@@ -1,0 +1,345 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Ricerca Operativa}
+\author{Luca Seggiani}
+\date{23-09-24}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=Teorema~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+\begin{document}
+% sezione (data)
+\section{Lezione del 23-09-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Introduzione}
+
+\subsubsection{Programma del corso}
+Il corso di ricerca operativa si divide in 4 parti:
+
+\begin{enumerate}
+	\item Modello di programmazione lineare
+	\item ...
+\end{enumerate}
+
+Le prime 3 parti hanno come prerequisiti l'algebra lineare: in particolare operazioni matriciali, prodotti scalari, sistemi lineari, teorema di Rouché-Capelli.
+La quarta parte richiede invece conoscenze di Analisi II.
+
+\subsubsection{Introduzione alla ricerca operativa}
+La ricerca operativa si occupa di risolvere problemi di ottimizzazione con variabili decisionali e risorse limitate.
+Poniamo un problema di esempio:
+
+Una ditta produce due prodotti: \textbf{laminato A} e \textbf{laminato B}.
+Ogni prodotto deve passare attraverso diversi reparti: il reparto \textbf{materie prime}, il reparto \textbf{taglio}, il reparto \textbf{finiture A} e il reparto \textbf{finiture B}.
+Il guadagno è rispettivamente di 8.4 e 11.2 (unità di misura irrilevante) per ogni tipo di laminato.
+
+Ora, nel reparto materie prime, il laminato A occupa 30, ore, e lo B 20 ore.
+Nel reparto taglio il laminato A occupa 10 ore e lo B 20 ore.
+Il laminato A occupa poi 20 ore nel reparto finiture A, mentre il laminato B occupa 30 ore nel reparto finiture B.
+I reparti hanno a disposizione, rispettivamente, 120, 80, 62 e 105 ore.
+Possiamo porre queste informazioni in forma tabulare:
+
+\begin{table}[h!]
+	\center \rowcolors{2}{white}{black!10}
+	\begin{tabular} { c || c | c | c }
+		\bfseries Reparto & \bfseries Capienza & \bfseries Laminato A & \bfseries Laminato B \\
+		\hline 
+		Materie prime & 120 & 30 & 20 \\
+		Taglio & 80 & 10 & 20 \\
+		Finiture A & 62 & 20 & / \\
+		Finiture B & 105 & / & 30 \\
+		\hline
+		\textbf{Guadagno} & & 8.4 & 11.2 \\
+	\end{tabular}
+\end{table}
+
+Quello che ci interessa è chiaramente massimizzare il guadagno.
+Decidiamo di modelizzare questa situazione con un modello matematico.
+
+Il guadagno che abbiamo dai laminati rappresenta una \textbf{funzione obiettivo}, ovvero la funzione che vogliamo ottimizzare.
+Ottimizzare significa trovare il modo migliore di massimizzare o minimizzare i valori della funzione agendo sulle variabili decisionali.
+La funzione obiettivo va ottimizzata rispettando determinati \textbf{vincoli}, che modellizzano il fatto che le risorse sono limitate.
+Una \textbf{soluzione ammissibile} è una qualsiasi soluzione che rispetta i vincoli del problema.
+Chiamiamo quindi \textbf{regione ammissibile} l'insieme di tutte le soluzioni ammissibili.
+All'interno della regione ammissibile c'è la soluzione che cerchiamo, ovvero la \textbf{soluzione ottima}.
+
+Decidiamo quindi le \textbf{variabili decisionali}, ed esplicitiamo la funzione obiettivo e i vincoli.
+
+In questo caso le variabili decisiali saranno le quantità di laminato A e B da produrre, che individuano un punto in $ R^2 $ denominato $ ( x_A, x_B ) $. 
+Decidere di usare la soluzione $ (1,1) $ significa decidere di produrre 1 unità di laminato A e 1 unità di laminato B, per un guadagno complessivo di $ 8.4 + 11.2 = 19.6 $.
+
+La funzione obiettivo sarà quindi:
+
+$$ f(x_A, x_B) = 8.4 x_A + 11.2 x_B, \quad f: R^2 \rightarrow R $$
+
+lineare, e noi saremo interessati a:
+
+$$ \max(f(x_A, x_B)) $$
+
+rispettando i vincoli, ergo nella regione ammissibile.
+Per esprimere questi vincoli, cioè il tempo limitato all'interno di ogni reparto, introduciamo il sistema di disequazioni:
+
+\[
+	\begin{cases}
+		30 x_A + 20 x_B \leq 120 \\
+		10 x_A + 20 x_B \leq 80	\\
+		20 x_A + 0 x_B \leq 62 \\	
+		0 x_A + 30 x_B \leq 105 \\
+		- x_A \leq 0 \\
+		- x_B \leq 0 \\
+	\end{cases}
+\]
+
+dove notiamo le ultime due disequazioni indicano la positività di $x_A$ e $x_B$, in forma $ f(x_A, x_B) \leq b $.
+Questo sistema non indica altro che la regione ammissibile.
+
+Possiamo riscrivere questo modello usando la notazione dell'algebra lineare.
+La funzione obiettiva e i vincoli diventano semplicemente:
+
+\[
+	\begin{cases}
+		\max(c^T \cdot x) \\
+		A \cdot x \leq b	
+	\end{cases}
+\]
+
+dove $c$ rappresenta il vettore dei costi, $A$ rappresenta la matrice dei costi a $b$ il vettore dei vincoli.
+$c$ è trasposto per indicare prodotto fra vettori.
+
+Possiamo scrivere $A$, $b$ e $c$ per esteso:
+
+$$
+A:
+\begin{pmatrix}
+	30 & 20 \\
+	10 & 20 \\
+	20 & 0 \\
+	0 & 30 \\
+	-1 & 0 \\
+	0 & -1
+\end{pmatrix}, \quad
+b:
+\begin{pmatrix}
+	120 \\
+	80 \\
+	62 \\ 
+	105 \\ 
+	0 \\ 
+	0 
+\end{pmatrix}, \quad 
+c:
+\begin{pmatrix}
+	8.4 \\
+	11.2 \\
+\end{pmatrix}
+$$
+
+Notiamo come $A$ e $b$ hanno dimensione verticale $ 4 + 2 = 6 $, dai 4 vincoli superiori e i 2 vincoli inferiori.
+
+A questo punto, possiamo disegnare la regione ammissbile come l'intersezione dei semipiani individuati da ogni singola disuguaglianza.
+Si riporta un grafico:
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = middle,
+    xlabel = {$x_A$},
+    ylabel = {$x_B$},
+    xmin=0, xmax=6,
+    ymin=0, ymax=6,
+    domain=0:10,
+    samples=100,
+    width=10cm, height=10cm,
+    legend pos=north east
+  ]
+
+% regione ammissibile
+
+	\addplot[fill=gray, opacity=0.4] 
+    coordinates {
+			(0, 0)
+			(3.1, 0)
+			(3.1, 1.35)
+			(2,3)
+			(1, 3.5)
+			(0, 3.5)
+		};
+
+% rette
+
+\addplot[domain=2:3.1, thick, blue] {6 - 1.5*x}; 
+\addlegendentry{$ 30 x_A + 20 x_B \leq 120 $}
+
+\addplot[domain=1:2, thick, green] {4 - 0.5*x}; 
+\addlegendentry{$ 10 x_A + 20 x_B \leq 80 $}
+
+\addplot[thick, purple] coordinates {(3.1, 0) (3.1, 1.35)};
+\addlegendentry{$ 20 x_A + 0 x_B \leq 62 $}
+
+\addplot[domain=0:1, thick, red] {3.5}; 
+\addlegendentry{$ 0 x_A + 30 x_B \leq 105 $}
+	
+\end{axis}
+\end{tikzpicture}
+
+In diversi colori sono riportate i margini delle disequazioni, mentre in grigio è evidenziata la regione ammissibile.
+
+\par\smallskip
+
+Il modello finora descritto prende il nome di modello di programmazione lineare.
+
+"Programmazione" qui non ha alcun legame col concetto di programmazione informatica, ma si riferisce al fatto che il modello è effettivamente \textit{programmabile}.
+
+"Lineare" si riferisce alla linearità del problema (e quindi del modello).
+
+
+
+\end{document}
