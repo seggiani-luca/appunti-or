@@ -167,14 +167,16 @@
 Il corso di ricerca operativa si divide in 4 parti:
 
 \begin{enumerate}
-	\item Modello di programmazione lineare
-	\item ...
+	\item Modello di Programmazione Lineare;
+	\item Programmazione Lineare su reti, ergo programmazione lineare su grafi;
+	\item Programmazione Lineare intera, ergo programmazione lineare col vincolo $x \in \mathbb{Z}^n$;
+	\item Programmazione Non Lineare.
 \end{enumerate}
 
 Le prime 3 parti hanno come prerequisiti l'algebra lineare: in particolare operazioni matriciali, prodotti scalari, sistemi lineari, teorema di Rouché-Capelli.
 La quarta parte richiede invece conoscenze di Analisi II.
 
-\subsubsection{Introduzione alla ricerca operativa}
+\subsubsection{Un problema di ricerca operativa}
 La ricerca operativa si occupa di risolvere problemi di ottimizzazione con variabili decisionali e risorse limitate.
 Poniamo un problema di esempio:
 
@@ -203,7 +205,7 @@ Possiamo porre queste informazioni in forma tabulare:
 \end{table}
 
 Quello che ci interessa è chiaramente massimizzare il guadagno.
-Decidiamo di modelizzare questa situazione con un modello matematico.
+Decidiamo di modellizzare questa situazione con un modello matematico.
 
 Il guadagno che abbiamo dai laminati rappresenta una \textbf{funzione obiettivo}, ovvero la funzione che vogliamo ottimizzare.
 Ottimizzare significa trovare il modo migliore di massimizzare o minimizzare i valori della funzione agendo sulle variabili decisionali.
@@ -214,12 +216,12 @@ All'interno della regione ammissibile c'è la soluzione che cerchiamo, ovvero la
 
 Decidiamo quindi le \textbf{variabili decisionali}, ed esplicitiamo la funzione obiettivo e i vincoli.
 
-In questo caso le variabili decisiali saranno le quantità di laminato A e B da produrre, che individuano un punto in $ R^2 $ denominato $ ( x_A, x_B ) $. 
+In questo caso le variabili decisionali saranno le quantità di laminato A e B da produrre, che individuano un punto in $ \mathbb{R}^2 $ denominato $ ( x_A, x_B ) $. 
 Decidere di usare la soluzione $ (1,1) $ significa decidere di produrre 1 unità di laminato A e 1 unità di laminato B, per un guadagno complessivo di $ 8.4 + 11.2 = 19.6 $.
 
 La funzione obiettivo sarà quindi:
 
-$$ f(x_A, x_B) = 8.4 x_A + 11.2 x_B, \quad f: R^2 \rightarrow R $$
+$$ f(x_A, x_B) = 8.4 x_A + 11.2 x_B, \quad f: \mathbb{R}^2 \rightarrow \mathbb{R} $$
 
 lineare, e noi saremo interessati a:
 
@@ -285,7 +287,7 @@ $$
 
 Notiamo come $A$ e $b$ hanno dimensione verticale $ 4 + 2 = 6 $, dai 4 vincoli superiori e i 2 vincoli inferiori.
 
-A questo punto, possiamo disegnare la regione ammissbile come l'intersezione dei semipiani individuati da ogni singola disuguaglianza.
+A questo punto, possiamo disegnare la regione ammissibile come l'intersezione dei semipiani individuati da ogni singola disuguaglianza.
 Si riporta un grafico:
 
 \begin{tikzpicture}
@@ -334,11 +336,28 @@ In diversi colori sono riportate i margini delle disequazioni, mentre in grigio 
 
 \par\smallskip
 
-Il modello finora descritto prende il nome di modello di programmazione lineare.
+Il modello finora descritto prende il nome di modello di programmazione lineare, e permette di formulare problemi di programmazione lineare (LP).
+
+\begin{definition}{Problema di programmazione lineare (1)}
+Un problema di programmazione lineare (LP) riguarda l'ottimizzazione di una funzione lineare in più variabili
+soggetta a vincoli di tipo $ =, \ \leq $ e $ \geq $, ovvero in forma:
+\[
+	\begin{cases}
+			\min / \max(c^T \cdot x) \\
+			A x \leq b \\
+			... \\
+			B x \geq d \\
+			... \\
+			C x = e \\
+			...
+	\end{cases}
+\]
+\end{definition}
 
 "Programmazione" qui non ha alcun legame col concetto di programmazione informatica, ma si riferisce al fatto che il modello è effettivamente \textit{programmabile}.
 
 "Lineare" si riferisce alla linearità del problema (e quindi del modello).
+
 
 
 
