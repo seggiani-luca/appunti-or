@@ -17,9 +17,9 @@
 \usepackage{standalone}
 
 % imposta il titolo
-\title{Appunti Ricerca Operativa}
-\author{Luca Seggiani}
-\date{2024}
+\title{Appunti title-tag}
+\author{author-tag}
+\date{year-tag}
 
 % disegni
 \usepackage{pgfplots}
@@ -75,6 +75,16 @@
 	sharp corners=northwest,
 	fonttitle=\sffamily\bfseries,
 	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
 	#1
 }
 

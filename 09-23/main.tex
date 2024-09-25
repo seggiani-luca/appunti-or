@@ -53,6 +53,16 @@
 	#1
 }
 
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
+	#1
+}
+
 % disponi codice
 \usepackage{listings}
 \usepackage[table]{xcolor}
@@ -176,10 +186,12 @@ Il corso di ricerca operativa si divide in 4 parti:
 Le prime 3 parti hanno come prerequisiti l'algebra lineare: in particolare operazioni matriciali, prodotti scalari, sistemi lineari, teorema di Rouché-Capelli.
 La quarta parte richiede invece conoscenze di Analisi II.
 
-\subsubsection{Un problema di ricerca operativa}
+\subsubsection{Un problema di programmazione lineare}
+
 La ricerca operativa si occupa di risolvere problemi di ottimizzazione con variabili decisionali e risorse limitate.
 Poniamo un problema di esempio:
 
+\begin{problem}{Produzione}
 Una ditta produce due prodotti: \textbf{laminato A} e \textbf{laminato B}.
 Ogni prodotto deve passare attraverso diversi reparti: il reparto \textbf{materie prime}, il reparto \textbf{taglio}, il reparto \textbf{finiture A} e il reparto \textbf{finiture B}.
 Il guadagno è rispettivamente di 8.4 e 11.2 (unità di misura irrilevante) per ogni tipo di laminato.
@@ -190,9 +202,9 @@ Il laminato A occupa poi 20 ore nel reparto finiture A, mentre il laminato B occ
 I reparti hanno a disposizione, rispettivamente, 120, 80, 62 e 105 ore.
 Possiamo porre queste informazioni in forma tabulare:
 
-\begin{table}[h!]
-	\center \rowcolors{2}{white}{black!10}
-	\begin{tabular} { c || c | c | c }
+	\center \rowcolors{2}{green!10}{green!40!black!20}
+	\begin{tabular} { | c || c | c | c | }
+		\hline
 		\bfseries Reparto & \bfseries Capienza & \bfseries Laminato A & \bfseries Laminato B \\
 		\hline 
 		Materie prime & 120 & 30 & 20 \\
@@ -201,10 +213,14 @@ Possiamo porre queste informazioni in forma tabulare:
 		Finiture B & 105 & / & 30 \\
 		\hline
 		\textbf{Guadagno} & & 8.4 & 11.2 \\
+		\hline
 	\end{tabular}
-\end{table}
+
+	\par\bigskip
 
 Quello che ci interessa è chiaramente massimizzare il guadagno.
+\end{problem}
+
 Decidiamo di modellizzare questa situazione con un modello matematico.
 
 Il guadagno che abbiamo dai laminati rappresenta una \textbf{funzione obiettivo}, ovvero la funzione che vogliamo ottimizzare.
