@@ -184,10 +184,46 @@
 \makeatother
 
 \begin{document}
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
+
+% sezione (data)
+\section{Lezione del 30-09-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Calcolo dei vertici}
+Troviamo adesso il modo di calcolare i vertici del poliedro di un problema LP in forma primale standard.
+
+Avevamo già dato la definizione di vertice come punto non ottenibile come combinazione convessa degli altri punti del poliedro (definizione 4.6).
+Questa definizione è corretta ma poco utile per il calcolo procedurale.
+Dimostriamo quindi un teorema utile.
+
+Innanzitutto, assumiamo che in generale, per un problema LP $ \mathcal{P} $ con $n$ variabili decisionali e $m$ vincoli, si ha che $n < m$.
+A questo punto, possiamo dire:
+\begin{definition}{Soluzione di base}
+	Sia dato un problema LP $\mathcal{P}$ con $n < m$.
+	Sia $B \subseteq \{ 1, ..., m \}$ un sottoinsieme di indici di riga tale che $\mathrm{card}(B) = n$.
+	A questo punto, sia $A_B$ la sottomatrice di $A$ con con righe indicate da $B$, e $b_B$ il sottovettore colonna di $B$ con righe indicate da $B$, con det $\det{A_B} \neq 0$.
+	Allora la soluzione di:
+	$$
+	A_Bx = b_B
+	$$
+	è detta soluzione di base di $\mathcal{P}$.
+\end{definition}
+da qui possiamo dimostrare il teorema:
+\begin{theorem}{Caratterizzazione dei vertici}
+	Un punto $x$ di un poliedro $P$ è un vertice di $P$ se e solo se è una soluzione di base ammissibile, ovvero:
+	$$ 
+	x \in \mathrm{vert}(P) \Leftrightarrow \text{$x$ è soluzione di base}
+	$$
+\end{theorem}
+
+Riflettiamo un'attimo su questo risultato: se la definizione di vertice era effettivamente sufficiente a dichiarare \textit{quali} erano i vertici, un teorema di caratterizzazione come quello sopra riportato ci fornisce una procedura per calcolarli tutti a partire da $P$.
+In questo, definizione e teorema di caratterizzazione sono effettivamente intercambiabili, ovvero:
+$$
+\text{definizione} \Leftrightarrow \text{teorema di caratterizzazione}
+$$
+
 \end{document}
