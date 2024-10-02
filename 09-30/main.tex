@@ -202,21 +202,21 @@ Dimostriamo quindi un teorema utile.
 
 Innanzitutto, assumiamo che in generale, per un problema LP $ \mathcal{P} $ con $n$ variabili decisionali e $m$ vincoli, si ha che $n < m$.
 A questo punto, possiamo dire:
-\begin{definition}{Soluzione di base}
-	Sia dato un problema LP $\mathcal{P}$ con $n < m$.
+\begin{definition}{Soluzione di base primale}
+	Sia dato un problema LP $\mathcal{P}$ in forma primale standard con $n < m$.
 	Sia $B \subseteq \{ 1, ..., m \}$ un sottoinsieme di indici di riga tale che $\mathrm{card}(B) = n$.
 	A questo punto, sia $A_B$ la sottomatrice di $A$ con con righe indicate da $B$, e $b_B$ il sottovettore colonna di $B$ con righe indicate da $B$, con det $\det{A_B} \neq 0$.
 	Allora la soluzione di:
 	$$
 	A_Bx = b_B
 	$$
-	è detta soluzione di base di $\mathcal{P}$.
+	è detta soluzione di base primale di $\mathcal{P}$.
 \end{definition}
 da qui possiamo dimostrare il teorema:
-\begin{theorem}{Caratterizzazione dei vertici}
-	Un punto $x$ di un poliedro $P$ è un vertice di $P$ se e solo se è una soluzione di base ammissibile, ovvero:
+\begin{theorem}{Caratterizzazione dei vertici primali}
+	Su un problema in forma primale standard, un punto $x$ del poliedro $P$ è un vertice di $P$ se e solo se è una soluzione di base primale ammissibile, ovvero:
 	$$ 
-	x \in \mathrm{vert}(P) \Leftrightarrow \text{$x$ è soluzione di base}
+	x \in \mathrm{vert}(P) \Leftrightarrow \text{$x$ è soluzione di base primale}
 	$$
 \end{theorem}
 

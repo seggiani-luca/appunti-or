@@ -193,9 +193,9 @@
 \pagestyle{fancy}
 
 % testo
-\subsection{Soluzioni di base degeneri}
-Abbiamo dato un teorema di caratterizzazione dei vertici.
-Questo teorema si basava sulla nozione di \textbf{soluzione di base}.
+\subsection{Soluzioni di base primali degeneri}
+Abbiamo dato un teorema di caratterizzazione dei vertici primali.
+Questo teorema si basava sulla nozione di \textbf{soluzione di base primale}.
 Possiamo fare una distinzione fra soluzione di base degeneri e non degeneri:
 \begin{definition}{Soluzione di base degenere}
 Quando una soluzione di base è soluzione di più combinazioni delle disequazioni del problema, essa si dice degenere.
@@ -205,15 +205,15 @@ Questa definizione è esatta ma non particolarmente utile.
 Sostanzialmente, ci dice soltanto che una soluzione degenere è \textbf{ridondante} su più combinazioni di disequazioni (cioè risolve $A_Bx = b_B$ su più permutazioni degli $1,...,m$ elementi in classi $n$ in $B$).
 Si noti che ridondante non significa \textbf{eliminabile}: questa affermazione purtroppo è vera soltanto in $R^2$, dove effettivamente si può rimuovere una delle disequazioni ridondanti ed avere sempre lo stesso risultato.
 
-Diamo quindi una caratterizzazione delle soluzioni di base degeneri appoggiandoci al teorema di caratterizzazione dei vertici, ergo al concetto di soluzione di base:
-\begin{theorem}{Caratterizzazione delle soluzioni di base degeneri}
+Diamo quindi una caratterizzazione delle soluzioni di base primali degeneri appoggiandoci al teorema di caratterizzazione dei vertici, ergo al concetto di soluzione di base:
+\begin{theorem}{Caratterizzazione delle soluzioni di base primali degeneri}
 	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., m \}$ con $\mathrm{card}(B) = n$ è data da $A_Bx = b_B$, possiamo dire che è pure degenere quando $\exists i \in N$ t.c. $A_i x = b_i$, con $I$ = $\{1, ..., m\} - B$. 
 \end{theorem}
 Quindi, una soluzione di base è degenere quando almeno una variabile di base si annulla per almeno una delle disequazioni non di base indicate dagli indici $I$, che sono tutti gli indici fra $\{1,...,m\}$ non contenuti in $B$. 
 
 Sulla stessa linea di pensiero, possiamo dimostrare un'altro teorema, stavolta sul concetto piuttosto intuitivo di ammissibilità.
 Potremmo infatti dire che una soluzione di base ammissibile, cioè che rientra all'interno della regione ammissibile, è tale se:
-\begin{theorem}{Caratterizzazione delle soluzioni di base ammissibili}
+\begin{theorem}{Caratterizzazione delle soluzioni di base primali ammissibili}
 	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., m \}$ con $\mathrm{card}(B) = n$ è data da $A_Bx = b_B$, possiamo dire che è ammissible quando $\forall i \in N$ t.c. $A_i x \leq b_i$, con $I$ = $\{1, ..., m\} - B$. 
 \end{theorem}
 cioè banalmente rispetta tutte le disequazioni.
@@ -246,29 +246,5 @@ Riassumiamo adesso le trasformazioni equivalenti che abbiamo individuato finora 
 
 Usiamo queste trasformazioni per portare i problemi LP in forme standard.
 Esistono molteplici forme standard, ma in questo corso ci riguardano: il formato \textit{linprog}, usato dal pacchetto software \textit{MATLAB}, le forme standard primale (già vista) e duale (che vedremo fra poco). 
-
-\subsection{Forma duale standard}
-Per ogni problema LP avevamo definito la forma primale standard:
-\[
-	\begin{cases}
-		\max{C^T \cdot x} \\
-		Ax \leq b
-	\end{cases}
-\]
-
-Introduciamo adesso la forma duale standard:
-\begin{definition}{Forma duale standard}
-	Un problema di programmazione lineare si dice in forma duale standard quando è espresso in forma:
-	
-	\[
-		\begin{cases}
-			\min(c^T \cdot x) \\
-			Ax = b \\
-			x \geq 0
-		\end{cases}
-	\]
-
-\end{definition}
-
 
 \end{document}
