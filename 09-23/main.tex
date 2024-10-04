@@ -304,18 +304,21 @@ $$
 Notiamo come $A$ e $b$ hanno dimensione verticale $ 4 + 2 = 6 $, dai 4 vincoli superiori e i 2 vincoli inferiori.
 
 A questo punto, possiamo disegnare la regione ammissibile come l'intersezione dei semipiani individuati da ogni singola disuguaglianza.
+
 Si riporta un grafico:
+
+\begin{center}
 
 \begin{tikzpicture}
 \begin{axis}[
     axis lines = middle,
     xlabel = {$x_A$},
     ylabel = {$x_B$},
-    xmin=0, xmax=6,
-    ymin=0, ymax=6,
+    xmin=0, xmax=7.9,
+    ymin=0, ymax=3.9,
     domain=0:10,
     samples=100,
-    width=10cm, height=10cm,
+    width=15cm, height=7cm,
     legend pos=north east
   ]
 
@@ -348,7 +351,10 @@ Si riporta un grafico:
 \end{axis}
 \end{tikzpicture}
 
-In diversi colori sono riportate i margini delle disequazioni, mentre in grigio è evidenziata la regione ammissibile.
+\end{center}
+
+In diversi colori sono riportati i margini delle disequazioni, mentre in grigio è evidenziata la regione ammissibile.
+Qualsiasi punto all'interno della regione ammissibile vale come soluzione, e almeno uno di essi è soluzione ottimale.
 
 \par\smallskip
 
@@ -360,19 +366,16 @@ soggetta a vincoli di tipo $ =, \ \leq $ e $ \geq $, ovvero in forma:
 \[
 	\begin{cases}
 			\min / \max(c^T \cdot x) \\
-			A x \leq b \\
-			... \\
-			B x \geq d \\
-			... \\
-			C x = e \\
-			...
+			A_i x \leq b \\
+			B_j x \geq d \\
+			C_k x = e \\
 	\end{cases}
 \]
 \end{definition}
 
 "Programmazione" qui non ha alcun legame col concetto di programmazione informatica, ma si riferisce al fatto che il modello è effettivamente \textit{programmabile}.
 
-"Lineare" si riferisce alla linearità del problema (e quindi del modello).
+"Lineare" si riferisce alla linearità dei problemi che ci permette di risolvere (e quindi del modello).
 
 
 

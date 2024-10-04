@@ -199,7 +199,7 @@ Un modo per portare un problema LP qualsiasi in forma primale standard è:
 		da cui la (1):
 		$$
 			f(x) = c \ \rightarrow \
-		\begin{cases}
+S		\begin{cases}
 			f(x) \leq c \\ 
 			-f(x) \leq -c
 		\end{cases}
@@ -212,7 +212,7 @@ Un modo per portare un problema LP qualsiasi in forma primale standard è:
 		Questo significa che posso semplicemente cambiare di segno la funzione obiettivo per trovare da massimi minimi, e viceversa.
 \end{enumerate}
 
-Notiamo inoltre che, nel forma primale standard, si ha:
+Notiamo inoltre che, nella forma primale standard, si ha:
 $$
 	x \in R^n, \quad
 	A \in R^{n \times m}, \quad
@@ -222,17 +222,21 @@ $$
 
 \subsection{Proprietà generali di un problema LP}
 La regione ammissibile di un problema PL si chiama \textbf{poliedro}.
-
+Si può dare agilmente una definizione algebrica di poliedro:
 \begin{definition}{Definizione algebrica di poliedro}
-	Algebricamente, un poliedro non è altro che il sistema di disequazioni che definiscono una regione (possibilmente vuota, o infinita), come determinato dalle matrici $A$ e $b$. 
+	Algebricamente, un poliedro è l'insieme delle soluzioni di un sistema di disequazioni lineari in $\mathbb{R}^n$ variabili:
+	$$
+		P = \{ x \in \mathbb{R}^n : Ax \leq b \}
+	$$
 \end{definition}
 
 Questa regione in un problema LP prende il nome di regione ammissibile.
 
 \begin{definition}{Definizione geometrica di poliedro}
-	Geometricamente, un poliedro è l'intersezione di un numero finito di semispazi lineari chiusi (semipiani in $R^2$).
+	Geometricamente, un poliedro è l'intersezione di un numero finito di semispazi chiusi.
 \end{definition}
 
+I semispazi chiaramente sono lineari, e in $\mathbb{R}^2$ rappresenterebbero semipiani.
 Chiusi significa che nelle disequazioni che descrivono i vincoli compargono solo $\leq$ e non $<$, ergo la regione ammissibile contiene la sua frontiera.
 
 Possiamo dimostrare 4 proprietà dei poliedri:
@@ -247,7 +251,7 @@ Possiamo dimostrare 4 proprietà dei poliedri:
 		Inanzitutto, si è stabilito che la soluzione ottimale non è altro che il massimo o minimo assoluto all'interno della regione ammissibile del problema.
 		Il gradiente della funzione obiettiva è $\neq 0$ in ogni suo punto (funzione lineare a gradiente costante). 
 		Da Fermat, i massimi e minimi hanno sempre gradiente $0$, ergo massimi o minimi locali (che esistono per Weierstrass) possono trovarsi solo sulla frontiera.
-		A questo punto, possiamo imporre la convessità per asserire che quei punti di massimo o minimo sono anche globali (non è possibile che si incontri un dato massimo, spostandosi dall'origine verso l'esterno, "prima" dello stesso massimo o uno minore su un punto più esterno della frontiera, se ha senso). 
+		A questo punto, possiamo imporre la convessità per asserire che quei punti di massimo o minimo sono anche globali. 
 
 	\item 
 		Prendiamo in esempio il poliedro dato da:
@@ -271,19 +275,13 @@ Possiamo dimostrare 4 proprietà dei poliedri:
 		\end{pmatrix}
 		$$
 		questo poliedro non è limitato nella direzione positiva, ergo può arrivare a valori di $x_A$ e $x_B$ che tendono a $+\infty$.
-		Da ciò si dimostra:
-		\begin{theorem}{Limitatezza della regione ammissibile di un problema LP}
-			Può accadere che un problema LP ammette soluzioni $x$ tali che $x \rightarrow \pm \infty $,
-			ovvero che il poliedro è illimitato..
-		\end{theorem}
+		Da ciò si ha che può accadere che un problema LP ammetta soluzioni $x$ tali che $x \rightarrow \pm \infty $,
+		ovvero che il poliedro sia illimitato.
 		In particolare, un poliedro limitato si dice \textbf{politopo}.
-	\item Notiamo poi che:
-		\begin{theorem}{Unicità della soluzione ottimale di un problema LP (1)}
-			La soluzione di un problema LP può non essere unica.
-		\end{theorem}
+	\item Notiamo poi che la soluzione di un problema LP può non essere unica.
 		Questo accade ad esempio quando la soluzione sta su un segmento di frontiera: a quel punto tutti i punti del segmento sono soluzione.
 		Da questo segue che:
-		\begin{theorem}{Unicità della soluzione ottimale di un problema LP (2)}
+		\begin{theorem}{Unicità della soluzione ottimale di un problema LP}
 			Se un problema LP ha almeno 2 soluzioni, allora ne ha infinite.
 		\end{theorem}
 		Ciò si può dimostrare come segue.
@@ -300,11 +298,8 @@ Possiamo dimostrare 4 proprietà dei poliedri:
 			c^T\left(\lambda z + (1 - \lambda)w\right) = \lambda c^T z + (1 - \lambda) c^T w = \lambda v + (1 - \lambda) v = v 
 		$$
 		Ovvero ogni punto sul segmento porta la funzione obiettiva a massimo assoluto, quindi è soluzione ottimale.
-	\item Infine, notiamo che:
-		\begin{theorem}{}
-			Il poliedro della regione ammissible di un problema LP può essere vuoto, ergo $P = \emptyset$.
-			In questo caso, si ha che $ \max(c^T \cdot x) = -\infty $ e $ \min(c^T \cdot x) = \infty $. 
-		\end{theorem}	
+	\item Infine, notiamo che il poliedro della regione ammissible di un problema LP può essere vuoto, ergo $P = \emptyset$.
+		In questo caso, si ha che $ \max(c^T \cdot x) = -\infty $ e $ \min(c^T \cdot x) = \infty $. 
 		Un poliedro vuoto significa che i vincoli stessi vanno modificati. 
 		Questo solitamente si fa risovendo una versione semplificata del problema LP.
 \end{enumerate}
@@ -334,5 +329,6 @@ Il cono (in $R^2$, angolo) di valori possibili del gradiente che rendono un punt
 	Il cono di competenza di un punto $x^*$ è il cono, ovvero l'insieme di vettori gradiente, tale per cui il punto $x^*$ conserva l'ottimalità sulla funzione obiettivo coi vincoli imposti.
 \end{definition}
 
+Vedremo in seguito l'importanza di una nozione di cono per i problemi LP.
 
 \end{document}

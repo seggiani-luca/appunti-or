@@ -267,17 +267,20 @@ che si riconduce all'equazione del triangolo di vertici $x_1$, $x_2$, $x_3$ (sec
 
 Dai grafici si nota come una combinazione convessa descrive una parte di spazio, che si può definire:
 \begin{definition}{Involucro convesso}
-	L'involucro convesso $\mathrm{conv}(K)$ di un'insieme di punti $K = \{x_1, x_2, ..., x_n\} \in \mathbb{R}^n$ è definito come il luogo di tutte le loro combinazioni convesse.
+	L'involucro convesso $\mathrm{conv}(K)$ di un'insieme di punti $K = \{x_1, x_2, ..., x_n\}, \quad x_i \in \mathbb{R}^n$ è definito come il luogo di tutte le loro combinazioni convesse.
 \end{definition}
 
 Si nota che l'involucro convesso negli esempi precedenti è effettivamente un poliedro convesso che contiene tutti i punti che lo formano.
 Si può infatti dire:
 \begin{theorem}{Minimalità dell'involucro convesso}
-	L'insieme $\mathrm{conv}(K)$ di tutte le combinazioni convesse di $n$ punti è il più piccolo poliedro convesso che li contiene tutti.
+	L'insieme $\mathrm{conv}(K)$ di tutte le combinazioni convesse di $n$ punti è l'insieme convesso minimale che li contiene tutti.
 \end{theorem}
 
-Si noti che non è detto che a $n$ punti corrisponda uno poligono di di $n$ vertici.
-Può infatti accadere che uno dei punti è già parte dell'involucro convesso. 
+In $R^n$, possiamo esprimere un insieme convesso lineare come un poliedro convesso, e quindi dire che l'involucro convesso di $n$ punti è il più piccolo (in termini di inclusione) poliedro convesso che li contiene tutti.
+Inoltre, un'insieme è convesso se e solo se corrisponde al suo involucro convesso.
+
+Si noti che non è detto che a $n$ punti corrisponda un poligono di $n$ vertici.
+Potrebbe infatti accadere che uno dei punti (chiamiamolo $x_j$) sia già parte dell'involucro convesso, ergo $x_j \in \mathrm{conv}(K)$.
 
 Le combinazioni convesse ci permettono di descrivere parte delle regioni ammissibili (poliedri) dei problemi di programmazione lineare, ma restano ancora in sospeso problemi che ammettono regioni illimitate.
 Per descrivere tali regioni, si introduce un altro tipo di combinazione.
@@ -298,8 +301,13 @@ La combinazione conica di più punti non è più il poliedro convesso che li con
 Questo cono si estende fino all'infinito ($\lambda_i \geq 0$) nelle direzioni dei vettori che lo formano.
 Il concetto è simile a quello di spazio somma, ma con la differenza che non si va ovunque nello span dei due vettori, ma si seguono le semirette che essi conducono.
 
+Si può dire, analogamente alle combinazioni convesse, che il cono di $n$ punti è il pi+ piccolo (in termini di inclusione) cono convesso che li contiene.
+Inoltre, un'insieme è un cono convesso se e solo se corrisponde al suo involucro conico.
+
 \subsection{Poliedri}
 Abbiamo definito un poliedro come la regione definita da un sistema di disequazioni lineari, o geometricamente come l'intersezione di un numero finito di semipiani chiusi in $\mathbb{R}^n$.
+Si dimostra che un poliedro, in quanto intersezione di insiemi convessi, è lui stesso convesso: potremo applicare la definizione di convessità per dire che, presi due punti $x_1, x_2 \in C$ nell'intersezione $C = C_1 \cap C_2$, si avrà che entrambi appartengono sia a $C_1$ che a $C_2$, ergo il segmento che li congiunge completamente in ciascuno di quei due insiemi è interamente contenuto in $C$.
+
 Un poliedro che è anche cono si chiama cono poliedrico. Si dimostra che:
 \begin{theorem}{Cono poliedrico}
 	Se $P$ è un cono poliedrico allora:
@@ -310,6 +318,7 @@ Un poliedro che è anche cono si chiama cono poliedrico. Si dimostra che:
 \end{theorem}
 
 Senza dimostrazioni, questo è chiaro dal fatto che le disequazioni che compongono il poliedrico sono omogenee (hanno frontiere che passano dall'origine).
+
 Si definiscono poi i \textbf{vertici} del poliedro:
 \begin{definition}{Vertice}
 	Un vertice di un poliedro è un punto che non si può esprimere come combinazione convessa propria di altri punti del poliedro.
@@ -327,22 +336,78 @@ Per poliedri illimitati, introduciamo invece:
 
 Chiaramente, per ogni poliedro $P$, $0 \in \mathrm{rec}(P)$ e per i poliedri limitati, $\mathrm{rec}(P) = \{0\}$.
 Notiamo che le direzioni di recessione determinano i vettori del cono che coincide (almeno a distanze abbastanza grandi dall'origine) con i poliedri illimitati.
-Più propriamente, si può dire che un cono poliedrico è l'involucro conico di un insieme finito dei suoi punti (basta prendere gli "estremi").
 
-Definiamo poi lo spazio di linealità:
+Inoltre, l'insieme $\mathrm{rec}(p)$ di un poliedro è in sé un cono poliedrico. In particolare: 
+
+\begin{theorem}{Cono di recessione}	
+Il cono di recessione di un poliedro $P$ è dato da:
+$$
+P = \{ x \in \mathbb{R}^n : Ax \leq b \} \Rightarrow \mathrm{rec}(P) = \{ x \in \mathbb{R}^n : Ax \leq 0 \}
+$$
+\end{theorem}
+
+\par\medskip
+\noindent
+\textbf{\textsf{Dimostrazione}} \\
+Questo teorema vale perchè, per definizione, una direzione di recessione è $x + \lambda d$, che sostituita al sistema dà:
+$$
+A(x + \lambda d) \leq b \Rightarrow Ax + \lambda Ad \leq b
+$$
+
+Possiamo quindi sottrarre $Ax$ da entrambi i lati:
+$$
+\lambda Ad \leq b - Ax
+$$
+
+Da ipotesi, $Ax \leq b$ e quindi $b - Ax \geq 0$.
+Chiamiamo questa quantità postiva $k^+$ e scriviamo:
+$$
+\lambda Ad \leq k^+
+$$
+
+Visto che $\lambda \rightarrow +\infty$, dovrà essere verò che $Ad \leq 0$, ergo con $d = x$, il teorema è dimostrato.
+
+\par\medskip
+
+Un'altro teorema importante lega il cono ai suoi "raggi estremi", cioè quell'insieme finito di vettori la cui combinazione conica corrisponde all'intero cono:
+\begin{theorem}{Raggi estremi}
+	Un cono poliedrico $P = \{ x \in \mathbb{R^n} : Ax \leq 0 \}$ è l'involucro conico di un'insieme limitato dei suoi punti. Questi punti prendono il nome di \textit{raggi estremi}.
+\end{theorem}
+
+\par\medskip
+\noindent
+\textbf{\textsf{Dimostrazione}} \\
+Diamo una dimostrazione più o meno intuitiva di questo risultato.
+Indichiamo con $A_1, ..., A_m$ le righe della matrice $A$. 
+Queste formeranno dei vettori che indicano la direzione su cui "agisce" la diseguaglianza.
+Si può semplicemente osservare che questi vettori sono perpendicolari agli estremi del cono.
+Prendiamo quindi il cono dei vettori, che formerà un'altro cono detto \textit{duale} del cono di partenza:
+$$
+\mathrm{cono}(A_1, ..., A_m) = \{ x \in \mathbb{R}^n : Qx \leq 0 \}
+$$
+
+I vettori $Q_1, ..., Q_t$, presi come righe della matrice, sono perpendicolari ai vettori $A_1, ..., A_n$ di partenza, ergo paralleli ai raggi estremi del cono di partenza.
+Possiamo quindi dire che:
+$$
+P = \mathrm{cono}(Q_1, ..., Q_t)
+$$
+
+\subsubsection{Spazio di linealità}
+
+Definiamo infine lo spazio di linealità:
 \begin{definition}{Spazio di linealità}
-	Lo spazio di linealità di un poliedro illimtato $P$ è il più piccolo sottospazio contenuto interamente in $P$.
+	Lo spazio di linealità di un poliedro illimitato $P$ è il più piccolo sottospazio contenuto interamente in $P$.
 \end{definition}
-La base di uno spazio di linealità è un vettore $d$ tale che:
+Ogni vettore di base di uno spazio di linealità è un vettore $d$ tale che:
 $$
 d \in \mathrm{rec}(P), \quad - d \in \mathrm{rec}(P)
 $$
 ovvero un vettore che è contenuto sia positivo che negativo nelle direzioni di recessione del poliedro.
 
-Questa distinzione è importante in quanto non si può dimostrare completamente il prossimo problemi su poliedri con spazio di linealità $\neq {0}$.
+Questa distinzione è importante in quanto non si può dimostrare completamente il prossimo teorema su poliedri con spazio di linealità $\neq {0}$.
 
 \subsubsection{Teorema di rappresentazione dei poliedri}
-Gli strumenti che abbiamo stabilito finora ci permettono di dimostrare un'importante risultato, noto come \textbf{teorema di rappresentazione dei poliedri}, o teorema di Minkowski-Weyl.
+Gli strumenti che abbiamo stabilito finora ci permettono di enunciare un'importante risultato, noto come \textbf{teorema di rappresentazione dei poliedri}, o teorema di Minkowski-Weyl.
 
 \begin{theorem}{Rappresentazione dei poliedri}
 	Dato un poliedro $P$ definito come $P = \{ x \in \mathbb{R}^n : Ax \leq b \}$, si ha:
@@ -352,6 +417,34 @@ Gli strumenti che abbiamo stabilito finora ci permettono di dimostrare un'import
 \end{theorem}
 
 Questo significa che è possibile rappresentare qualsiasi poliedro attraverso i suoi vertici, e le direzioni in cui si estende all'infinito (ergo le sue direzioni di recessione).
+
+\subsubsection{H-rappresentazioni e V-rappresentazioni}
+Possiamo intendere il risultato precedente come segue: per ogni poliedro di un problema di programmazione LP, abbiamo due possibili rappresentazioni:
+\begin{itemize}
+	\item \textbf{H-rappresentazione:} come intersezione di semispazi, ergo come insieme delle soluzioni di un sistema di disequazioni lineari.
+	\item \textbf{V-rappresentazione:} come un'insieme di vertici e direzioni di regressione, quindi un involucro convesso e un cono di regressione.
+\end{itemize}
+
+\par\smallskip
+
+Non diamo una dimostrazione del teorema ma possiamo, noti i concetti di H-rappresentazione e V-rappresentazione, dire che:
+\begin{itemize}
+	\item Da un \textbf{H-rappresentazione} si può ricavare una \textbf{V-rappresentazione}:
+		abbiamo un poliedro dato dall'H-rappresentazione $Ax \leq b$.
+		Dividiamo questo poliedro in una parte limitata e una parte illimitata: la parte limitata sarà data dai vertici, mentre la parte illimitata sarà data dal cono di regressione:
+		$$ P = \mathrm{conv}(v_1,...,v_k) + rec(P)$$
+		A questo punto possiamo esprimere, come dallo scorso lemma, come combinazione conica dei suoi raggi estremi:
+		$$ P = \mathrm{conv}(v_1, ..., v_k) + \mathrm{cono}(e_1, ..., e_p) $$
+
+	\item Da un \textbf{V-rappresentazione} si può ricavare una \textbf{H-rappresentazione}:
+		abbiamo un poliedro dato dalla V-rappresentazione $P = \mathrm{conv}(v_1, ..., v_k) + \mathrm{cone}(e_1, ..., e_p)$.
+		Prendiamo separatamente gli involucri convessi e conici: avremo che per l'involucro convesso possiamo immediatamente riportare in una forma ad intersezione di semipiani (disequazioni):
+		$$ \mathrm{conv}(v_1, ..., v_k) = \{ x \in \mathbb{R}^n : A'x \leq b' \} $$
+		mentre per l'involucro conico possiamo portare in una forma ad intersezione di disequazioni omogenee:
+		$$ \mathrm{cone}(e_1, ..., e_p) = \{ x \in \mathbb{R}^n : A''x \leq 0 \} $$
+		Per trovare l'H-rappresentazione, basterà combinare queste due rappresentazioni in una forma del tipo:
+		$$ P = \{ x \in \mathbb{R}^n : A'x \leq b', A''x \leq 0 \}$$
+\end{itemize}
 
 La somma in $P = \mathrm{conv}(V) + \mathrm{cono}(E)$ si riferisce alla somma vettoriale fra tutti i possibili punti di $\mathrm{conv}(V)$ e $\mathrm{conv}(E)$, come quella studiata sui sottospazi vettoriali (anche se nessuno dei due insiemi è un sottospazio vettoriale).
 Per un dato insieme $\mathrm{conv}(V)$, quindi, l'aggiunta di $\mathrm{cono}(E)$ rappresenta la "proiezione" di tale insieme nelle direzioni di recessione indicate dal cono.
@@ -442,6 +535,6 @@ $$
 c^Tv_k \leq \max_{x \in P} c^T \cdot x
 $$
 
-E dunque $\max_{x \in P} c^T \cdot x = c^T v_k$, C.V.D.
+E dunque $\max_{x \in P} c^T \cdot x = c^T v_k$, come volevasi dimostrare. 
 
 \end{document}
