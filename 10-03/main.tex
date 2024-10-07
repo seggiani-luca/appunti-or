@@ -306,7 +306,7 @@ mentre per il duale, significherà partizionare le variabili introdotte:
 $$
 y = \left( y_B \over y_N \right)
 $$
-noto il numero di $y1, ..., y_m$ uguale a $m$.
+noto il numero di $y_1, ..., y_m$ uguale a $m$.
 
 Questo significa che possiamo trovare due soluzioni di base corrispondenti per un'unica base su primale e duale.
 Queste sono:
@@ -322,10 +322,10 @@ Si dice che le soluzioni di base sono \textbf{complementari}.
 Vogliamo che $y^T(b - Ax)$ sia $=0$ soddisfatte le condizioni di base.
 Applichiamo quindi la base:
 $$
-y^T(b - Ax) = \left( y_B^T, y_N^T \right) \binom{b_B - A_B x}{b_N - A_N x} = \left( c_T A_B^{-1}, 0 \right) \binom{b_B - A_B A_B^{-1} b_B}{b_N - A_N A_B^{-1} b_B}
+y^T(b - Ax) = \left( y_B^T, y_N^T \right) \binom{b_B - A_B x}{b_N - A_N x} = \left( c^T A_B^{-1}, 0 \right) \binom{b_B - A_B A_B^{-1} b_B}{b_N - A_N A_B^{-1} b_B}
 $$
 $$
-= \left( c_T A_B^{-1}, 0 \right) \binom{0}{b_N - A_N A_B^{-1} b_B} = 0
+= \left( c^T A_B^{-1}, 0 \right) \binom{0}{b_N - A_N A_B^{-1} b_B} = 0
 $$
 
 Questo nome non è a caso, in quanto si può dimostrare le due soluzioni sono in scarti complementari.
