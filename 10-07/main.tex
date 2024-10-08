@@ -196,7 +196,7 @@
 \pagestyle{fancy}
 
 % testo
-\subsection{Algoritmo del simplesso}
+\subsection{Algoritmo del simplesso primale}
 Supponiamo di avere un problema LP in formato primale standard con $n = 8$ vincoli, espresso come:
 
 \[
@@ -303,7 +303,7 @@ c \bar{x} + \lambda c W^{i} = c \bar{x} - \lambda \bar{y}_B
 $$
 Vogliamo quindi "allentare" l'indice (e il corrispettivo vertice) che ci dà $\bar{y}_i < 0$, in quanto è quello che restituisce un $c W^{i} > 0$, e quindi un accrescimento della funzione. 
 Definiamo allora questo indice:
-\begin{definition}{Indice uscente}
+\begin{definition}{Indice uscente primale}
 Chiamiamo indice uscente $h$, da una certa soluzione della base $B$:
 $$h := \min\{ i \in B \ \text{t.c.} \ \bar{y_i} < 0  \}$$
 \end{definition}
@@ -333,24 +333,28 @@ r_i = \frac{b_i - A_i \bar{x}}{A_i W^h}, \quad i \in N, \quad A_i W^h > 0
 $$
 e scegliere l'indice che dà $\vartheta = \min(r_i)$.
 Definiamo allora anche questo indice:
-\begin{definition}{Indice entrante}
+\begin{definition}{Indice entrante primale}
 	Chiamiamo indice entrante $k$, da una certa soluzione della base $B$ e un certo indice uscente $h$:
 	$$
-	i := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \}	
+	h := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \}	
 	$$
 \end{definition}
 Anche qui, il $\min$ serve a selezionare il primo indice valido, ed è una regola anticiclo (di Bland).
-Notiamo che si potrebbe più $r_i$ uguali rappresentano soluzioni di base degenere, in quanto sono più modi di restare sullo stesso vertice stringendo vincoli diversi.
-Le regole anticiclo di Bland assicurano anche che l'algoritmo non si blocchi a ciclare su soluzioni degeneri.
+Notiamo due possibili situazioni:
+\begin{itemize}
+	\item Si potrebbero avere più $r_i$ uguali: questi rappresentano soluzioni di base degenere \textit{in arrivo}, in quanto sono più modi di arrivare allo stesso vertice stringendo vincoli diversi;
+	\item Si potrebbe avere un $r_i$ nullo: questo significa che il vertice è sullo stesso vertice da dove siamo partiti, ergo rappresenta una soluzione di base degenere \textit{in partenza}.
+\end{itemize}
+Come prima, le regole anticiclo di Bland assicurano anche che l'algoritmo non si blocchi a ciclare su queste soluzioni degeneri.
 \end{itemize}
 
 Abbiamo quindi tutti gli strumenti necessari alla formulazione dell'algoritmo del simplesso:
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{del simplesso primale}
 \begin{algorithmic}
 	\STATE \textbf{Input:} un problema LP in forma primale standard
 	\STATE \textbf{Output:} la soluzione ottima 
-	\STATE Trova una base B che genera una soluzione di base ammissibile.
+	\STATE Trova una base B che genera una soluzione di base primale ammissibile.
 	\STATE \textsf{ciclo:}
 	\STATE Calcola la soluzione di base primale $\bar{x} = A_b^{-1} b_B$ e la soluzione di base duale $\bar{y} = (cA_b^{-1}, 0)$
 	\IF{$\bar{y_B} \geq 0$}
@@ -371,7 +375,7 @@ Abbiamo quindi tutti gli strumenti necessari alla formulazione dell'algoritmo de
 		$$
 		e trova l'indice entrante: 
 		$$ 
-		i := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \} 
+		h := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \} 
 		$$
 	\ENDIF
 	\STATE Aggiorna la base come:

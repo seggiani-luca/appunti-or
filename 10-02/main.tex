@@ -311,7 +311,7 @@ Introduciamo adesso la forma duale standard:
 \subsubsection{Vertici del duale}
 Sulle forme duali è semplice il calcolo dei vertici. 
 Possiamo infatti avere, come avevamo fatto sulla primale:
-\begin{definition}{Soluzone di base duale}
+\begin{definition}{Soluzione di base duale}
 	Sia dato un problema LP $\mathcal{P}$ in forma duale standard.
 	Sia $B \subseteq \{ 1, ..., n \}$ un sottoinsieme di indici di variabili decisionali tale che $\mathrm{card}(B) = m$.
 	Chiamiamo $x_B$ l'insieme delle variabili decisionali individuate da $B$, e $x_N$ l'insieme delle $n - m$ variabili decisionali rimanenti:
@@ -320,6 +320,7 @@ Possiamo infatti avere, come avevamo fatto sulla primale:
 	La soluzione di quel sistema è detta soluzione di base duale di $\mathcal{P}$.
 \end{definition}
 
+Indichiamo spesso questo vertice come $(bA_B^{-1}, 0)$.
 Questa definizione porta ad una caratterizzazione dei vertici del tutto analoga a quella dichiarata sui problemi in forma primale standard:
 
 \begin{theorem}{Caratterizzazione dei vertici duali}
@@ -333,11 +334,11 @@ Questa definizione porta ad una caratterizzazione dei vertici del tutto analoga 
 Possiamo ricavare il concetto di soluzione degenere (e anche di soluzione ammissibile) sui vertici del poliedro del duale. Si ha:
 
 \begin{theorem}{Caratterizzazione delle soluzioni di base duali degeneri}
-	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., n \}$ con $\mathrm{card}(B) = m$ è data da $Ax_B = b$, possiamo dire che è pure degenere quando $\exists i \in B$ tale che almeno una componente si annulla. 
+	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., n \}$ con $\mathrm{card}(B) = m$ è data da $(bA_B^{-1}, 0)$, possiamo dire che è pure degenere quando $\exists i \in B$ tale che almeno una componente si annulla. 
 \end{theorem}
 e riguardo l'ammissibilità:
 \begin{theorem}{Caratterizzazione delle soluzioni di base duali ammissibili}
-	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., n \}$ con $\mathrm{card}(B) = m$ è data da $Ax_B = b$, possiamo dire che è ammissibile quando il vettore soluzione è $\geq 0$. 
+	Se una soluzione è di base, ergo scelto $B = \{ 1, ..., n \}$ con $\mathrm{card}(B) = m$ è data da $(bA_B^{-1}, 0)$, possiamo dire che è ammissibile quando il vettore soluzione è $\geq 0$. 
 \end{theorem}
 
 \end{document}
