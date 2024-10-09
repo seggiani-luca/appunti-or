@@ -336,7 +336,7 @@ Definiamo allora anche questo indice:
 \begin{definition}{Indice entrante primale}
 	Chiamiamo indice entrante $k$, da una certa soluzione della base $B$ e un certo indice uscente $h$:
 	$$
-	h := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \}	
+	k := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \}	
 	$$
 \end{definition}
 Anche qui, il $\min$ serve a selezionare il primo indice valido, ed è una regola anticiclo (di Bland).
@@ -359,7 +359,7 @@ Abbiamo quindi tutti gli strumenti necessari alla formulazione dell'algoritmo de
 	\STATE Calcola la soluzione di base primale $\bar{x} = A_b^{-1} b_B$ e la soluzione di base duale $\bar{y} = (cA_b^{-1}, 0)$
 	\IF{$\bar{y_B} \geq 0$}
 		\STATE Fermati, $\bar{x}$ è ottima per $P$ e $\bar{y}$ è ottima per $D$
-	\ELSE
+k\ELSE
 		\STATE Calcola l'indice uscente: 
 		$$
 		h := \min\{ i \in B \ \text{t.c.} \ \bar{y_i} < 0 \}
