@@ -1,0 +1,380 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Ricerca Operativa}
+\author{Luca Seggiani}
+\date{2024}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=Teorema~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
+	#1
+}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+
+% sezione (data)
+\section{Lezione del 10-10-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Introduzione alla programmazione lineare intera}
+Iniziamo adesso a studiare un tipo di problemi che finora avevamo menzionato, ma mai risolto.
+Si pone il seguente:
+
+\begin{problem}{Caricamento}
+	Un ladro è riuscito a scassinare un'importante caveau, e ha di fronte a sé una serie di gemme preziose.
+	Tenendo conto del peso e del tipo delle gemme, ricava una tabella col valore e il peso di ogni gemma:
+	
+	\center \rowcolors{2}{green!10}{green!40!black!20}
+	\begin{tabular} { | c || c | c | c | c | c| c |}
+		\hline
+		Valore & 2 & 4 & 7 & 9 & 13 & 16 \\
+		Peso & 6 & 8 & 9 & 11 & 15 & 18 \\
+		\hline
+	\end{tabular}
+
+	\par\bigskip
+
+	\raggedright
+	Amesso che il suo zaino non possa portare più di 30 kg, quali gemme dovrà scegliere per avere il maggiore profitto possibile?
+\end{problem}
+
+Questo problema riprende il celebre \textit{knapsack problem}, che risulta essere NP-completo.
+Attraverso la \textbf{programmazione lineare intera}, possiamo ricavare soluzioni, almeno approssimate.
+
+Si ha che qualsiasi possibilità delle $2^n$ configurazioni di gemme che il ladro può portare sono rappresentate da un vettore:
+$$ 
+x = (x_0, ..., x_n), \quad x_i \in \{ 0, 1 \}
+$$
+e che i il valore e il peso delle stesse sono vettori:
+$$
+v = \left( 2, 4, 7, 9, 13, 16 \right)
+$$
+$$
+p = \left( 6, 8, 9, 11, 15, 18 \right)
+$$
+
+Possiamo quindi formulare il sistema:
+\[
+	\begin{cases}
+		\max \left( 2x_1 + 4x_2 + 7x_3 + 9x_4 + 13x_5 + 16x_6 \right) \\ 
+		6x_1 + 8x_2 + 9x_3 + 11x_4 + 15x_5 + 18x_6 \leq 30 \\
+		x \in \{ 0, 1 \}^n
+	\end{cases}
+	\rightarrow
+	\begin{cases}
+		\max \left( v^T x \right) \\
+		p^T x \leq P \\
+		x \in \{ 0, 1 \}^n
+	\end{cases}
+\]
+dove $P$ è il vincolo di massimo dei pesi.
+
+Questo problema ricalca la struttura di un problema LP, ma il vincolo finale, che limita i valori possibili delle componenti del vettore soluzione, lo rende IPL.
+Decidiamo di trasformare il problema in un LP corrispondente, che chiameremo \textbf{rilassamento continuo}, e risolvere quello.
+Possiamo fare ciò in due modi: il primo prevede di rimuovere semplicemente il vincolo, magari includendo la positività, o ancor meglio l'appartenenza $x \in [0, 1]$:
+\[
+	\begin{cases}
+		\max \left( v^T x \right) \\
+		p^T x \leq P \\
+		0 \leq x \leq 1
+	\end{cases}
+\]
+
+Questo metodo è sicuramente funzionante, ma preferiamo calcolare il duale, a partire dal primale con imposta la positività:
+\[
+	\begin{cases}
+		\max \left( 2x_1 + 4x_2 + 7x_3 + 9x_4 + 13x_5 + 16x_6 \right) \\ 
+		6x_1 + 8x_2 + 9x_3 + 11x_4 + 15x_5 + 18x_6 \leq 30 \\
+		-x_1 \leq 0 \\ 
+		-x_2 \leq 0 \\ 
+		-x_3 \leq 0 \\ 
+		-x_4 \leq 0 \\ 
+		-x_5 \leq 0 \\ 
+		-x_6 \leq 0
+	\end{cases}
+	\rightarrow 
+	\begin{cases}
+		\min \left( 30y_1 \right) \\ 
+		6 y_1 - y_2 = 2 \\
+		8 y_1 - y_3 = 4 \\ 
+		9 y_1 - y_4 = 7 \\ 
+		11 y_1 - y_5 = 9 \\ 
+		15 y_1 - y_6 = 13 \\ 
+		18 y_1 - y_7 = 16 \\ 
+		y_i \geq 0
+	\end{cases}
+\]
+da cui notiamo che le disequazioni in forma $a_i x + s_i = b_i$ si possono rendere come $a_i x \geq b_i$: 
+\[
+	\begin{cases}
+		\min \left( 30y_1 \right) \\ 
+		6 y_1 \geq 2 \\
+		8 y_1 \geq 4 \\ 
+		9 y_1 \geq 7 \\ 
+		11 y_1 \geq 9 \\ 
+		15 y_1 \geq 13 \\ 
+		18 y_1 \geq 16 \\ 
+		y_1 \geq 0
+	\end{cases} \equiv
+	\begin{cases}
+		\min \left( 30y_1 \right) \\ 
+		y_1 \geq \frac{1}{3} \\
+		y_1 \geq \frac{1}{2} \\ 
+		y_1 \geq \frac{7}{9} \\ 
+		y_1 \geq \frac{9}{11} \\ 
+		y_1 \geq \frac{13}{15} \\ 
+		y_1 \geq \frac{8}{9} \\ 
+		y_1 \geq 0
+	\end{cases}
+\]
+
+Abbiamo che questo sistema è banale: il minimo di $30 y_1$ sottoposto ai vincoli si avrà quando $y_1$ rispetta i vincoli, che sono tutti $\geq$, e rispettare qualsiasi vincolo significa rispettare il vincolo con $b_i$ più grande, quindi in questo caso $\frac{8}{9}$
+Si ha quindi che la soluzione ottima del duale è $\frac{8}{9}$, e possiamo trovare con la stessa facilità la soluzione del primale: abbiamo che la disequazione da cui si è ricavato la soluzione del duale ha indice $j = 6$.
+Si prende quindi la variabile con lo stesso indice nel primale, e si \textbf{satura}, cioè si porta al livello più alto possibile prima di violare il limite.
+Si nota che il valore ottimo trovato nel primale e nel duale (che è uguale dalla dualità forte) è $v = P \bar{y}_j = v_j \bar{x}_j $, con $\bar{x}$ e $\bar{y}$ le soluzioni ottime trovate rispettivamente al primale e al duale. 
+
+Nel nostro caso, $18 x_6 \leq 30$, quindi $x_6 = \frac{30}{18}$, con valore $v = 16 \frac{30}{18} = \frac{80}{3}$.
+
+Questo approccio sarebbe quello che si applicherebbe intuitivamente senza sapere nulla di PL. 
+Infatti i rapporti calcolati nel duale:
+$$
+r_i = \frac{v_i}{p_i}
+$$
+sono effettivamente i \textbf{rendimenti} di ogni elemento di peso e valore, cioè quanto valore portano in rapporto al loro peso.
+Chiaramente, vorremmo massimizzare gli elementi con rendimento maggiore, quindi saturiamo gli elementi con $r_i$ massimo.
+Possiamo quindi definire il seguente algoritmo:
+
+\begin{algorithm}[H]
+\caption{caricamento per soluzioni ottime del rilassato continuo}
+\begin{algorithmic}
+	\STATE \textbf{Input:} il rilassato continuo di un problema di caricamento
+	\STATE \textbf{Output:} la soluzione ottima $\bar{x}$
+	\STATE Considera i $r_i = \frac{v_i}{p_i}$ rendimenti di ogni elemento
+	\STATE Scegli l'indice $j$ del rendimento massimo $r_j$
+	\STATE Satura la variabile $j$
+\end{algorithmic}
+\end{algorithm}
+
+Abbiamo che la soluzione trovata è un limite superiore per il problema di partenza, quello ILP: infatti, rilassando i vincoli, otteniamo una regione ammissibile più grande, e quindi aumentiamo il massimo.
+In verità anche l'arrotondamento in basso della soluzione $v$ è un limite superiore: nel caso del problema abbiamo $ \lfloor \frac{80}{3} \rfloor = 26$.
+
+Un'idea banale per trovare il punto ottimo di questo problema ILP potrebbe essere quello di arrotondare il punto ottimo del rilassato continuo: nel nostro esempio, troviamo $\bar{x} = \left( 0, 0, 0, 0, 0, 1 \right)$, che dà massimo $v = 16$.
+
+Notiamo un risultato fondamentale: se chiamiamo il valore arrotondato della soluzione del rilassato continuo $v_s$, e il valore ottenuto nell'approssimazione del \textit{punto} di ottimo $v_i$, è vero che:
+$$ v_i \leq v_{ILP} \leq v_p $$
+dove $v_{ILP}$ è la soluzione del problema ILP che stiamo cercando.
+Per la precisione, possiamo definire l'errore:
+$$
+\varepsilon = \frac{v_s - v_i}{v_i}
+$$
+che sul problema in esame dà $\varepsilon \approx 60\%$, chiaramente poco utile. 
+Sarà necessario adottare un qualche metodo per migliorare la stima data dall'arrotondamento del punto di ottimo del rilassato continuo.
+
+Per adesso, generalizziamo quando trovato finora: bisogna distinguere fra $v_i$ e $v_s$ che si parli di problemi di minimizzazione o di massimizzazione.
+Si ha infatti che:
+\begin{theorem}{Bound di problemi ILP}
+	Per un dato problema ILP con soluzione $v_{ILP}$, si ha che:
+	$$
+		v_i \leq v_{PLI} \leq v_s
+	$$
+	\begin{itemize}
+		\item Se il problema è di \textbf{massimizzazione}, $v_i$ è il valore calcolato soluzione ammissibile del rilassato continuo arrotondata \textbf{per difetto}, e $v_s$ è la soluzione ottima del rilassato continuo arrotondata \textbf{per difetto};
+		\item Se il problema è di \textbf{minimizzazione}, $v_i$ è la soluzione ottima del rilassato continuo arrotondata \textbf{per eccesso}, e $v_i$ è il valore calcolato soluzione ammissibile del rilassato continuo arrotondata \textbf{per eccesso};
+	\end{itemize}
+\end{theorem}
+
+\subsubsection{Vincoli booleani}
+Possiamo chiamare il vincolo introdotto prima, $x \in \{ 0, 1 \}^n$, \textbf{vincolo booleano} (in modo più o meno informale).
+Come abbiamo detto, questo vincolo può essere reso come $x_i \geq 0$, o ancor meglio $0 \geq x_i \geq 1$ quando si porta al rilassato continuo (abbiamo usato il primo insieme di vincoli per ricavare il duale del rilassato continuo).
+
+Introduciamo quindi l'algoritmo, equivalente a quello presentato prima per :
+\begin{algorithm}[H]
+\caption{caricamento per soluzioni ottime del rilassato continuo con vincolo booleano}
+\begin{algorithmic}
+	\STATE \textbf{Input:} il rilassato continuo di un problema con vincolo booleano
+	\STATE \textbf{Output:} la soluzione ottima $\bar{x}$
+	\STATE Considera i $r_i = \frac{v_i}{p_i}$ rendimenti di ogni elemento
+	\STATE Scegli l'indice $j$ del rendimento massimo $r_j$
+	\STATE Satura la variabile $j$
+	\STATE Quando finisci lo spazio, satura con il bene rimanente (sic.)
+\end{algorithmic}
+\end{algorithm}
+
+\end{document}
