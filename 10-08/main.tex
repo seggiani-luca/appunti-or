@@ -277,7 +277,7 @@ Abbiamo quindi revisionato tutti gli strumenti necessari alla formulazione dell'
 	\STATE \textbf{Output:} la soluzione ottima 
 	\STATE Trova una base B che genera una soluzione di base duale ammissibile.
 	\STATE \textsf{ciclo:}
-	\STATE Calcola la soluzione di base duale $\bar{y} = (cA_B^{-1}, 0)$ e la soluzione di base duale $\bar{x} = A_B^{-1}b_B$
+	\STATE Calcola la soluzione di base duale $\bar{y} = (cA_B^{-1}, 0)$ e la soluzione di base primale $\bar{x} = A_B^{-1}b_B$
 	\IF{$A_N(A_B^{-1} b_B) \leq b_N$}
 		\STATE Fermati, $\bar{y}$ è ottima per $D$ e $\bar{x}$ è ottima per $P$
 	\ELSE
