@@ -274,6 +274,57 @@ $$
 r_p = \frac{b_k - A_k \bar{x}}{A_k W^h}, \quad r_d = \frac{-\bar{y}_h}{A_k W^h}
 $$
 
+\subsection{Riassunto sulle regole anticiclo}
+Abbiamo introdotto, nel corso della trattazione degli algoritmi del simplesso, le \textbf{regole anticiclo di Bland}.
+Possiamo riassumerle come segue:
+\begin{itemize}
+	\item \textbf{\textsf{Simplesso primale}}
+		\begin{itemize}
+			\item \textbf{Regola anticiclo per l'indice uscente:}
+				quando si calcola l'indice uscente $h$ del simplesso primale, si considera una certa soluzione di base complementare duale $\bar{y} = \left( c A_b^-1, 0 \right)$.
+				Se consideriamo ogni componente di $\bar{y}$ come il "prezzo ombra" associato ad ogni vincolo, cioè il guadagno (in verità l'opposto del guadagno) che potremmo avere rilassando quel vincolo, sembrerebbe conveniente prendere l'indice del componente più negativo come indice uscente.
+				In verità, su certi problemi con soluzioni degeneri questo potrebbe causare cicli infiniti sulle basi degeneri.
+				Per questo si adotta la regola anticiclo di prendere il primo indice negativo.
+				Così si evitano cicli anche su basi degeneri, cioè ci si assicura che l'algoritmo termina in un numero finito di passi:
+		$$
+		h := \min\{ i \in B \ \text{t.c.} \ \bar{y_i} < 0 \}
+		$$
+			\item \textbf{Regola anticiclo per l'indice entrante:} 
+				allo stesso modo, quando si calcola l'indice entrante $k$ del simplesso primale, si considerano i rapporti, che rappresentano le distanze sulla base definita dagli indici di base scelti degli altri vincoli, per scegliere il prossimo vincolo più vicino:
+				$$
+					r_i = \frac{b_i - A_i \bar{x}}{A_iW^h}, \quad \min(r_i) = \vartheta
+				$$
+
+				Si potrebbe avere che più indici hanno rapporto che corrisponde a $\vartheta$. 
+				Anche in questo caso è necessario scegliere sempre l'indice più piccolo, in quanto questi rappresentano basi degeneri, ovvero un punto che resta vertice su diverse basi, e senza un'apposita regola si potrebbe finire per ciclare:
+		$$ 
+		k := \min\{ i \in N \ \text{t.c.} \ A_i W^h > 0, \quad \frac{b_i - A_i \bar{x}}{A_i W^h} = \vartheta \} 
+		$$
+		\end{itemize}
+	\item \textbf{\textsf{Simplesso duale}}
+		\begin{itemize}
+			\item \textbf{Regola anticiclo per l'indice duale:} 
+				nel simplesso duale, prima si calcola l'indice entrante $k$ considerando la soluzione di base primale, ovvero prendendo gli $i$ tali che $b_i - A_i \bar{x} < 0$.
+				Potrebbero esistere più $i$ che rispettano la proprietà, e bisogna quindi prendere l'indice $i$ più piccolo:
+		$$
+		k := \min\{ i \in N \ \text{t.c.} \ b_i - A_i \bar{x} < 0 \}
+		$$
+			\item \textbf{Regola anticiclo per l'indice entrante:} 
+				infine, nel simplesso duale, si calcola l'indice uscente $h$ prendendo i rapporti, analoghi a quelli del simplesso primale:
+				$$
+					r_i = \frac{\bar{y_i}}{A_k W^i}, \quad \min(r_i) = \vartheta
+				$$
+				anche qui si potrebbero avere più rapporti "distanza" con rapporto $\vartheta$.
+				Di questi va nuovamente preso quello con l'indice minore:
+		$$ 
+		h := \min\{ i \in B \ \text{t.c.} \ A_k W^i < 0, \quad \frac{-\bar{y}_i}{A_kW^i} = \vartheta \}	
+		$$
+		\end{itemize}
+\end{itemize}
+
+In generale, si può dire che in condizioni di sicurezza di non esistenza di basi degeneri, queste regole potrebbero non essere applicare.
+In tutti gli altri casi, evitano eventuali cicli sulle stesse basi degeneri.
+
 \subsection{Casi degeneri}
 Concludiamo infine la trattazione della PL notando il motivo dell'uso delle regole anticiclo di Bland nel calcolo degli indici uscenti ed entranti nell'algoritmo del simplesso.
 Prendiamo un problema di esempio:

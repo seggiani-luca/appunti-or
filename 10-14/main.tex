@@ -194,7 +194,7 @@
 
 % testo
 \subsection{Algoritmi dei rendimenti}
-Riassumiamo i quattro algoritmi presentati finora per le valutazioni inferiori e superiori di problemi di PLI (con vincolo $x \in \mathbb{Z}^n$). 
+Riassumiamo i quattro algoritmi presentati finora per le valutazioni inferiori e superiori di problemi di ILP (con vincolo $x \in \mathbb{Z}^n$). 
 Prendiamo in esempio lo "zaino":\begin{table}[h!]
 	\center 
 	\begin{tabular} { c | c c c c }
@@ -264,5 +264,8 @@ $$
 	Si ha quindi $V_I = 63$ e $V_S = 73.5$, con errore $\epsilon = \frac{73.5 - 63}{63} = \frac{1}{6} = 16\%$.
 	Notiamo come sul problema intero si accumuli molto più errore.
 \end{itemize}
+
+Dobbiamo fare un'ulteriore precisazione: si prendono approssimazioni per \textbf{difetto} quanto si parla di problemi di \textit{massimo}.
+Nel caso di problemi di \textit{minimo}, è opportuno prendere approssimazioni per \textbf{eccesso}.
 
 \end{document}

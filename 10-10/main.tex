@@ -248,7 +248,26 @@ dove $P$ è il vincolo di massimo dei pesi.
 
 Questo problema ricalca la struttura di un problema LP, ma il vincolo finale, che limita i valori possibili delle componenti del vettore soluzione, lo rende IPL.
 Decidiamo di trasformare il problema in un LP corrispondente, che chiameremo \textbf{rilassamento continuo}, e risolvere quello.
-Possiamo fare ciò in due modi: il primo prevede di rimuovere semplicemente il vincolo, magari includendo la positività, o ancor meglio l'appartenenza $x \in [0, 1]$:
+
+\begin{definition}{Rilassato continuo}
+	Dato un problema ILP in forma:
+	\[
+		\begin{cases}
+			\max c^T \cdot x \\ 
+			Ax \leq b \\ 
+			x \in \mathbb{Z}^n
+		\end{cases}
+	\]
+	chiamiamo \textbf{rilassato continuo} il problema LP che rimuove il vincolo di interezza:
+	\[
+		\begin{cases}
+			\max c^T \cdot x \\ 
+			Ax \leq b 
+		\end{cases}	
+	\]
+\end{definition}
+
+Possiamo ricavare questo rilassato continuo in due modi: il primo prevede di rimuovere semplicemente il vincolo, magari includendo la positività, o ancor meglio l'appartenenza $x \in [0, 1]$:
 \[
 	\begin{cases}
 		\max \left( v^T x \right) \\
