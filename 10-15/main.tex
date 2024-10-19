@@ -222,6 +222,7 @@ Poniamo ad esempio il problema:
 		\max(0.3 x_1 + 0.4 x_2) \\
 		3 x_1 + 5 x_2 \leq 15 \\ 
 		4 x_1 +  4 x_2 \leq 16 \\ 
+		x_i \geq 0 \\
 		x \in \mathbb{Z}^2
 	\end{cases}
 \]
@@ -301,26 +302,26 @@ dove si è riportata la soluzione ottima del rilassato $x_{V_S}$.
 
 Notiamo quindi che esiste un'insieme:
 $$
-\mathrm{conv} (\Omega) = \{ x \in \mathbb{R}^n : \exists x_1, ..., x_p \in \Omega, \quad \lambda_1, ..., \lambda_p \geq 0 \quad \text{t.c.} \ \ \ x = \sum_{i=1}^p  \lambda_i x_i, \quad \sum \lambda_{i=1}^p  \lambda_i = 1 \}
+\mathrm{conv} (\Omega) = \left\{ x \in \mathbb{R}^n : \exists x_1, ..., x_p \in \Omega, \quad \lambda_1, ..., \lambda_p \geq 0 \quad \text{t.c.} \ \ \ x = \sum_{i=1}^p  \lambda_i x_i, \quad \sum_{i=1}^p  \lambda_i = 1 \right\}
 $$
 cioè l'involucro convesso di $\Omega$.
 Visto che i punti di $\Omega$ hanno componenti intere, si può dimostrare il seguente teorema:
 \begin{theorem}{Caratterizzazione della regione ammissibile di un problema ILP}
-	Dato un problema ILP con regione ammissibile $\Omega$, esiste un insieme finito di punti $\{ q_l \}_{l \in L} = \{ q_1, ..., q_{|L|} \}$ di $\Omega$, e un insieme finito di direzioni di recessione $\{ r_j \}_{j \in J} = \{ r_1, ..., r_|J| \}$ di $P$, tali che:
+	Dato un problema ILP con regione ammissibile $\Omega$, esiste un insieme finito di punti $\left\{ q_l \right\}_{l \in L} = \{ q_1, ..., q_{|L|} \}$ di $\Omega$, e un insieme finito di direzioni di recessione $\{ r_j \}_{j \in J} = \{ r_1, ..., r_|J| \}$ di $P$, tali che:
 
 $$ 
-\Omega = \{ x \in R^n_+: x = \sum_{l\in L} \alpha_l q_l + \sum_{j\in J} \beta_j q_j, \quad \sum_{l \in L} \alpha_l = 1, \quad \alpha \in \mathbb{Z}^{|L|}_+, \quad \beta \in \mathbb{Z}^{|J|}_+ \}
+\Omega = \left\{ x \in R^n_+: x = \sum_{l\in L} \alpha_l q_l + \sum_{j\in J} \beta_j r_j, \quad \sum_{l \in L} \alpha_l = 1, \quad \alpha \in \mathbb{Z}^{|L|}_+, \quad \beta \in \mathbb{Z}^{|J|}_+ \right\}
 $$
-cioè si puo ricavare $\Omega$ attraverso una forma simile alla $P = \mathrm{conv}(V) + \mathrm{cono}(E)$ del teorema di Minkowski-Weyl, sugli insiemi $\{ q_l \}_{l \in L}$ di vertici a componenti intere e $\{ r_j \}_{j \in J}$ di direzioni di recessione.
 \end{theorem}
+cioè si puo ricavare $\Omega$ attraverso una forma simile alla $P = \mathrm{conv}(V) + \mathrm{cono}(E)$ del teorema di Minkowski-Weyl, sugli insiemi $\left\{ q_l \right\}_{l \in L}$ di vertici a componenti intere e $\{ r_j \}_{j \in J}$ di direzioni di recessione.
 
 A partire da questa caratterizzazione di $\Omega$, vogliamo caratterizzare $\mathrm{conv} (\Omega)$:
 
 \begin{theorem}{Caratterizzazione dell'involucro convesso della regione ammissibile di un problema ILP}
-	Dato un problema ILP con regione ammissibile $\Omega$, si ha che $\mathrm{conv}(\Omega)$ è un \textbf{poliedro razionale}, cioè esistono due insiemi finiti di vettori, $\{ q_l \}_{l \in L}$ e $\{ r_j \}_{j \in J}$, a \textbf{componenti razionali}, tali che:
+	Dato un problema ILP con regione ammissibile $\Omega$, si ha che $\mathrm{conv}(\Omega)$ è un \textbf{poliedro razionale}, cioè esistono due insiemi finiti di vettori, $\left\{ q_l \right\}_{l \in L}$ e $\{ r_j \}_{j \in J}$, a \textbf{componenti razionali}, tali che:
 
 $$
-\mathrm{conv}(\Omega) = \mathrm{conv} \{ q_l \}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J}
+\mathrm{conv}(\Omega) = \mathrm{conv} \left\{ q_l \right\}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J}
 $$
 
 \end{theorem}
@@ -329,11 +330,11 @@ Addirittura, normalizzando si può supporre che gli $r_j$ siano a componenti int
 
 Nell'esempio precedente, $\mathrm{conv} (\Omega)$ sarebbe rappresentato dagli insiemi: 
 $$
-	\{ q_l \}_{l \in L} = \{ (0,0), (0,3), (3,1), (4,0) \}, \quad \{ r_j \}_{j \in J} = \emptyset 
+	\left\{ q_l \right\}_{l \in L} = \{ (0,0), (0,3), (3,1), (4,0) \}, \quad \{ r_j \}_{j \in J} = \emptyset 
 $$
 quindi:
 $$
-\mathrm{conv}(\Omega) = \mathrm{conv} \{ q_l \}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J} = (x_1, x_2) \in{R^2} \quad  \text{t.c.} \quad
+\mathrm{conv}(\Omega) = \mathrm{conv} \left\{ q_l \right\}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J} = (x_1, x_2) \in{R^2} \quad  \text{t.c.} \quad
 	\begin{cases}
 		\frac{2}{3}x_1 + x_2 \leq 3 \\ 
 		x_1 +x_2 \leq 4
@@ -422,34 +423,42 @@ e non solo: si può stringere la diseguaglianza sul lato sinistro, per affermare
 \begin{theorem}{Equivalenza fra problemi LP e ILP}
 	Si prenda un problema di ILP, e il problema di LP associato costruito su:
 $$
-\mathrm{conv}(\Omega) = \mathrm{conv} \{ q_l \}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J}
+\mathrm{conv}(\Omega) = \mathrm{conv} \left\{ q_l \right\}_{l \in L} + \mathrm{cono} \{ r_j \}_{j \in J}
 $$
 con, posto $P$ come il poliedro del rilassato continuo, $q$ ricavato dai vertici $P \cap \mathbb{Z}^n$, e $r$ ricavato dalle direzioni di recessione di $P$. 
 
 Se si prendono le soluzioni:
-$$ v_\Omega = \max_{x \in \Omega} c^T x, \quad v_{\mathrm{conv}(\Omega)} \max_{x \in \mathrm{conv}(\Omega)} c^T x$$
+$$ v_\Omega = \max_{x \in \Omega} c^T x, \quad v_{\mathrm{conv}(\Omega)} = \max_{x \in \mathrm{conv}(\Omega)} c^T x$$
 si ha che $v_\Omega = v_{\mathrm{conv}(\Omega)}$, e che se $v_{\mathrm{conv}(\Omega)}$ è finito, allora esiste $x_\Omega \in \Omega$ tale che $c^T x_\Omega = v_\Omega = v_{\mathrm{conv}(\Omega)}$
 \end{theorem}
 
-Siamo quindi arrivati a formulare il teorema secondo cui, per ogni problema ILP, possamo costruire un problema LP associato che ha la stessa soluzione, semplicemente riformulando i vincoli in modo che descrivano l'involucro convesso dei punti in $\Omega = P \cap \mathbb{Z}^n$, ed eventuali direzioni di recessione di $P$, dove $P$ è il poliedro del rilassato continuo.
-Il problema sorge dal fatto che è \textit{difficile} ricavare questo problema associato.
-Esistono però alcuni casi particolari dove pouò essere conveniente applicare questo teorema, cioè quando si è in presenza di \textbf{matrici unimodulari}.
+Siamo quindi arrivati a formulare un teorema secondo cui, per ogni problema ILP, possamo costruire un problema LP associato che ha la stessa soluzione, semplicemente riformulando i vincoli in modo che descrivano l'involucro convesso dei punti in $\Omega = P \cap \mathbb{Z}^n$, ed eventuali direzioni di recessione di $P$, dove $P$ è il poliedro del rilassato continuo.
+Il problema sorge dal fatto che è \textit{difficile} (nell'accezzione di \textit{difficile} data dalla complessità) ricavare questo problema associato.
+
+\subsubsection{Caratterizzazione dell'involucro convesso}
+Esistono tre strade principali per il calcolo di $\mathrm{conv}(\Omega)$:
+\begin{itemize}
+	\item \textbf{Matrici unimodulari:} in problemi LP dove i vincoli sono espressi da matrici particolari, che chiameremo \textbf{unimodulari}, si ha che $P$ ha vertici a componenti intere, e quindi il $\mathrm{conv}(\Omega) = P \cap \mathbb{Z}^n$ degli $\Omega$ a componenti interi non potrà che coincidere con $P$ che li contiene. Questi problemi sono ad esempio quelli di flusso a costo minimo.
+	\item \textbf{Combinatorica poliedrale:} in alcuni problemi LP espressi su grafi, si può stabilire la forma delle disequazioni che esprimono $\mathrm{conv}(\Omega)$. Ad esempio, si ha che i problemi di accoppiamento massimo sui grafi, che richiedono di trovare il maggior numero di archi attraverso il cui si può realizzare un accoppiamento, risulta coincidente in $P$ e $\mathrm{conv}{\Omega}$ quando il grafo di interesse è \textbf{bipartito}, cioè è divisibile in due insiemi di nodi $U$ e $V$ tali che ogni arco porta da $U \rightarrow V$ o viceversa.
+	\item \textbf{Piani di taglio:} quando non si possono applicare i metodi riportati sopra, l'unica strada è quella di trovare una serie di disequazioni successive che riducono l'insieme $P$ fino al minimale $\mathrm{conv}(\Omega)$.
+		Uno dei metodi che andremo a vedere per realizzare queste riduzioni è quello dei \textbf{piani di taglio di Gomory}.
+\end{itemize}
 
 \subsubsection{Matrici unimodulari}
 Definiamo innanzitutto:
 \begin{definition}{Matrice unimodulare}
-	Si chiama \textbf{modulare} ogni matrice quadrata intera con determinante $\det{A_{m}} \in \{ 1, -1\}$.
+	Si chiama \textbf{modulare} ogni matrice quadrata intera con determinante $\det{A_{m}} \in \left\{ 1, -1\right\}$.
 \end{definition}
 e, sulla base di questo:
 \begin{definition}{Matrice totalmente unimodulare}
-	Si chiama \textbf{totalmente unimodulare} ogni matrice per cui ogni sottomatrice quadrata invertibile è unimodulare, cioè ogni sottomatrice quadrata ha determinante $\det(A_{m}) \in \{0, 1, -1\}$.
+	Si chiama \textbf{totalmente unimodulare} ogni matrice per cui ogni sottomatrice quadrata invertibile è unimodulare, cioè ogni sottomatrice quadrata ha determinante $\det(A_{m}) \in \left\{0, 1, -1\right\}$.
 \end{definition}
 
 Si ha che se una matrice è unimodulare, allora i vertici della regione ammissibile appartengono a $\mathbb{Z}^n$, infatti:
 \begin{theorem}{Soluzioni di base di matrici unimodulari}
 	Dato $Ax \leq b$, se $A$ e $b$ sono a componenti intere, e $A$ è totalmente unimodulare, allora tutte le soluzioni di base del poliedro $P$:
 	$$
-		P = \{ x \in \mathbb{R}^n : Ax \leq b \}
+		P = \left\{ x \in \mathbb{R}^n : Ax \leq b \right\}
 	$$
 	sono a componenti intere.
 \end{theorem}

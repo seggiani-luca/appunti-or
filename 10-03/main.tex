@@ -280,6 +280,41 @@ Il teorema della dualità forte afferma che, se entrambi i poliedri (primale e d
 Se invece solo il primale (solo il duale) è vuoto, si ha che entrambi condividono ottimo $-\infty$ ($\infty$).
 Quando entrambi sono vuoti non si ha soluzione condivisa.
 
+\par\medskip
+
+Si noti che la dualità è univocamente determinata solo nel caso di soluzioni non degeneri.
+Nel caso di soluzioni degeneri si può avere che a una soluzione del primale ne corrispondono multiple del duale, e viceversa.
+In questo caso, è possibile che si raggiunga un massimo (o un minimo) nel primale (nel duale), a partire da più vertici complementari, o addirittura senza che la soluzione di base complementare sia ammissibile.
+Più formalmente, se l'esistenza di una soluzione complementare ammissibile è \textbf{condizione necessaria e sufficiente} per problemi con soluzioni non degeneri, è solo \textbf{condizione sufficiente} per problemi con soluzioni degeneri.
+
+Ad esempio, si noti il problema duale:
+\[
+	\begin{cases}
+		\min 3y_1 - 7y_2 + 5y_3 + 22y_4 + 14y_5 + 15y_6 \\ 
+-y_1 - y_2 +3 y_4 + 2y_5 + 2y_6 = 2 \\
+y_1 - 4y_2 + y_3 + 2y_4 + y_5 - 2 y_6 = 1 \\e
+y_i \geq 0	
+	\end{cases}
+\]
+con il primale associato:
+\[
+	\begin{cases}
+			
+\max 2x_1 + x_2 \\ 
+-x_1 + x_1 \leq 3 \\ 
+-x_1 -4x_2 \leq -7 \\ 
+x_2 \leq 5 \\ 
+3 x_1 + 2 x_2 \leq 22 \\ 
+2 x_1 + x_2 \leq 14 \\ 
+2 x_1 - 2 x_2 \leq 5
+	\end{cases}
+\]
+
+Con la base $B = \{ 1, 5 \}$, si hanno le soluzioni $\bar{x} = (4, 5)$ e $\bar{y} = (0, 0, 0,  0, 1, 0)$.
+Si dimostra che $\bar{y}$ è ottima a $D$, mentre $\bar{x}$ è non ammissibile su $P$.
+Ciò deriva dal fatto che $\bar{y}$ in $D$ è degenere: descrive un vincolo perpendicolare al vettore costo (di indice $i = 5$), e quindi soddisfatto da infinite soluzioni del primale.
+Il punto $\bar{x}$ nel primale ha come complementare l'ottimo del duale perchè sta proprio su questo vincolo. 
+
 \subsubsection{Scarti complementari}
 Si può dimostrare il seguente teorema:
 \begin{theorem}{Scarti complementari}
