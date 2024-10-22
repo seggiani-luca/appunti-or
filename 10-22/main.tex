@@ -1,0 +1,317 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Ricerca Operativa}
+\author{Luca Seggiani}
+\date{2024}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=Teorema~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
+	#1
+}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+
+% sezione (data)
+\section{Lezione del 22-10-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Problema del commesso viaggiatore}
+\begin{problem}{del commesso viaggiatore}
+Supponiamo che un commesso viaggiatore debba fare il giro di 5 città, passando da tutte una e una sola volta.
+Si prepara una tabella con le distanze fra le città:
+	
+\center \rowcolors{2}{green!10}{green!40!black!20}
+	\begin{tabular} { c || c | c | c | c | c }
+		& \bfseries Roccalbegna & \bfseries Cana & \bfseries Vallerona & \bfseries Santa Caterina & \bfseries Triana \\ 
+		\hline 
+		\bfseries Roccalbegna & - & 18 & 14 & 17 & 19 \\ 
+		\bfseries Cana & 16 & - & 19 & 22 & 23 \\ 
+		\bfseries Vallerona & 17 & 14 & - & 18 & 20 \\ 
+		\bfseries Santa Caterina & 16 & 19 & 22 & - & 21 \\ 
+		\bfseries Triana & 15 & 14 & 13 & 20 & -
+	\end{tabular}
+
+\par\bigskip
+\raggedright
+Quale percorso dovrà seguire il commerciante, in modo da minimizzare la distanza percorsa?
+\end{problem}
+
+Il problema del commesso viaggiatore (in inglese \textit{Traveling Salesman Problem}, TSP) è effettivamente quello di trovare un \textbf{ciclo hamiltioniano}, cioè ciclo su un grafo che passa da ogni nodo una e una sola volta.
+Possiamo innanzitutto porre la matrice di adiacenza:
+
+$$
+C=
+\begin{pmatrix}
+	- & 18 & 14 & 17 & 19 \\ 
+	16 & - & 19 & 22 & 23 \\ 
+	17 & 14 & - & 18 & 20 \\ 
+	16 & 19 & 22 & - & 21 \\ 
+	15 & 14 & 13 & 20 & -
+\end{pmatrix}
+$$
+
+Notiamo che si può distinguere fra TSP \textbf{simmetrici} e \textbf{asimmetrici}, in base alla simmetria della matrice di adiacenza.
+Si ha che i due tipi di problema hanno algoritmi risolutivi molto diversi.
+In questo caso, come è chiaro dalla matrice, considereremo il caso \textbf{asimmetrico}.
+
+Inoltre, senza togliere dalla generalità della trattazione, possiamo assumere tutte le connessioni come stabilite, quindi la matrice \textbf{completa}. In questo caso gli archi mancanti del grafo saranno rappresentati da un costo infinito nella matrice di adiacenza (compresi gli archi $x_{ij} \rightarrow x_{ij}$, cioè da un nodo allo stesso nodo).
+
+Abbiamo che tutti i percorsi possibili, per $n$ città partendo dalla prima, sono $(n-1)!$, e che il problema si dimostra NP-completo. 
+Diventa inapplicabile un'algoritmo di enumerazione completa: dobbiamo trovare quindi un modello matematico su cui applicare i macchinari della PL.
+Chiamiamo $C$ la matrice dei costi, $a_{ij}$ l'arco generico, $C_H$ il ciclo hamiltioniano e introduciamo la variabile binaria:
+$$
+x_{ij} =
+	\begin{cases}
+		0, \quad a_{ij} \notin C_H \\
+		1, \quad a_{ij} \in C_H
+	\end{cases}
+$$
+che rappresenterà matrice di adiacenza $a$ rappresentante il percorso scelto.
+Come sempre, linearizzamo le matrici in vettori ordinati lessicograficamente, quindi:
+
+$$ C = \begin{pmatrix}
+	x_{11} & x_{12} & ... & x_{1N} \\ 
+	x_{21} & x_{22} & ... & x_{2N} \\ 
+	... \\ 
+	x_{N1} & x_{N2} & ... & x_{NN}
+\end{pmatrix} \rightarrow c = (x_{11}, x_{12}, ..., x_{1N}, x_{21}, x_{22}, ..., x_{2N}, ..., x_{N1}, x_{N2}, ..., x_{NN}) $$
+
+A questo punto possiamo impostare il problema di ILP:
+\[
+	\begin{cases}
+		\min c^T x \\ 
+		x_{11} + x_{12} + x_{13} + x_{14} + x_{15} = 1 \\ 
+		x_{21} + x_{22} + x_{23} + x_{24} + x_{25} = 1 \\ 
+		... \\ 
+		x_{51} + x_{52} + x_{53} + x_{54} + x_{55} = 1 \\ 
+		x_{11} + x_{21} + x_{31} + x_{41} + x_{51} = 1 \\ 
+		x_{12} + x_{22} + x_{32} + x_{42} + x_{52} = 1 \\ 
+		.... \\
+		x_{15} + x_{25} + x_{35} + x_{45} + x_{55} = 1 \\ 
+		x \in \{ 0, 1 \}
+	\end{cases}
+\]
+
+Notiamo che questo non basta a rappresentare cicli hamiltoniani: sono infatti ammessi sottocicli disgiunti fra di loro. 
+Aggiungiamo quindi i vincoli, detti \textbf{di connessione}, dato $S \subset N$ sottoinsieme qualsiasi dei nodi:
+$$
+\sum_{i \in S \, j \notin S} x_{ij} \geq 1, \forall S \subset N, \quad S \neq \emptyset
+$$
+
+Questi vincoli rappresentano l'obbligo per ogni sottoinsieme $S$ non vuoto di nodi di avere almeno un'arco uscente, così da evitare cicli isolati.
+Si prende sottoinsieme stretto in quanto sarebbe inutile chiedere un'arco uscente dall'insieme completo dei nodi.
+Notiamo inoltre che con $|S| = 1$, questo dà i primi vincoli del problema già posto (in forma $x_{11} + x_{12} + x_{13} ...$), che risulta in quanto sarebbero gli archi uscenti da gruppi di cardinalità 1, cioè singoli nodi, e il singolo arco uscente da ogni singolo nodo è già una prerogativa dell'assegnamento.
+
+Possiamo quindi dire, in modo più completo, che si prende:
+$$
+\sum_{i \in S \, j \notin S} x_{ij} \geq 1, \forall S \subset N, \quad 1 \leq |S| \leq n - 1
+$$
+
+\TODO
+% TODO scrivere tutti
+
+\subsubsection{Cardinalità dei vincoli}
+
+Si ha che i vincoli iniziali erano $2n$, $n$ per gli archi entranti e $n$ per gli archi uscenti. 
+Inoltre, posto $1 \leq |S| \leq n - 1$, abbiamo che il numero di vincoli di connessione è:
+$$
+|\mathcal{V}_{connessione}| = \sum_{k=2}^{n-1} \binom{n}{k} \approx 2^n - 2n
+$$ 
+
+Ergo si ha un numero di vincoli pari a circa:
+$$
+|\mathcal{V}| \approx 2n + 2^n - 2n = 2^n
+$$
+
+Dobbiamo poi considerare il vincolo di interezza $x \in \mathbb{Z}$, e nel caso si prenda il rilassato continuo (che vedremo in questo caso è il problema di assegnamento corrispondente), i $2n$ vincoli in forma $x_{ij} \leq 1$, $x_{ij} \geq 0$.
+
+\subsubsection{Valutazioni inferiori e superiori}
+Per fare una valutazione inferiore $v_I$, si rimuovono i vincoli di connessione, trasformando il problema in un problema di assegnamento (infatti si indica anche $v_I = v_{ASS}$) e concedendo quindi cicli disgiunti. 
+
+Per fare una valutazione superiore $v_S$, invece, si usa il cosiddetto \textbf{algoritmo delle toppe}, o \textit{algoritmo di fusione dei cicli disgiunti} (ma tu vedi gli americani).
+Questo algoritmo prevede di calcolare il $v_I$, quindi la soluzione che concede cicli disgiunti, e di selezionare da due questi un arco, $(i, j)$ e $(k, l)$.
+Si eliminano quindi questi archi, incrociandoli, cioè rimuovendo $(i, j)$ e $(k, l)$ e introducendo $(i,l)$ e $(k, j)$.
+Avremo variazione di $v_{ASS}$:
+$$ 
+v_S = v_{ASS} - c_{ij} - c_{kl} + c_{il} + c_{kj} 
+$$
+
+\end{document}
