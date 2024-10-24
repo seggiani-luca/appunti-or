@@ -16,9 +16,6 @@
 \usepackage{hyperref}
 \usepackage{standalone}
 
-% cose fluttuanti
-\usepackage{float}
-
 % imposta il titolo
 \title{Appunti Ricerca Operativa}
 \author{Luca Seggiani}
@@ -188,29 +185,95 @@
 
 \begin{document}
 
-\pagestyle{fancy}
-\thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+% sezione (data)
+\section{Lezione del 24-10-24}
 
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
-\input{../10-01/main.tex}
-\input{../10-02/main.tex}
-\input{../10-03/main.tex}
-\input{../10-07/main.tex}
-\input{../10-08/main.tex}
-\input{../10-09/main.tex}
-\input{../10-10/main.tex}
-\input{../10-14/main.tex}
-\input{../10-15/main.tex}
-\input{../10-16/main.tex}
-\input{../10-17/main.tex}
-\input{../10-21/main.tex}
-\input{../10-22/main.tex}
-\input{../10-23/main.tex}
-\input{../10-24/main.tex}
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsubsection{Riassunto TSP simmetrico}
+Avevamo quindi posto problemi con vincoli  in forma:
+\[
+	\begin{cases}
+			\min c^T \cdot x \\ 
+			\sum\limits_{x < j} x_{ij} + \sum\limits_{j < y} x_{ij} = 2, \quad \forall j \\ 
+			\sum\limits_{i \in S \, j \notin S} x_{ij} + \sum\limits_{i \notin S \, j \in S} x_{ij} \geq 1, \quad \forall S \subset N, \quad 2 \leq |S| \leq \left\lceil \frac{|N|}{2} \right\rceil  
+	\end{cases}
+\]
+
+cioè dove si poneva la somma dei nodi entranti e uscenti (i vincoli \textit{di grado}) da $j$ come $=2$.
+Visto che $j$ era l'unico nodo su cui era imposto il vincolo, si aveva che la soluzione del problema era il $j$-albero a costo minimo.
+
+Inoltre, si aveva che i vincoli sulla terza erano quelli \textit{di connessione}, che si cercavano solo su cardinalità dei sottoinsiemi $= \left\lceil \frac{|N|}{2} \right\rceil $, in quanto i vincoli per $S$ valevano anche per $N \setminus S$. 
+
+\subsection{Branch and bound}
+Avevamo visto l'algoritmo dei piani di taglio di Gomory per il calcolo di soluzioni approssimate di problemi ILP.
+Presentiamo adesso un altro metodo, detto \textbf{branch and bound}.
+Il metodo più naive che possiamo adottare per risolvere un problema in forma:
+\[
+	\begin{cases}
+		\max c^T x \\ 
+		A x\leq b \\ 
+		x \in \{0, 1\}^n
+	\end{cases}
+\]
+è quello di enumerare tutti le possibili soluzioni ammissibili $\in \{0,1\}^n$, costruendo il cosiddetto \textbf{albero di enumerazione}.
+Scegliamo quindi una variabile, $x_1$, e costruiamo l'albero:
+
+\begin{center}
+	\begin{forest}
+		[$x_1$, roundstyle 
+			[$x_2$, name=1, label={$x_0 = 0$}
+				[,phantom
+				[$x_n$, name=1a 
+						[{$\scriptstyle (0,..., 0,0)$}, rectstyle]
+						[{$\scriptstyle (0,..., 0,1)$}, rectstyle]
+					]
+					[$x_n$, name=1b
+						[{$\scriptstyle (0,,..., 1,0)$}, rectstyle]
+						[{$\scriptstyle (0,..., 1,1)$}, rectstyle]
+					]
+				]
+			]
+			[$x_2$, name=2, label={$x_0 = 1$}
+				[,phantom
+					[$x_n$, name=2a
+						[{$\scriptstyle (1,,..., 0,0)$}, rectstyle]
+						[{$\scriptstyle (1,,..., 0,1)$}, rectstyle]
+					]
+					[$x_n$,name=2b
+						[{$\scriptstyle (1,,..., 1,0)$}, rectstyle]
+						[{$\scriptstyle (1,..., 1,1)$}, rectstyle]
+					]
+				]
+			]
+		]	
+		\path(1)--node[sloped]{\Large\dots}(1a);
+		\path(1)--node[sloped]{\Large\dots}(1b);
+		\path(2)--node[sloped]{\Large\dots}(2a);
+		\path(2)--node[sloped]{\Large\dots}(2b);
+	\end{forest}
+\end{center}
+
+Abbiamo che il calcolo di ogni nodo dell'albero non è effettivamente necessario.
+Chiamiamo quindi \textbf{problemi} $P_{ij}$ ogni nodo dell albero, con $i$ che seleziona il livello e $j$ il fratello, da sinstra verso destra.
+
+Stabilita una valutazione superiore e inferiore di ogni problema, che chiameremo $v_S(P)$ e $v_I(P)$, abbiamo:
+$$
+v_I(P) \leq v(P) \leq v_S(P) 
+$$
+
+Possiamo usare queste valutazioni per stabilire \textbf{regole di taglio} che ci permettano di tagliare (si dice anche \textit{visitare implicitamente}) un'intero sottoalbero a partire da un certo nodo $P_{ij}$.
+Queste regole di taglio assicurano, essenzialmente, che ogni sottoproblema $P_{{i+k}, j'}$ figlio di $P_{ij}$ non contiene l'ottimo, e quindi si può saltare.
+
+Vediamo quindi le regole di taglio che possiamo adottare:
+\begin{enumerate}
+	\item $P_{ij} = \emptyset$ significa che per un certo nodo $P_{ij}$ possiamo tagliare tutti i problemi che istanziano le $i$ variabili di $P_{ij}$, ergo tutti i suoi nodi figl;
+	\item Calcolo di $v_S(P_{ij})$. Se $v_S(P_{ij}) < v_I(P)$ figlio, allora posso scartare il sottoalbero.
+\end{enumerate}
+
+
+
 \end{document}

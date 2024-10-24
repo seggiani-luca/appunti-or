@@ -244,7 +244,7 @@ x_{ij} =
 		1, \quad a_{ij} \in C_H
 	\end{cases}
 $$
-che rappresenterà matrice di adiacenza $a$ rappresentante il percorso scelto.
+che rappresenterà matrice di adiacenza rappresentante il percorso scelto.
 Come sempre, linearizzamo le matrici in vettori ordinati lessicograficamente, quindi:
 
 $$ C = \begin{pmatrix}
@@ -270,48 +270,121 @@ A questo punto possiamo impostare il problema di ILP:
 	\end{cases}
 \]
 
+I primi $n=5$ vincoli impongono che da ogni nodo esca uno e uno solo arco, mentre i seguenti $n=5$ impongono che su ogni nodo arrivi uno e un solo arco.
+L'ultimo vincolo rappresenta il dominio booleano delle variabili (un arco o è incluso o non è incluso nel ciclo hamiltoniano).
+
 Notiamo che questo non basta a rappresentare cicli hamiltoniani: sono infatti ammessi sottocicli disgiunti fra di loro. 
 Aggiungiamo quindi i vincoli, detti \textbf{di connessione}, dato $S \subset N$ sottoinsieme qualsiasi dei nodi:
 $$
-\sum_{i \in S \, j \notin S} x_{ij} \geq 1, \forall S \subset N, \quad S \neq \emptyset
+\sum_{i \in S \, j \notin S} x_{ij} \geq 1, \quad \forall S \subset N, \quad S \neq \emptyset
 $$
 
 Questi vincoli rappresentano l'obbligo per ogni sottoinsieme $S$ non vuoto di nodi di avere almeno un'arco uscente, così da evitare cicli isolati.
 Si prende sottoinsieme stretto in quanto sarebbe inutile chiedere un'arco uscente dall'insieme completo dei nodi.
 Notiamo inoltre che con $|S| = 1$, questo dà i primi vincoli del problema già posto (in forma $x_{11} + x_{12} + x_{13} ...$), che risulta in quanto sarebbero gli archi uscenti da gruppi di cardinalità 1, cioè singoli nodi, e il singolo arco uscente da ogni singolo nodo è già una prerogativa dell'assegnamento.
 
-Possiamo quindi dire, in modo più completo, che si prende:
-$$
-\sum_{i \in S \, j \notin S} x_{ij} \geq 1, \forall S \subset N, \quad 1 \leq |S| \leq n - 1
-$$
+\par\smallskip
 
-\TODO
-% TODO scrivere tutti
+Possiamo quindi dire, in modo più completo, che si prendono i vincoli:
+\[
+	\begin{cases}
+		\sum\limits_{j \in N, \, j \neq i} x_{ij} = 1, \quad \forall i \in N \\		
+		\sum\limits_{i \in N, \, i \neq j} x_{ij} = 1, \quad \forall j \in N \\		
+		\sum\limits_{i \in S, \, j \notin S} x_{ij} \geq 1, \quad \forall S \subset N, \quad 2 \leq |S| \leq n - 1
+	\end{cases}
+\]
 
 \subsubsection{Cardinalità dei vincoli}
 
 Si ha che i vincoli iniziali erano $2n$, $n$ per gli archi entranti e $n$ per gli archi uscenti. 
-Inoltre, posto $1 \leq |S| \leq n - 1$, abbiamo che il numero di vincoli di connessione è:
+Inoltre, posto $2 \leq |S| \leq n - 1$, abbiamo che il numero di vincoli di connessione è:
 $$
-|\mathcal{V}_{connessione}| = \sum_{k=2}^{n-1} \binom{n}{k} \approx 2^n - 2n
+|\mathcal{V}_{connessione}| = 2^n - n - 2
 $$ 
 
-Ergo si ha un numero di vincoli pari a circa:
+Ergo si ha un numero di vincoli pari a:
 $$
-|\mathcal{V}| \approx 2n + 2^n - 2n = 2^n
+|\mathcal{V}| = 2^n - n - 2 + 2n = 2^n + n - 2
+$$
+
+Si ha che i vincoli crescono quindi in maniera esponenziale.
+Ad esempio, ecco l'insieme completo dei vincoli preso $n=5$, come dall'esempio precedente, generati attraverso un programma al computer:
+$$
+\begin{cases}
+	x_{1 \, 2} + x_{1 \, 3} + x_{1 \, 4} + x_{1 \, 5} = 1 \\
+	x_{2 \, 1} + x_{2 \, 3} + x_{2 \, 4} + x_{2 \, 5} = 1 \\
+	x_{3 \, 1} + x_{3 \, 2} + x_{3 \, 4} + x_{3 \, 5} = 1 \\
+	x_{4 \, 1} + x_{4 \, 2} + x_{4 \, 3} + x_{4 \, 5} = 1 \\
+	x_{5 \, 1} + x_{5 \, 2} + x_{5 \, 3} + x_{5 \, 4} = 1 \\
+	x_{2 \, 1} + x_{3 \, 1} + x_{4 \, 1} + x_{5 \, 1} = 1 \\
+	x_{1 \, 2} + x_{3 \, 2} + x_{4 \, 2} + x_{5 \, 2} = 1 \\
+	x_{1 \, 3} + x_{2 \, 3} + x_{4 \, 3} + x_{5 \, 3} = 1 \\
+	x_{1 \, 4} + x_{2 \, 4} + x_{3 \, 4} + x_{5 \, 4} = 1 \\
+	x_{1 \, 5} + x_{2 \, 5} + x_{3 \, 5} + x_{4 \, 5} = 1 \\
+	x_{1 \, 2} + x_{3 \, 2} + x_{4 \, 2} + x_{5 \, 2} \geq 1 \\
+	x_{1 \, 3} + x_{2 \, 3} + x_{4 \, 3} + x_{5 \, 3} \geq 1 \\
+	x_{1 \, 4} + x_{2 \, 4} + x_{3 \, 4} + x_{5 \, 4} \geq 1 \\
+	x_{1 \, 5} + x_{2 \, 5} + x_{3 \, 5} + x_{4 \, 5} \geq 1 \\
+	x_{2 \, 1} + x_{3 \, 1} + x_{4 \, 1} + x_{5 \, 1} \geq 1 \\
+	x_{1 \, 4} + x_{1 \, 5} + x_{2 \, 4} + x_{2 \, 5} + x_{3 \, 4} + x_{3 \, 5} \geq 1 \\
+	x_{1 \, 3} + x_{1 \, 5} + x_{2 \, 3} + x_{2 \, 5} + x_{4 \, 3} + x_{4 \, 5} \geq 1 \\
+	x_{1 \, 3} + x_{1 \, 4} + x_{2 \, 3} + x_{2 \, 4} + x_{5 \, 3} + x_{5 \, 4} \geq 1 \\
+	x_{1 \, 3} + x_{1 \, 4} + x_{1 \, 5} + x_{2 \, 3} + x_{2 \, 4} + x_{2 \, 5} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 5} + x_{3 \, 2} + x_{3 \, 5} + x_{4 \, 2} + x_{4 \, 5} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 4} + x_{3 \, 2} + x_{3 \, 4} + x_{5 \, 2} + x_{5 \, 4} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 4} + x_{1 \, 5} + x_{3 \, 2} + x_{3 \, 4} + x_{3 \, 5} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 3} + x_{4 \, 2} + x_{4 \, 3} + x_{5 \, 2} + x_{5 \, 3} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 3} + x_{1 \, 5} + x_{4 \, 2} + x_{4 \, 3} + x_{4 \, 5} \geq 1 \\
+	x_{1 \, 2} + x_{1 \, 3} + x_{1 \, 4} + x_{5 \, 2} + x_{5 \, 3} + x_{5 \, 4} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 5} + x_{3 \, 1} + x_{3 \, 5} + x_{4 \, 1} + x_{4 \, 5} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 4} + x_{3 \, 1} + x_{3 \, 4} + x_{5 \, 1} + x_{5 \, 4} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 4} + x_{2 \, 5} + x_{3 \, 1} + x_{3 \, 4} + x_{3 \, 5} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 3} + x_{4 \, 1} + x_{4 \, 3} + x_{5 \, 1} + x_{5 \, 3} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 3} + x_{2 \, 5} + x_{4 \, 1} + x_{4 \, 3} + x_{4 \, 5} \geq 1 \\
+	x_{2 \, 1} + x_{2 \, 3} + x_{2 \, 4} + x_{5 \, 1} + x_{5 \, 3} + x_{5 \, 4} \geq 1 \\
+	x_{3 \, 1} + x_{3 \, 2} + x_{4 \, 1} + x_{4 \, 2} + x_{5 \, 1} + x_{5 \, 2} \geq 1 \\
+	x_{3 \, 1} + x_{3 \, 2} + x_{3 \, 5} + x_{4 \, 1} + x_{4 \, 2} + x_{4 \, 5} \geq 1 \\
+	x_{3 \, 1} + x_{3 \, 2} + x_{3 \, 4} + x_{5 \, 1} + x_{5 \, 2} + x_{5 \, 4} \geq 1 \\
+	x_{4 \, 1} + x_{4 \, 2} + x_{4 \, 3} + x_{5 \, 1} + x_{5 \, 2} + x_{5 \, 3} \geq 1 \\
+\end{cases}
 $$
 
 Dobbiamo poi considerare il vincolo di interezza $x \in \mathbb{Z}$, e nel caso si prenda il rilassato continuo (che vedremo in questo caso è il problema di assegnamento corrispondente), i $2n$ vincoli in forma $x_{ij} \leq 1$, $x_{ij} \geq 0$.
 
 \subsubsection{Valutazioni inferiori e superiori}
-Per fare una valutazione inferiore $v_I$, si rimuovono i vincoli di connessione, trasformando il problema in un problema di assegnamento (infatti si indica anche $v_I = v_{ASS}$) e concedendo quindi cicli disgiunti. 
+Vediamo come trovare buone valutazioni inferiori e superiori delle soluzioni $v_{TSP}$ di problemi TSP asimmetrici.
 
-Per fare una valutazione superiore $v_S$, invece, si usa il cosiddetto \textbf{algoritmo delle toppe}, o \textit{algoritmo di fusione dei cicli disgiunti} (ma tu vedi gli americani).
-Questo algoritmo prevede di calcolare il $v_I$, quindi la soluzione che concede cicli disgiunti, e di selezionare da due questi un arco, $(i, j)$ e $(k, l)$.
+\begin{itemize}
+	\item \textbf{Valutazione inferiore:} per fare una valutazione inferiore $v_I$, si rimuovono i vincoli di connessione, trasformando il problema in un problema di assegnamento (infatti si indica anche $v_I = v_{ASS}$) e concedendo quindi cicli disgiunti.
+		Questo approccio è solitamente molto efficace per i problemi TSP \textit{asimmetrici}, restituendo rapporti $\epsilon = \frac{v_{TSP} - v_{ASS}}{v_{ASS}}$ nell'ordine di poche frazioni di punto percentuale.
+		Nel caso di TSP simmetrici, invece, il rilassamento restituisce errori fino al $60\%$, e non è quindi particolarmente indicato.
+	\item \textbf{Valutazione superiore:} per fare una valutazione superiore $v_S$, invece, si usa il cosiddetto \textbf{algoritmo delle toppe}, o \textit{algoritmo di fusione dei cicli disgiunti} (ma tu vedi gli americani).
+Questo algoritmo prevede di calcolare il $v_I$, quindi la soluzione che concede cicli disgiunti, e di selezionare da due di questi un arco ciascuno, $(i, j)$ e $(k, l)$.
 Si eliminano quindi questi archi, incrociandoli, cioè rimuovendo $(i, j)$ e $(k, l)$ e introducendo $(i,l)$ e $(k, j)$.
 Avremo variazione di $v_{ASS}$:
 $$ 
-v_S = v_{ASS} - c_{ij} - c_{kl} + c_{il} + c_{kj} 
+v_S' = v_{ASS} - c_{ij} - c_{kl} + c_{il} + c_{kj}, \quad \Delta v = -c_{ij} - c_{kl} + c_{il} + c_{kj}
 $$
+Si ripete iterativamente il processo, riducendo di volta in volta il numero di vincoli, finche non si arriva ad un ciclo hamiltoniano.
+L'algoritmo completo è quindi:
+
+\begin{algorithm}
+\caption{delle toppe}
+\begin{algorithmic}
+	\STATE \textbf{Input:} una $v_{ASS}$ soluzione dall'assegnamento ricavato da un TSP % input
+	\STATE \textbf{Output:} una valutazione inferiore $v_I$ del TSP % output
+	% body
+	\STATE \textsf{ciclo:}
+	\STATE Chiama $C = \{ C_1, ..., C_p \}$ l'insieme dei cicli (sottocicli) dati da $v_{ASS}$
+	\STATE Per ogni coppia di cicli $(C_h, C_k)$ valuta l'incremento di costo $\Delta v$ dovuto alla fusione di $C_h$ e $C_k$ nel modo più conveniente possibile
+	\STATE Effettua la fusione dei cicli $C_h$ e $C_k$ con $\Delta v = \min\limits_{C_i, \, C_j} \Delta v, \quad i, j \in [1, p], \quad i \neq j$
+	\STATE $p \leftarrow p - 1$
+	\IF{$p > 1$}
+		\STATE Vai a \textsf{ciclo}
+	\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+\end{itemize}
 
 \end{document}
