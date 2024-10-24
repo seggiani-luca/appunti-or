@@ -268,12 +268,11 @@ $$
 Possiamo usare queste valutazioni per stabilire \textbf{regole di taglio} che ci permettano di tagliare (si dice anche \textit{visitare implicitamente}) un'intero sottoalbero a partire da un certo nodo $P_{ij}$.
 Queste regole di taglio assicurano, essenzialmente, che ogni sottoproblema $P_{{i+k}, j'}$ figlio di $P_{ij}$ non contiene l'ottimo, e quindi si può saltare.
 
-Vediamo quindi le regole di taglio che possiamo adottare:
+Vediamo quindi le regole di taglio che possiamo adottare.
+Mantendendo un'ottimo corrente $x$, abbiamo che calcolato un nuovo $P_{ij}$ per enumerazione:
 \begin{enumerate}
-	\item $P_{ij} = \emptyset$ significa che per un certo nodo $P_{ij}$ possiamo tagliare tutti i problemi che istanziano le $i$ variabili di $P_{ij}$, ergo tutti i suoi nodi figl;
-	\item Calcolo di $v_S(P_{ij})$. Se $v_S(P_{ij}) < v_I(P)$ figlio, allora posso scartare il sottoalbero.
+	\item $P_{ij} = \emptyset$ significa che per un certo nodo $P_{ij}$ possiamo tagliare tutti i problemi che istanziano le $i$ variabili di $P_{ij}$, ergo tutti i suoi nodi figli;
+	\item Calcolo di $v_S(P_{ij})$. Se $v_S(P_{ij}) < v_I(P)$ del problema, allora posso scartare il sottoalbero: non troverò soluzioni migliori scendendovi;
+	\item $v_S(P_{ij}) > v_I(P)$, e l'$\bar{x}$ dove si ha tale $v_S$ è ammissibile per $P$, allora si prende $\bar{x}$ come nuovo $x$ e si fa una visita implicità di $P_{ij}$: questo perchè un suo sottoproblema non potrà darci di meglio (più scendiamo nell'albero, più stringiamo i vincoli, ergo $P_{i+k, j'}$ figlio di $P_{ij}$ ha $v_S(P_{i+k, j'}) \leq v_S(P_{ij})$).
 \end{enumerate}
-
-
-
 \end{document}
