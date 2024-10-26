@@ -193,6 +193,47 @@
 \pagestyle{fancy}
 
 % testo
+\subsection{Multizaino}
+Abbiamo visto in precedente i cosiddetti problemi di \textbf{caricamento}, o di \textit{zaino}, cioè problemi in forma:
+\[
+	\begin{cases}
+		\max \sum_{i=1}^n c_i x_i \\ 
+		\sum_{i=1}^n a_i x_i \leq b \\ 
+		x_i \in \{ 0, 1 \}
+	\end{cases}
+\]
+
+dove gli $c_i$ definiscono i \textbf{valori} e $a_i$ i \textbf{pesi} di $n$ oggetti, in questo caso presi una volta sola.
+Avevamo ammesso anche il caso con un numero arbitrario di oggetti:
+\[
+	\begin{cases}
+		\max \sum_{i=1}^n c_i x_i \\ 
+		\sum_{i=1}^n a_i x_i \leq b \\ 
+		x_i \geq 0
+	\end{cases}
+\]
+
+Entrambi questi tipi di problemi si risolvono con valutazioni e algoritmi euristici, tenendo conto del vettore dei \textbf{rendimenti} $r_i = \frac{c_i}{a_i}$.
+
+Esiste una variante del problema dove abbiamo più di un vincolo di peso: questa si dice \textbf{multizaino}.
+In forma binaria, si esprime come:
+\[
+	\begin{cases}	
+		\max \sum_{i=1}^n c_i x_i \\ 
+		\sum_{i=1}^n a_i x_i \leq b \\ 
+		\sum_{i=1}^n p_i x_i \leq p \\
+		... \\ 
+		x_i \in \{ 0, 1 \}
+	\end{cases}
+\]
+
+In forma non binaria, si sostituisce come prima il vincolo $x_i \in \{ 0, 1 \}$ con $x_i \geq 0$.
+
+In generale, questo tipo di problema non è semplice da risolvere, anche attraverso metodi euristici.
+In questo corso ci si limita a riportarne l'esistenza, e non vengono dati algoritmi risolutivi.
+
+\subsection{Riassunto sugli algoritmi di valutazione}
+
 Prendiamo in considerazione il poliedro generico di ILP:
 
 \[
@@ -233,7 +274,7 @@ c =
 	- & - & - & 47
 \end{pmatrix}
 $$
-dove non si riporta la parte in basso a sinistra in quanto è la specchiata della matrice triangolare in alto a destra.
+dove notiamo si mettono in relazione i nodi da $1$ a $n-1$ sulle righe con i nodi da $2$ a $n$ sulle colonne (per cui la diagonale è riempita).
 
 Siccome questo è un caso particolare del TSP, possiamo effettivamente usare tutti i metodi studiati per il TSP asimmetrico.
 Vediamo però che ci sono delle semplificazioni particolari che possiamo fare sul problema.

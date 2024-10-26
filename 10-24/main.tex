@@ -206,7 +206,7 @@ Avevamo quindi posto problemi con vincoli  in forma:
 cioè dove si poneva la somma dei nodi entranti e uscenti (i vincoli \textit{di grado}) da $j$ come $=2$.
 Visto che $j$ era l'unico nodo su cui era imposto il vincolo, si aveva che la soluzione del problema era il $j$-albero a costo minimo.
 
-Inoltre, si aveva che i vincoli sulla terza erano quelli \textit{di connessione}, che si cercavano solo su cardinalità dei sottoinsiemi $= \left\lceil \frac{|N|}{2} \right\rceil $, in quanto i vincoli per $S$ valevano anche per $N \setminus S$. 
+Inoltre, si aveva che i vincoli sulla terza erano quelli \textit{di connessione}, che si cercavano solo su cardinalità dei sottoinsiemi $= \left\lceil \frac{|N|}{2} \right\rceil $, in quanto i vincoli per $S$ valevano anche per $N \setminus S$.
 
 \subsection{Branch and bound}
 Avevamo visto l'algoritmo dei piani di taglio di Gomory per il calcolo di soluzioni approssimate di problemi ILP.
@@ -275,4 +275,7 @@ Mantendendo un'ottimo corrente $x$, abbiamo che calcolato un nuovo $P_{ij}$ per 
 	\item Calcolo di $v_S(P_{ij})$. Se $v_S(P_{ij}) < v_I(P)$ del problema, allora posso scartare il sottoalbero: non troverò soluzioni migliori scendendovi;
 	\item $v_S(P_{ij}) > v_I(P)$, e l'$\bar{x}$ dove si ha tale $v_S$ è ammissibile per $P$, allora si prende $\bar{x}$ come nuovo $x$ e si fa una visita implicità di $P_{ij}$: questo perchè un suo sottoproblema non potrà darci di meglio (più scendiamo nell'albero, più stringiamo i vincoli, ergo $P_{i+k, j'}$ figlio di $P_{ij}$ ha $v_S(P_{i+k, j'}) \leq v_S(P_{ij})$).
 \end{enumerate}
+
+Ricordiamo che quanto detto finora vale su problemi \textbf{massimizzanti}: su problemi \textbf{minimizzanti} dovremo invertire l'ordine delle disugaglianze, e prendere vincoli superiori anziché inferiori e viceversa.
+
 \end{document}
