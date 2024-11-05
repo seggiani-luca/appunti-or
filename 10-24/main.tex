@@ -257,7 +257,8 @@ Scegliamo quindi una variabile, $x_1$, e costruiamo l'albero:
 	\end{forest}
 \end{center}
 
-Abbiamo che il calcolo di ogni nodo dell'albero non è effettivamente necessario.
+Abbiamo che il calcolo di ogni nodo dell'albero richiede $2^n$ operazioni (nodi di un albero binario).
+Questo calcolo, però, non è effettivamente necessario nella maggior parte dei casi.
 Chiamiamo quindi \textbf{problemi} $P_{ij}$ ogni nodo dell albero, con $i$ che seleziona il livello e $j$ il fratello, da sinstra verso destra.
 
 Stabilita una valutazione superiore e inferiore di ogni problema, che chiameremo $v_S(P)$ e $v_I(P)$, abbiamo:
@@ -265,7 +266,8 @@ $$
 v_I(P) \leq v(P) \leq v_S(P) 
 $$
 
-Possiamo usare queste valutazioni per stabilire \textbf{regole di taglio} che ci permettano di tagliare (si dice anche \textit{visitare implicitamente}) un'intero sottoalbero a partire da un certo nodo $P_{ij}$.
+Il funzionamento dell'algoritmo del branch and bound è determinato proprio dall'esistenza di valutazioni "buone" inferiori e superiori.
+Possiamo infatti usare queste valutazioni per stabilire \textbf{regole di taglio} che ci permettano di tagliare (si dice anche \textit{visitare implicitamente}) un'intero sottoalbero a partire da un certo nodo $P_{ij}$.
 Queste regole di taglio assicurano, essenzialmente, che ogni sottoproblema $P_{{i+k}, j'}$ figlio di $P_{ij}$ non contiene l'ottimo, e quindi si può saltare.
 
 Vediamo quindi le regole di taglio che possiamo adottare.

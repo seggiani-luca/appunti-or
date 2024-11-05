@@ -16,9 +16,6 @@
 \usepackage{hyperref}
 \usepackage{standalone}
 
-% cose fluttuanti
-\usepackage{float}
-
 % imposta il titolo
 \title{Appunti Ricerca Operativa}
 \author{Luca Seggiani}
@@ -188,32 +185,54 @@
 
 \begin{document}
 
-\pagestyle{fancy}
-\thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+% sezione (data)
+\section{Lezione del 29-10-24}
 
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
-\input{../10-01/main.tex}
-\input{../10-02/main.tex}
-\input{../10-03/main.tex}
-\input{../10-07/main.tex}
-\input{../10-08/main.tex}
-\input{../10-09/main.tex}
-\input{../10-10/main.tex}
-\input{../10-14/main.tex}
-\input{../10-15/main.tex}
-\input{../10-16/main.tex}
-\input{../10-17/main.tex}
-\input{../10-21/main.tex}
-\input{../10-22/main.tex}
-\input{../10-23/main.tex}
-\input{../10-24/main.tex}
-\input{../10-29/main.tex}
-\input{../10-30/main.tex}
-\input{../11-05/main.tex}
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Regole di branch}
+Vediamo quindi nel dettaglio le regole di ramificazione da usare nell'applicazione del branch and bound, su problemi di minimo e di massimo.
+Consideriamo un problema TSP simmetrico minimizzante:
+\subsubsection{Regole di branch minimizzanti}
+Partiamo dal problema $P$, e istanziamo variabili per ottenere una serie di $P_{i,j}$, dove la $i$ rappresenta il livello di profondità nell'albero e $j$ il sottoproblema corrente a quel livello.
+
+Ogni volta che si istanzia la prima cosa da controllare è l'ammissibilità delle soluzioni ottenute istanziando le variabili.
+Se si ha infatti che se $P_{i,j} = \emptyset$, quel sottoalbero può essere tagliato.
+
+Si controlla poi se vale $v_I(P_{i,j}) \geq v_S(P)$, cioè se il minimo possibile ottenuto dal sottoproblema $P_{i,j}$ è più piccolo della valutazione superiore del problema $P$. In questo caso si taglia il sottoalbero.
+
+Si controlla infine se vale $v_I(P_{i,j}) < v_S(P)$ e questa $v_I$ è ammissibile per $P$. Se sì, allora si aggionra il $v_S$ corrente di $P$ a $v_I$.
+Inoltre, si può applicare anche la regola precedente, e quindi tagliare il sottoalbero.
+
+Riassumendo si hanno quindi le regole:
+\begin{itemize}
+	\item $P_{i,j} = \emptyset \implies $ taglio;
+	\item $v_I(P_{i,j}) \geq v_S(P) \implies $ taglio;
+	\item $v_I(P_{i,j}) < v_S(P)$ e $v_I \in P \implies $ $v_S(P) \leftarrow v_I(P_{i,j})$, taglio.
+\end{itemize}
+
+\par\smallskip 
+Consideriamo poi un problema di zaino booleano massimizzante:
+\subsubsection{Regole di branch massimizzanti}
+In un problema massimizzante si segue un approccio simile.
+Dal problema $P$ si istanzia successivamente per ottenere $P_{i,j}$ con le stesse caratteristiche di prima.
+
+Istanziando, se si va a svuotare la regione ammissbilie, cioè si ottiene $P_{i,j} = \emptyset$, si scarta quel sottoalbero.
+
+Si controlla poi se vale $v_S(P_{i, j}) \leq v_I (P)$, cioè se il massimo possibile ottenuto dal sottoproblema $P_{i,j}$ è più grande della valutazione inferiore del problema $P$. In questo caso, chiaramente, si taglia il sottoalbero.
+
+Infine si controlla se vale $v_S(P_{i,j}) > v_I(P)$, e questa $v_S$ è ammissibile per $P$ (cioè, in questo caso, è a componenti intere). Se sì, allora si aggiorna il $v_I$ corrente di $P$ a $v_S$. 
+Inoltre, si taglia il sottoalbero.
+
+Anche qui, riassumendo, si hanno le regole:
+\begin{itemize}
+	\item $P_{i,j} = \emptyset \implies $ taglio;
+	\item $v_S(P_{i,j}) \leq v_I(P) \implies $ taglio;
+	\item $v_S(P_{i,j}) > v_I(P)$ e $v_S \in P \implies $ $v_I(P) \leftarrow v_S(P_{i,j})$, taglio.
+\end{itemize}
+
+
 \end{document}
