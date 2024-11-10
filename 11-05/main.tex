@@ -226,7 +226,7 @@ A questo punto, il vettore soluzione $x_{ij}$ rappresenterà le unità di flusso
 Come sempre, il vettore soluzione è ordinato \textbf{lessicograficamente}.
 
 Quello che vogliamo fare è quindi esprimere i \textbf{vincoli} a cui è sottoposto flusso sugli archi del grafo.
-Conviene quindi guardare sempre al bilancio in termini di flusso di ogni nodo, prendendo gli entranti (cioè i nodi che \textit{approvigionano} il nodo) come positivi e gli uscenti (cioè i nodi che si \textit{riforniscono} dal nodo) come negativi (da qui il segno negativo alle sorgenti).
+Conviene quindi guardare sempre al bilancio in termini di flusso di ogni nodo, prendendo gli archi entranti sul nodo (cioè che partono da nodi che \textit{approvigionano} il nodo) come positivi e gli archi uscenti dal nodo (cioè che vanno a nodi che si \textit{riforniscono} dal nodo) come negativi (da qui il segno negativo alle sorgenti).
 Ad esempio, avremo per l'esempio precedente:
 \[
 	\begin{cases}
@@ -240,7 +240,7 @@ Ad esempio, avremo per l'esempio precedente:
 \]
 in formato duale standard.
 
-La situazione diventa un problema di LP quando si introduce un \textbf{costo di movimentazione} su ogni arco: a questo punto può essere interessante calcolare, se ogni unità di flusso "paga" per ogni unità il costo dell'arco su cui scorre, il \textbf{flusso di costo minimo} sul grafo.
+La situazione diventa un problema di LP quando si introduce un \textbf{costo di movimentazione} su ogni arco: a questo punto può essere interessante calcolare, se ogni unità di flusso "paga" il costo dell'arco su cui scorre, il \textbf{flusso di costo minimo} sul grafo.
 Questo si traduce nella funzione costo:
 $$
 \min{2 x_{12} + 3 x_{13} + 4 x_{24} + 6 x_{25} + 7 x_{32} + 5 x_{35} + 8 x_{54} \equiv c^T \cdot x}
@@ -287,18 +287,18 @@ A scopo esplicativo, si riportano le matrici di incidenza $E$ e di adiacenza $A$
 $$
 E =
 \begin{array}{c | c c c c c c c}
-	& (1,2) & (1,3) & (2,3) & (2,4) & (2,5) & (3,5) & (4,5) \\
+	& (1, 2) & (1, 3) & (2, 4) & (2, 5) & (3, 2) & (3, 5) & (5, 4) \\ 
 	\hline
-	1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
-	2 & 1 & 0 & 1 & -1 & -1 & 0 & 0 \\ 
-	3 & 0 & 1 & -1 & 0 & 0 & -1 & 0 \\ 
-	4 & 0 & 0 & 0 & 1 & 0 & 0 & 1 \\ 
-	5 & 0 & 0 & 0 & 0 & 1 & 1 & -1 
+	1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\ 
+	2 & 1 & 0 & -1 & -1 & 0 & 0 & 0 \\ 
+	3 & 0 & 1 & 0 & 0 & -1 & -1 & 0 \\ 
+	4 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\ 
+	5 & 0 & 0 & 0 & 1 & 0 & 1 & -1
 \end{array}
 A = 
 \begin{pmatrix}
 	0 & 1 & 1 & 0 & 0 \\ 
-	0 & 0 & 0 & 0 & 1 \\ 
+	0 & 0 & 0 & 1 & 1 \\ 
 	0 & 1 & 0 & 0 & 1 \\ 
 	0 & 0 & 0 & 0 & 0 \\ 
 	0 & 0 & 0 & 1 & 0
@@ -319,20 +319,21 @@ dove segnaliamo è importante il grafo sia \textbf{connesso}:
 \begin{definition}{Grafo connesso}
 	Un grafo si dice connesso quando l'insieme degli archi $A$ contiene un albero di copertura $T \subseteq A$.
 \end{definition}
-Questa definizione (che in verità si potrebbe intendere come caratterizzazione) si fonda sull'idea di textbf{albero di copertura} (che in verità abbiamo già usato nei problemi del commesso viaggiatore in ILP), che definiamo come segue:
+Questa definizione (che in verità si potrebbe intendere come caratterizzazione) si fonda sull'idea di \textbf{albero di copertura} (che in verità abbiamo già usato nei problemi del commesso viaggiatore in ILP), che definiamo come segue:
 \begin{definition}{Albero di copertura}
 	Dato un grafo $G = (N, A)$, un albero di copertura è un sottoinsieme di archi $T \subseteq A$ tale che il sottografo $(N, T)$ è connesso e non presenta cicli. Un nodo di questo grafo su cui incide solo un arco si dice \textbf{foglia}.
 \end{definition}
 
 Notiamo che su ogni colonna della matrice di adiacenza si ha esattamente un 1 e un -1, e tutti gli altri elementi valgono 0 (in altre parole, un arco è formato da un nodo di partenza e un nodo di arrivo).
-Questo significa che la somma delle righe della matrice è nulla, ergo per definizione queste sono fra di loro linearmente dipendenti.
+Questo significa che la somma delle righe della matrice è nulla (lo è la somma di ogni colonna), ergo per definizione queste sono fra di loro linearmente dipendenti.
 Si ha quindi che:
 \begin{theorem}{Rango della matrice di incidenza}
 	La matrice di incidenza di un problema di ottimizzazione su un grafo con $n$ nodi ha rango $n-1$.
 \end{theorem}
 
-La proposizione precedente rispetto alla dipendenza lineare delle righe della matrice di adiacenza è solo metà delle ipotesi necessarie a dimostrare quanto sopra: il resto viene dalla definizione di albero di copertura. 
-Dimostriamo quindi che il rango vale $n-1$, mostrando come si possono prendere come minori dela matrice gli alberi di copertura costruiti sul grafo in questione.
+Questo significa che il sistema $Ex = b$ è \textbf{sovradeterminato}, e possiamo quindi tranquillamente rimuoverne una riga (solitamente si sceglie la prima).
+
+La proposizione precedente rispetto alla dipendenza lineare delle righe della matrice di adiacenza dà un limite superiore sul suo rango: mostriamo come dare un limite inferiore (e quindi dimostrare il teorema precedente). 
 Per formare un albero di copertura si prendono i minimi $n-1$ archi necessari a collegare fra di loro tutti i nodi, ergo si prendono le $n-1$ colonne della matrice di adiacenza del grafo corrispondenti agli archi che formano l'albero per formare un minore $E_T$.
 Da queste, permutando appositamente righe e colonne, si può sempre ottenere una forma del tipo:
 $$
@@ -351,18 +352,19 @@ Questa forma, per ipotesi induttiva, ci dice che la matrice di incidenza dell'al
 		Questo ha dei risvolti importanti per quanto riguarda l'ILP, in quanto vedremo che una soluzione di LP per un problema di flusso minimo corrisponde con la soluzione del problema di ILP corrispondente (a patto di bilanci $b_i$ interi).
 \end{itemize}
 
-\subsubsection{Calcolo delle basi}
+\subsubsection{Caratterizzazione delle basi}
 Abbiamo appurato che la matrice di incidenza di un problema di ottimizzazione su un grafo ha rango $n-1$ e presenta minori invertibili, rappresentanti matrici di incidenza di alberi di copertura.
-Visto che il problema stesso era stato espresso in forma duale standard, e che quello che facciamo nel prendere minori di rango $n-1$ è effettivamente scegliere $n-1$ colonne della matrice di incidenza, si ha che effettivamente ogni albero di copertura rappresenta una \textbf{base} del poliedro.
+Visto che il problema stesso era stato espresso in forma duale standard, e che quello che facciamo nel prendere minori di rango $n-1$ è effettivamente scegliere $n-1$ colonne della matrice di incidenza, si ha che ogni albero di copertura rappresenta una \textbf{base} del poliedro.
 
 \begin{theorem}{Caratterizzazione di base di matrici di incidenza}
-	ei ha che, per una matrice di incidenza $E$ di un problema di ottimizzazione su grafi, un albero di copertura coincide con una data base $T$ ottenuta scegliendo le $n-1$ colonne degli archi che formano l'albero, ovvero:
+	Per una matrice di incidenza $E$ di un problema di ottimizzazione su grafi, un albero di copertura coincide con una data base $T$ ottenuta scegliendo le $n-1$ colonne degli archi che formano l'albero, ovvero:
 	$$
 	T \text{ è un albero di copertura} \Leftrightarrow T \text{ è una base}
 	$$
 \end{theorem}
 
 Vediamo un modo per calcolare una soluzione di base data una base $T$.
+Questa prenderà il nome di \textbf{flusso di base}.
 Iniziamo con l'impostare, come era sempre valso per il duale standard, a 0 le variabili non di base.
 Adesso si può fare una visita positicipata per foglie (considerando la base come un albero).
 Vorremo che questa foglia rispetti:
@@ -370,10 +372,22 @@ $$
 E_T x_T = b
 $$
 
-Partendo dalle foglie, si può mettere sull'arco corrispondente (e quindi sulla $x_{ij}$ corrispondente) la capacità di quella foglia, e poi tagliarla dall'albero.
-Il procedimento si ripete sulle foglie rimaste, fino ad arrivare alla radice dell'albero.
+Partendo dalle foglie, si può mettere sull'arco corrispondente (e quindi sulla $x_{ij}$ corrispondente) il bilancio di quella foglia, e poi tagliarla dall'albero.
+Il procedimento si ripete sulle foglie rimaste, tenendo conto dei bilanci dei nodi rimanenti, fino ad arrivare alla radice dell'albero.
 
 Così facendo troveremo un vettore soluzione $x_{ij}$, su cui notiamo se almeno una componente è $< 0$, la soluzione di base non è ammissibile (significa che un nodo sorgente chiede più di quanto può erogare).
+
+Possiamo quindi dare, stabilito un flusso di base, la seguente caratterizzazione di ammissibilità:
+
+\begin{definition}{Caratterizzazione dei flussi di base ammissibili}
+	Un flusso di base, scelto $T$ albero di copertura, è ammissibile se $\forall (i, j) \in T$ si ha $ \overline{x}_{ij} \geq 0$.
+\end{definition}
+
+e degenrazione, posto $L$ come l'insieme totale degli archi $A$ tolti quelli appartenenti in $T$, cioè $A \setminus T$:
+
+\begin{definition}{Caratterizzazione dei flussi di base degeneri}
+	Un flusso di base, scelto $T$ albero di copertura, è degenere se $\exists (i, j) \in L$ per cui $x_{ij} = 0$. 
+\end{definition}
 
 \subsubsection{Reti sbilanciate}
 Notiamo che finora abbiamo assunto l'ipotesi:
@@ -383,6 +397,6 @@ $$
 
 Potremmo avere invece che questa sommatoria è \textit{negativa} o \textit{positiva}, ergo il grafo \textbf{sbilanciato} in \textbf{positivo} o in \textbf{negativo}.
 Nel primo caso, si ha più richeista che produzione, e il problema è quindi vuoto.
-Nel secondo, si ha puù produzione che richiesta, e bisogna quindi introdurre un \textbf{nodo fittizio}, di capacità pari all'\textbf{eccedente} $\sum_{i=1}^n b_i$ e costo nullo, dove  verrà a riversarsi (in condizioni di ottimo) il flusso in eccesso. 
+Nel secondo, si ha puù produzione che richiesta, e bisogna quindi introdurre un \textbf{nodo fittizio}, di capacità pari all'\textbf{eccedente} $\sum_{i=1}^n b_i$, a costo nullo e connesso ad ogni sorgente del grafo, dove verrà a riversarsi (in condizioni di ottimo) il flusso in eccesso. 
 
 \end{document}

@@ -354,12 +354,12 @@ Abbiamo quindi tutti gli strumenti necessari alla formulazione dell'algoritmo de
 \begin{algorithmic}
 	\STATE \textbf{Input:} un problema LP in forma primale standard
 	\STATE \textbf{Output:} la soluzione ottima 
-	\STATE Trova una base B che genera una soluzione di base primale ammissibile.
+	\STATE Trova una base B che genera una soluzione di base primale ammissibile
 	\STATE \textsf{ciclo:}
 	\STATE Calcola la soluzione di base primale $\bar{x} = A_b^{-1} b_B$ e la soluzione di base duale $\bar{y} = (cA_b^{-1}, 0)$
 	\IF{$\bar{y_B} \geq 0$}
 		\STATE Fermati, $\bar{x}$ è ottima per $P$ e $\bar{y}$ è ottima per $D$
-k\ELSE
+\ELSE
 		\STATE Calcola l'indice uscente: 
 		$$
 		h := \min\{ i \in B \ \text{t.c.} \ \bar{y_i} < 0 \}
@@ -367,7 +367,7 @@ k\ELSE
 		poni $W := -A_B^{-1}$ e indica con $W^h$ la $h$-esima colonna di $W$
 	\ENDIF
 	\IF{$A_i W^h \leq 0 \quad \forall i \in N$}
-		\STATE Fermati, $P \rightarrow +\infty$ e $D$ non ha soluzione ottima.
+		\STATE Fermati, $P \rightarrow +\infty$ e $D$ non ha soluzione ottima
 	\ELSE
 		\STATE Calcola:
 		$$
