@@ -219,7 +219,7 @@ Convverrà quindi esprimere il vincolo delle capacità superiori come uguaglianz
 	\end{cases}
 \]
 
-Questa forma, con $w \in \mathbb{R^m}$, intende $x_ {ij} + w_{ij} = u_{ij}$, cioè gli $w_{ij}$ di ogni arco sono gli \textbf{scarti} dal valore di capacità massima. A $w$ negativi si avranno $x > u$, ergo saremo oltre la portata massima, mentre a $w = 0$ avremo "fissato" la capacità al massimo per la $x$ corrispondente.
+Questa forma, con $w \in \mathbb{R}^m$, intende $x_ {ij} + w_{ij} = u_{ij}$, cioè gli $w_{ij}$ di ogni arco sono gli \textbf{scarti} dal valore di capacità massima. A $w$ negativi si avranno $x > u$, ergo saremo oltre la portata massima, mentre a $w = 0$ avremo "fissato" la capacità al massimo per la $x$ corrispondente.
 
 Se volessimo restare nella forma matriciale, potremmo riscrivere il vincolo di capacità come:
 $$
@@ -240,12 +240,14 @@ $$
 \end{pmatrix}
 $$
 dove la prima matrice ha dimensioni $(m + n) \times 2n$.
-
+Denotiamo questa matrice $M$.
 Se avevamo dimostrato che il rango di $Ex = b$ è $n - 1$, cioè quello delle matrici di base (che danno alberi di copertura), sarà abbastanza intuitivo che il rango di questa nuova matrice sarà $m + n - 1$.
-In particolare, si avrà la seguente caratterizzazione delle basi:
+In particolare, caratterizzare una base di questa matrice significherà trovare $m + n - 1$ colonne da selezionare per formare un minore invertibile.
+
 \begin{theorem}{Caratterizzazione di base di matrici di incidenza capacitate}
-	Presa la matrice di vincoli data da un problema di flusso di costo minimo capacitato, espressa in forma:
+	Presa la matrice $M$ di vincoli data da un problema di flusso di costo minimo capacitato, espressa in forma:
 $$
+M=
 \begin{pmatrix}
 	E & 0 \\ 
 	I & I
@@ -258,14 +260,18 @@ A questo punto, $B = T \cup U \cup T' \cup L'$ sarà un base.
 
 \end{theorem}
 
-Abbiamo che la tripartizione $T, L, U, T', L', U'$ è effettivamente una \textit{esapartizione} negli insiemi di colonne $T, L, U$ e le colonne con le $w$ associate.
-Notiamo che, da $T$ di dimensione $n-1$ e $T'$ + $L'$ di dimensione pari a $m$, si ha che la dimensione della base è $m + n - 1$, come volevamo.
+Abbiamo che la tripartizione $T, L, U, T', L', U'$ è effettivamente una \textit{esapartizione} negli insiemi di colonne $T, L, U$, e $T', L', U'$ con le $w$ associate.
+Notiamo che $M$ ha $2m$ colonne per definizione, e che queste sono distribuite ugualmente fra $T, L, U$ e $T', L', U'$, con il numero di colonne di $T$ pari a quello di $T'$, e via dicendo.
+Si ha quindi che scegliendo $U + Tì + L'$ dà $m$ colonne, a cui aggiungiamo le $n-1$ di $T$ (lo stesso ragionamento vale invertendo $T$ e $T'$), la dimensione della base è $m + n - 1$, come volevamo.
 
 Vediamo quindi come calcolare il flusso di base corrispondente a una base:
 $$
-(x, w) = \left( E_T^{-1} (b - E_U u_U), 0, u_U, u_T - x_T, u_L, 0 \right)
+(x(T, L, U), w(T', L', U')) = \left( E_T^{-1} (b - E_U u_U), 0, u_U, u_T - x_T, u_L, 0 \right)
 $$
+dove la notazione indica che $x$ è composto dalle componenti in $T, L, U$, e $w$ dalle componenti in $T', L', U'$.
 
-# qua sopra dubbi
+La dimostrazione della formula è semplice: $U'$ e $L$, essendo non in base, sono automaticamente zero.
+A questo punto, le $U$ e $L'$ corrispondenti sono determinate come i costi di flusso massimo, o i surplus massimi (conseguenti dal fluso nullo).
+Si calcolano infine le $T$ rimaste applicando un'algoritmo greedy sulle foglie che tiene conto dei flussi determinati da $U$, e si calcolano le $T'$ come gli scarti $u_T - x_T$ sulla capacità massima dati dal flusso appena determinato.
 
 \end{document}
