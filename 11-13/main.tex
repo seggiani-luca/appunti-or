@@ -186,93 +186,103 @@
 \begin{document}
 
 % sezione (data)
-\section{Lezione del 12-11-24}
+\section{Lezione del 13-11-24}
 
 % stili pagina
 \thispagestyle{empty}
 \pagestyle{fancy}
 
 % testo
-\subsection{Flusso di costo minimo capacitato}
-In realtà, il modello di flusso di costo minimo prevede, su ogni arco, un'altra quantità: la \textbf{portata} (o \textbf{capacità}) massima dell'arco.
-Avremo quindi che, oltre oltre agli $n$ bilanci $b_i$ e agli $m$ costi $c$ per $n$ nodi e $m$ archi, dovremo introdurre un nuovo vettore $u$ di dimensione $m$ per le \textbf{capacità superiori} di ogni arco.
-
-Porremo quindi il nostro sistema come:
+\subsection{Potenziali di base capacitati}
+Abbiamo visto come calcolare i flussi di base, data un'opportuna tripartizione, sulla base $T, U, T', L'$ di un problema di flusso minimo capacitato.
+Vediamo adesso come calcolare i potenziali di base.
+Si imposta innanzitutto il duale, cioè il \textbf{problema dei potenziali}: 
 \[
 	\begin{cases}
-		\max c^T x \\ 
-		Ex = b \\ 
-		0 \leq x \leq u
+		\max b^T \pi + u^T \mu \\ 
+		E^T \pi + \mu \leq c \\ 
+		\mu \leq 0
 	\end{cases}
 \]
-dove l'ultimo vincolo è l'espressione in forma vettoriale di $0 \leq x_{ij} \leq u_{ij} \ \forall (i, j) \in A$.
+dove $\mu$ rappresenta gli \textbf{scarti} ai potenziali. 
 
-Avevamo notato che un problema di flusso di costo minimo \textit{non capacitato} si esprime agilmente in forma duale standard. 
-Convverrà quindi esprimere il vincolo delle capacità superiori come uguaglianza, per ricondursi allo stesso formato:
+Notiamo che avremmo potuto usare la stessa matrice dei vincoli nel primale seguendo le stesse uguaglianze già viste sulle forme di matrici primali e duali:
 \[
 	\begin{cases}
-		\max c^T x \\ 
-		Ex = b \\
-		x + w = u \\ 
-		x \geq 0 \\ 
-		w \geq 0
+		\min
+		\begin{pmatrix}
+			x & w
+		\end{pmatrix}^T
+		\begin{pmatrix}
+			c \\ 0
+		\end{pmatrix} \\ 
+		\begin{pmatrix}
+			x & w
+		\end{pmatrix}^T
+		\begin{pmatrix}
+			E^T & I \\ 
+			0 & I 
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			b & u
+		\end{pmatrix}^T \\ 
+		\begin{pmatrix}
+			x & w
+		\end{pmatrix}
+		\geq 0
 	\end{cases}
 \]
 
-Questa forma, con $w \in \mathbb{R}^m$, intende $x_ {ij} + w_{ij} = u_{ij}$, cioè gli $w_{ij}$ di ogni arco sono gli \textbf{scarti} dal valore di capacità massima. A $w$ negativi si avranno $x > u$, ergo saremo oltre la portata massima, mentre a $w = 0$ avremo "fissato" la capacità al massimo per la $x$ corrispondente.
+Lo stesso problema potrebbe essere stato espresso nella forma a blocchi, come avevamo visto sul primale:
+\[
+	\begin{cases}
+		\max 
+		\begin{pmatrix}
+			b^T & u^T
+		\end{pmatrix}
+		\begin{pmatrix}
+			\pi \\ \mu
+		\end{pmatrix}\\
+		\begin{pmatrix}
+			E^T & I \\ 
+			0 & I
+		\end{pmatrix}
+		\begin{pmatrix}
+			\pi \\ \mu
+		\end{pmatrix}
+			\geq
+		\begin{pmatrix}
+			c \\ 0
+		\end{pmatrix}
+	\end{cases}
+\]
 
-Se volessimo restare nella forma matriciale, potremmo riscrivere il vincolo di capacità come:
+Vediamo quindi il calcolo vero e proprio.
+Si tratta il problema come qualsiasi altro problema in formato primale, cioè si rendono valide le equazioni date dalla base $T, U, T', L'$.
+Avremo quindi che $\mu_T = 0$ e $\mu_L = 0$.
+A questo punto troviamo i $\pi$ dati da $E_T^T \mu = c_T$, su $T$, $L$ e $U$.
+Infine, abbiamo i $\mu$ su $U$, dati da $\pi_T E_U + \mu_U^T = c^T$.
+Cioè, riassumendo, secondo la stessa notazione usata per i flussi di base (si noti che il flusso in $T$ è soluzione di un unico sistema):
 $$
-Ix + Iw = u
+(\pi(T), \mu(T'. L', U')) = \left(c_T^T E_T^{-1}, 0, 0, c_U^T - \pi^T E_U \right)
 $$
-sulla matrice identità $I$, e quindi esprimere a blocchi:
-$$
-\begin{pmatrix}
-	E & 0 \\ 
-	I & I
-\end{pmatrix}
-\begin{pmatrix}
-	x \\ w
-\end{pmatrix}
-=
-\begin{pmatrix}
-	b \\ u
-\end{pmatrix}
-$$
-dove la prima matrice ha dimensioni $(m + n) \times 2n$.
-Denotiamo questa matrice $M$.
-Se avevamo dimostrato che il rango di $Ex = b$ è $n - 1$, cioè quello delle matrici di base (che danno alberi di copertura), sarà abbastanza intuitivo che il rango di questa nuova matrice sarà $m + n - 1$.
-In particolare, caratterizzare una base di questa matrice significherà trovare $m + n - 1$ colonne da selezionare per formare un minore invertibile.
 
-\begin{theorem}{Caratterizzazione di base di matrici di incidenza capacitate}
-	Presa la matrice $M$ di vincoli data da un problema di flusso di costo minimo capacitato, espressa in forma:
+Dai potenziali possiamo calcolare i costi ridotti, analogamente a come avevamo fatto sui flussi non capacitati:
 $$
-M=
-\begin{pmatrix}
-	E & 0 \\ 
-	I & I
-\end{pmatrix}
+c^\pi_{ij} = c_{ij} - \pi_i + \pi_j
 $$
-si suppone di avere una \textbf{tripartizione} $T, L, U$ degli archi del grafo (cioè delle colonne della matrice), dove $T$ è un \textit{albero di copertura}. 
-Si chiamano poi $T', L', U'$ le colonne corrispondenti alle variabili di scarto $w$.
+e dimostrare una variante del teorema di Bellman:
 
-A questo punto, $B = T \cup U \cup T' \cup L'$ sarà un base. 
-
+\begin{theorem}{di Bellman capacitato}
+	Supponiamo di avere una tripartizione $T, L, U$ che generi un flusso di base ammissibile.
+	Se la soluzione è anche ottima, vale riguardo ai costi ridotti:
+	\[
+		\begin{cases}
+			c_ {ij}^T, \geq 0 \quad \forall (i,j) \in L \\ 
+			c_ {ij}^T \leq 0, \quad \forall (i,j) \in U
+		\end{cases}
+	\]	
 \end{theorem}
-
-Abbiamo che la tripartizione $T, L, U, T', L', U'$ è effettivamente una \textit{esapartizione} negli insiemi di colonne $T, L, U$, e $T', L', U'$ con le $w$ associate.
-Notiamo che $M$ ha $2m$ colonne per definizione, e che queste sono distribuite ugualmente fra $T, L, U$ e $T', L', U'$, con il numero di colonne di $T$ pari a quello di $T'$, e via dicendo.
-Si ha quindi che scegliendo $U + Tì + L'$ dà $m$ colonne, a cui aggiungiamo le $n-1$ di $T$ (lo stesso ragionamento vale invertendo $T$ e $T'$), la dimensione della base è $m + n - 1$, come volevamo.
-
-\subsubsection{Flussi di base capacitati}
-Vediamo quindi come calcolare il flusso di base corrispondente a una base:
-$$
-(x(T, L, U), w(T', L', U')) = \left( E_T^{-1} (b - E_U u_U), 0, u_U, u_T - x_T, u_L, 0 \right)
-$$
-dove la notazione indica che $x$ è composto dalle componenti in $T, L, U$, e $w$ dalle componenti in $T', L', U'$.
-
-La dimostrazione della formula è semplice: $U'$ e $L$, essendo non in base, sono automaticamente zero.
-A questo punto, le $U$ e $L'$ corrispondenti sono determinate come i costi di flusso massimo, o i surplus massimi (conseguenti dal fluso nullo).
-Si calcolano infine le $T$ rimaste applicando un'algoritmo greedy sulle foglie che tiene conto dei flussi determinati da $U$, e si calcolano le $T'$ come gli scarti $u_T - x_T$ sulla capacità massima dati dal flusso appena determinato.
 
 \end{document}
