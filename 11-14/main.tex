@@ -186,103 +186,59 @@
 \begin{document}
 
 % sezione (data)
-\section{Lezione del 13-11-24}
+\section{Lezione del 14-11-24}
 
 % stili pagina
 \thispagestyle{empty}
 \pagestyle{fancy}
 
 % testo
-\subsection{Potenziali di base capacitati}
-Abbiamo visto come calcolare i flussi di base, data un'opportuna tripartizione, sulla base $T, U, T', L'$ di un problema di flusso minimo capacitato.
-Vediamo adesso come calcolare i potenziali di base.
-Si imposta innanzitutto il duale, cioè il \textbf{problema dei potenziali}: 
+\subsection{Simplesso per flussi capacitati}
+Vediamo quindi come applicare l'algoritmo del simplesso ai problemi di flusso minimo capacitato.
+Si ha che, dal teorema di Bellman, gli archi entranti saranno quelli che violano i vincoli:
 \[
 	\begin{cases}
-		\max b^T \pi + u^T \mu \\ 
-		E^T \pi + \mu \leq c \\ 
-		\mu \leq 0
+		c_{ij}^\pi \geq 0, \quad \forall (i, j) \in L \\ 
+		c_{ij}^\pi \leq 0, \quad \forall (i, j) \in U
 	\end{cases}
 \]
-dove $\mu$ rappresenta gli \textbf{scarti} ai potenziali. 
+applicando la regola anticiclo di Bland per cui prendiamo il primo fra gli archi che viola i vincoli.
 
-Notiamo che avremmo potuto usare la stessa matrice dei vincoli nel primale seguendo le stesse uguaglianze già viste sulle forme di matrici primali e duali:
-\[
+Distinguiamo qui due casi: quello dove l'arco uscente è in $L$, e quello dove l'arco uscente è in $U$:
+\begin{itemize}
+	\item $\exists (i, j) \in L : c_{ij}^\pi > 0$: troviamo l'arco entrante $(p, q) \in L$. 
+		Vorremo eliminare il ciclo formato introducendo, in direzione concorde a $(p, q)$, $\vartheta \geq 0$ unità di flusso, che come avevamo visto porta i costi degli archi sul ciclo a:
+$$
+x_\vartheta =
 	\begin{cases}
-		\min
-		\begin{pmatrix}
-			x & w
-		\end{pmatrix}^T
-		\begin{pmatrix}
-			c \\ 0
-		\end{pmatrix} \\ 
-		\begin{pmatrix}
-			x & w
-		\end{pmatrix}^T
-		\begin{pmatrix}
-			E^T & I \\ 
-			0 & I 
-		\end{pmatrix}
-		=
-		\begin{pmatrix}
-			b & u
-		\end{pmatrix}^T \\ 
-		\begin{pmatrix}
-			x & w
-		\end{pmatrix}
-		\geq 0
+		\overline{x}_{ij} + \vartheta, \quad \forall (i, j) \in \mathcal{C}^+ \\ 
+		\overline{x}_{ij} - \vartheta, \quad \forall (i, j) \in \mathcal{C}^- \\
+		\overline{x}_{ij}, \quad \forall (i, j) \notin C
 	\end{cases}
-\]
-
-Lo stesso problema potrebbe essere stato espresso nella forma a blocchi, come avevamo visto sul primale:
-\[
-	\begin{cases}
-		\max 
-		\begin{pmatrix}
-			b^T & u^T
-		\end{pmatrix}
-		\begin{pmatrix}
-			\pi \\ \mu
-		\end{pmatrix}\\
-		\begin{pmatrix}
-			E^T & I \\ 
-			0 & I
-		\end{pmatrix}
-		\begin{pmatrix}
-			\pi \\ \mu
-		\end{pmatrix}
-			\geq
-		\begin{pmatrix}
-			c \\ 0
-		\end{pmatrix}
-	\end{cases}
-\]
-
-Vediamo quindi il calcolo vero e proprio.
-Si tratta il problema come qualsiasi altro problema in formato primale, cioè si rendono valide le equazioni date dalla base $T, U, T', L'$.
-Avremo quindi che $\mu_T = 0$ e $\mu_L = 0$.
-A questo punto troviamo i $\pi$ dati da $E_T^T \mu = c_T$, su $T$, $L$ e $U$.
-Infine, abbiamo i $\mu$ su $U$, dati da $\pi_T E_U + \mu_U^T = c^T$.
-Cioè, riassumendo, secondo la stessa notazione usata per i flussi di base (si noti che il flusso in $T$ è soluzione di un unico sistema):
 $$
-(\pi(T), \mu(T'. L', U')) = \left(c_T^T E_T^{-1}, 0, 0, c_U^T - \pi^T E_U \right)
-$$
+stabilite le partizioni concordi e discordi sul ciclo $\mathcal{C}^+$ e $\mathcal{C}^-$. 
+Questo dà la solita regola sull'arco uscente: 
+$$ \vartheta^- \leq \min_{(i, j) \in \mathcal{C}^-} \{ \overline{x}_{ij} \} $$
 
-Dai potenziali possiamo calcolare i costi ridotti, analogamente a come avevamo fatto sui flussi non capacitati:
-$$
-c^\pi_{ij} = c_{ij} - \pi_i + \pi_j
-$$
-e dimostrare una variante del teorema di Bellman:
+A questo punto vogliamo verificare la validità del flusso trovato, stabilendo che:
+\begin{itemize}
+	\item $x_\vartheta$ rispetta Bellman, in quanto, per un nodo posto in qualsiasi posizione fra archi, concordi e discordi, del ciclo, modificando i flussi secondo la regola riportata sopra non modificheremo mai il bilancio complessivo (la dimostrazione si fa per enumerazione completa # falla);
+	\item I vincoli $0 \leq x_\vartheta \leq u$ sono dimostrati se scegliamo:
+		$$
+		\vartheta^+ = \min_{(i, j) \in C^+} \{ u_{ij} - \overline{x}_{ij} \}
+		$$
+		e prendiamo l'arco uscente, nel caso $\vartheta^+ < \vartheta^-$, come # boh
 
-\begin{theorem}{di Bellman capacitato}
-	Supponiamo di avere una tripartizione $T, L, U$ che generi un flusso di base ammissibile.
-	Se la soluzione è anche ottima, vale riguardo ai costi ridotti:
-	\[
-		\begin{cases}
-			c_ {ij}^\pi, \geq 0 \quad \forall (i,j) \in L \\ 
-			c_ {ij}^\pi \leq 0, \quad \forall (i,j) \in U
-		\end{cases}
-	\]	
-\end{theorem}
+		Questo significa che, anzichè avere la singola regola sull'arco uscente vista per il flusso semplice, nel flusso capacitato dovremo imporre:
+		$$
+		\vartheta = \min \{ \vartheta^+, \vartheta^- \}, \quad \vartheta^- \leq \min_{(i, j) \in \mathcal{C}^-} \{ \overline{x}_{ij} \}, \quad \vartheta^+ = \min_{(i, j) \in C^+} \{ u_{ij} - \overline{x}_{ij} \}
+		$$
+		Nel caso $\vartheta = \vartheta^-$, prenderemo l'arco che $\vartheta^-$ svuota.
+		In caso contrario, prenderemo l'arco che $\vartheta^+$ svuota.
+\end{itemize}
+	\item $\exists (i, j) \in U : c_{ij}^\pi < 0$:
+\end{itemize}
+
+
 
 \end{document}
