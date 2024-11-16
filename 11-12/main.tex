@@ -208,7 +208,7 @@ Porremo quindi il nostro sistema come:
 dove l'ultimo vincolo è l'espressione in forma vettoriale di $0 \leq x_{ij} \leq u_{ij} \ \forall (i, j) \in A$.
 
 Avevamo notato che un problema di flusso di costo minimo \textit{non capacitato} si esprime agilmente in forma duale standard. 
-Convverrà quindi esprimere il vincolo delle capacità superiori come uguaglianza, per ricondursi allo stesso formato:
+Converrà quindi esprimere il vincolo delle capacità superiori come uguaglianza, per ricondursi allo stesso formato:
 \[
 	\begin{cases}
 		\max c^T x \\ 
@@ -260,9 +260,12 @@ A questo punto, $B = T \cup U \cup T' \cup L'$ sarà un base.
 
 \end{theorem}
 
-Abbiamo che la tripartizione $T, L, U, T', L', U'$ è effettivamente una \textit{esapartizione} negli insiemi di colonne $T, L, U$, e $T', L', U'$ con le $w$ associate.
+Abbiamo che la tripartizione degli archi $T, L, U$ è effettivamente una \textit{esapartizione} delle colonne $T, L, U$, e $T', L', U'$ con le $w$ associate.
 Notiamo che $M$ ha $2m$ colonne per definizione, e che queste sono distribuite ugualmente fra $T, L, U$ e $T', L', U'$, con il numero di colonne di $T$ pari a quello di $T'$, e via dicendo.
-Si ha quindi che scegliendo $U + Tì + L'$ dà $m$ colonne, a cui aggiungiamo le $n-1$ di $T$ (lo stesso ragionamento vale invertendo $T$ e $T'$), la dimensione della base è $m + n - 1$, come volevamo.
+Si ha quindi che scegliendo $U + T' + L'$ siamo a $m$ colonne, a cui aggiungiamo le $n-1$ di $T$ (lo stesso ragionamento vale invertendo $T$ e $T'$).
+Questo significa che la dimensione della base è $m + n - 1$, come volevamo.
+
+Inoltre, visto che ci siamo limitati a moltiplicare per matrici identità, $\det(M) = det(E_T)$, ergo vale ancora il \textbf{teorema dell'interezza} e $M$ è unimodulare (cioè il problema ha soluzioni intere).
 
 \subsubsection{Flussi di base capacitati}
 Vediamo quindi come calcolare il flusso di base corrispondente a una base:
@@ -272,7 +275,7 @@ $$
 dove la notazione indica che $x$ è composto dalle componenti in $T, L, U$, e $w$ dalle componenti in $T', L', U'$.
 
 La dimostrazione della formula è semplice: $U'$ e $L$, essendo non in base, sono automaticamente zero.
-A questo punto, le $U$ e $L'$ corrispondenti sono determinate come i costi di flusso massimo, o i surplus massimi (conseguenti dal fluso nullo).
+A questo punto, le $U$ e $L'$ corrispondenti sono determinate come i costi di flusso massimo, o i surplus massimi (conseguenti dal flusso nullo).
 Si calcolano infine le $T$ rimaste applicando un'algoritmo greedy sulle foglie che tiene conto dei flussi determinati da $U$, e si calcolano le $T'$ come gli scarti $u_T - x_T$ sulla capacità massima dati dal flusso appena determinato.
 
 \end{document}
