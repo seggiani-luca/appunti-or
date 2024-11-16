@@ -202,12 +202,20 @@ Si ha che, dal teorema di Bellman, gli archi entranti saranno quelli che violano
 		c_{ij}^\pi \leq 0, \quad \forall (i, j) \in U
 	\end{cases}
 \]
-applicando la regola anticiclo di Bland per cui prendiamo il primo fra gli archi che viola i vincoli.
 
-Distinguiamo qui due casi: quello dove l'arco uscente è in $L$, e quello dove l'arco uscente è in $U$:
+Il fatto che un arco entrante può appartenere sia a $L$ che a $U$ significherà che dovremo fare delle considerazioni diverse in fase  di elminazione dei cicli e in fase di inserzione dell'arco fra gli insiemi $T, L, U$ 
+
+Troviamo quindi questo arco entrante $(p, q) \in L \cup U$, discriminando attraverso la regola anticiclo di Bland sull'ordine lessicografico degli archi. 
+Vorremo eliminare il ciclo formato introducendovi $\vartheta \geq 0$ unità di flusso.
+
 \begin{itemize}
-	\item $\exists (i, j) \in L : c_{ij}^\pi > 0$: troviamo l'arco entrante $(p, q) \in L$. 
-		Vorremo eliminare il ciclo formato introducendo, in direzione concorde a $(p, q)$, $\vartheta \geq 0$ unità di flusso, che come avevamo visto porta i costi degli archi sul ciclo a:
+	\item 
+Nel caso $(p,q) \in L$, introdurremo le unità $\vartheta$ nella direzione \textbf{concorde} al flusso per cercare di \textit{riempire} l'arco.
+	\item 
+In caso contrario, con $(p,q) \in U$, introdurremo le unità $\vartheta$ nella direzione \textbf{discorde} al flusso, per cercare di \textit{svuotare} l'arco (ricordiamo che gli archi in $U$ sono quelli forzati pieni).
+\end{itemize}
+
+Scelta quindi una direzione per le unità $\vartheta$, avremo che i flussi sul ciclo si evolvono come:
 $$
 x_\vartheta =
 	\begin{cases}
@@ -216,29 +224,154 @@ x_\vartheta =
 		\overline{x}_{ij}, \quad \forall (i, j) \notin C
 	\end{cases}
 $$
-stabilite le partizioni concordi e discordi sul ciclo $\mathcal{C}^+$ e $\mathcal{C}^-$. 
-Questo dà la solita regola sull'arco uscente: 
-$$ \vartheta^- \leq \min_{(i, j) \in \mathcal{C}^-} \{ \overline{x}_{ij} \} $$
+stabilite le partizioni concordi e discordi sul ciclo $\mathcal{C}^+$ e $\mathcal{C}^-$.
 
-A questo punto vogliamo verificare la validità del flusso trovato, stabilendo che:
+Notiamo che il flusso trovato aggiungendo o rimuovendo $\vartheta$ unità di flusso, che chiamiamo $x_\vartheta$, rispetta Bellman, in quanto per un nodo posto in qualsiasi posizione fra archi concordi e discordi del ciclo, modificando i flussi secondo la regola riportata sopra non modificheremo mai il bilancio complessivo.
+
+Questo si può dimostrare per enumerazione completa: preso un nodo $n_c$ ad arbitrio su $\mathcal{C}$, si hanno i casi:
 \begin{itemize}
-	\item $x_\vartheta$ rispetta Bellman, in quanto, per un nodo posto in qualsiasi posizione fra archi, concordi e discordi, del ciclo, modificando i flussi secondo la regola riportata sopra non modificheremo mai il bilancio complessivo (la dimostrazione si fa per enumerazione completa # falla);
-	\item I vincoli $0 \leq x_\vartheta \leq u$ sono dimostrati se scegliamo:
-		$$
-		\vartheta^+ = \min_{(i, j) \in C^+} \{ u_{ij} - \overline{x}_{ij} \}
-		$$
-		e prendiamo l'arco uscente, nel caso $\vartheta^+ < \vartheta^-$, come # boh
-
-		Questo significa che, anzichè avere la singola regola sull'arco uscente vista per il flusso semplice, nel flusso capacitato dovremo imporre:
-		$$
-		\vartheta = \min \{ \vartheta^+, \vartheta^- \}, \quad \vartheta^- \leq \min_{(i, j) \in \mathcal{C}^-} \{ \overline{x}_{ij} \}, \quad \vartheta^+ = \min_{(i, j) \in C^+} \{ u_{ij} - \overline{x}_{ij} \}
-		$$
-		Nel caso $\vartheta = \vartheta^-$, prenderemo l'arco che $\vartheta^-$ svuota.
-		In caso contrario, prenderemo l'arco che $\vartheta^+$ svuota.
-\end{itemize}
-	\item $\exists (i, j) \in U : c_{ij}^\pi < 0$:
+	\item $n_c$ si trova fra due archi discordi: uno sarà discorde e l'altro concorde alla direzione di percorrenza, ergo avremo un unità di flusso in meno da un lato e una in più dall'altro.
+	\item $n_c$ si trova fra due archi concordi: questi cresceranno o diminuiranno di uno, ma in entrambi i casi l'unità in più (o in meno) di un arco dovrà essere fornita (ottenuta) dall'altro arco.
 \end{itemize}
 
+Ciò che cambierà invece saranno i costi, in quanto assunto che $c_{pq}^\pi$ è uguale al costo del ciclo, si avrà che il percorso fatto sul ciclo senza $(p,q)$ costerà la differenza di potenziale $c_{cic} = \pi_{p} - \pi_{q}$, e da $c_{pq} < c_{cic}$ sarà chiaramente più vantaggioso passare per $(p,q)$.
+
+Avremo quindi due condizioni di arresto per la variabile $\vartheta$:
+\begin{itemize}
+	\item Il primo caso è che un arco in $\mathcal{C}^-$ si annulli, cioè quello che avevamo visto sul flusso non capacitato, che si applica all'arco $(r,s) \in \mathcal{C}^-$ con $x_{rs} = \vartheta$
+	\item Il secondo caso è che un arco in $\mathcal{C}^+$ arrivi a capienza totale, e si applica all'arco $(r,s) \in \mathcal{C}^-$ con $u_{rs} - x_{rs} = \vartheta$.
+\end{itemize}
+
+Notiamo che dai due casi non è possibile dare una definizione univoca di $\vartheta$. Diciamo allora:
+$$
+\vartheta^+ = \min\{ u_{ij} - x_{ij}, \, (i, j) \in \mathcal{C}^+ \}
+$$
+$$
+\vartheta^- = \min\{ x_{\ij}, \, (i, j) \in \mathcal{C}^- \}
+$$
+da cui:
+$$
+\vartheta = \min\{\vartheta^+, \vartheta^-\}
+$$
+cioè definiamo separatamente il $\vartheta^+$ del primo arco saturo su $\mathcal{C}^+$, e il $\vartheta^-$ del primo arco vuoto su $\mathcal{C}^-$.
+Di conseguenza, $\vartheta$ sarà il minimo fra $\vartheta^+$ e $\vartheta^-$, cioè il primo che porta a una violazione dei vincoli.
+
+Notiamo infine come $\vartheta$ può tendere a $\infty$: questo è il caso già visto dei cicli a costo negativo, e porta la soluzione del problema a $-\infty$.
+
+Decideremo quindi di scegliere come arco uscente il primo arco $(r,s)$, dalla regola anticiclo di Bland sull'ordine lessicografico degli archi, che ha $u_{rs} - x_{rs} = \vartheta$ per $(r,s) \in \mathcal{C}^+$ o $x_{rs} = \vartheta$ per $(r,s) \in \mathcal{C}^-$.
+
+Resta quindi il problema di aggiornare le partizioni $T, L, U$ sulla base degli archi $(p,q)$ entrante e $(r,s)$ uscente scelti.
+Dovremo effettivamente porci due domande:
+\begin{itemize}
+	\item L'arco entrante $(p,q)$ è vuoto ($\in L$) o saturo ($\in U$)?
+	\item L'arco uscente $(r,s)$ esce dopo essere svuotato ($\in \mathcal{C}^-$) o saturato ($\in \mathcal{C}^+$)?
+\end{itemize}
+
+Iniziamo a discriminare dalla prima domanda.
+\begin{itemize}
+	\item $(p, q) \in L$: 
+		\begin{itemize}
+			\item $(r,s) \in \mathcal{C}^-$: l'arco entrante è vuoto e l'uscente esce svuotato. Vorremo spostare l'arco entrante in $T$ e l'arco uscente in in $L$, cioè:
+				$$ T = T \setminus (r,s) \cup (p,q), \quad L = L \setminus (p, q) \cup (r,s) $$
+			\item $(r,s) \in \mathcal{C}^+$: l'arco entrante è vuoto e l'uscente esce saturato. Vorremo spostare l'arco entrante in $T$ e l'arco uscente in in $U$, cioè:
+				$$ T = T \setminus (r,s) \cup (p,q), \quad L = L \setminus (p, q), \quad U = U \cup (r, s) $$
+				Notiamo che in questa situazione può presentarsi il caso dove $(p,q) = (r,s)$, cioè l'arco $(p,q)$ entra da vuoto e esce saturato, cioè semplicemente passa da $L$ a $U$.
+		\end{itemize}
+	\item $(p,q) \in U$:
+		\begin{itemize}
+			\item $(r,s) \in \mathcal{C}^-$: l'arco entrante è pieno e l'uscente esce svuotato. Vorremo spostare l'arco entrante in $T$ e l'arco uscente in in $L$, cioè:
+				$$ T = T \setminus (r,s) \cup (p,q), \quad L = L \cup (r,s), \quad U = U \setminus (p,q) $$
+				Notiamo che in questa situazione può presentarsi il caso dove $(p,q) = (r,s)$, cioè l'arco $(p,q)$ entra da pieno e esce svuotato, cioè semplicemente passa da $U$ a $l$.
+			\item $(r,s) \in \mathcal{C}^+$: l'arco entrante è pieno e l'uscente esce saturato. Vorremo spostare l'arco entrante in $T$ e l'arco uscente in in $U$, cioè:
+				$$ T = T \setminus (r,s) \cup (p,q), \quad U = U \setminus (p, q) \cup (r,s) $$
+		\end{itemize}
+\end{itemize}
+
+Possiamo quindi formulare l'algoritmo:
+\begin{algorithm}[H]
+\caption{del simplesso per flussi capacitati}
+\begin{algorithmic}
+	\STATE \textbf{Input:} un problema di flusso di costo minimo capacitato
+	\STATE \textbf{Output:} la soluzione ottima 
+	\STATE Trova una partizione degli archi $(T,L,U)$ con $T$ albero di copertura che genera un flusso ammissibile
+	\STATE \textsf{ciclo:}
+	\STATE Calcola il flusso di base capacitato:
+	$$
+	\bar{x} = \left(E_T^{-1} (b - E_U u_U), 0, u_U, u_T - x_T, u_L, 0\right) $$
+	e il potenziale di base capacitato:
+	$$
+	\bar{\pi} = \left( c_T^T E_T^{-1}, 0, 0, c_U^T - \pi^T E_U \right)
+	$$
+	\STATE Calcola i costi ridotti $c_{ij}^{\bar{\pi}} = c_{ij} + \bar{\pi}_{ij} - \bar{\pi}_{ij}$ per ogni arco
+	\IF{Bellman è soddisfatto, cioè:
+	$$
+c_{ij}^{\overline{\pi}} \geq 0 \ \ \forall (i, j) \in L
+$$
+$$
+c_{ij}^{\overline{\pi}} \leq 0 \ \ \forall (i, j) \in U
+$$}
+	\STATE Fermati, $\bar{x}$ è un flusso ottimo e $\bar{\pi}$ è un potenziale ottimo
+\ELSE
+		\STATE Calcola l'arco entrante: 
+		$$
+		(p, q) = \min \left\{ \{ (i, j) \in L : c_{ij}^{\bar{\pi}} < 0 \} \cup \{ (i, j) \in U : c_{ij}^{\bar{\pi}} > 0 \} \right\}
+		$$
+		stabilito l'ordinamento lessicografico degli archi
+		\STATE Chiama $\mathcal{C}$ il ciclo che l'arco $(p, q)$ forma con gli archi in $T$
+		\STATE Fissa un orientamento concorde a $(p,q)$ su $\mathcal{C}$ se $(p,q) \in L$, e discorde se $(p,q) \in U$ e partiziona $\mathcal{C}$ in $\mathcal{C^+}$ archi concordi e $\mathcal{C^-}$ archi discordi a tale orientamento
+	\ENDIF
+		\STATE Calcola:
+		$$
+		\vartheta^+ = \min\{ u_{ij} - \bar{x}_{ij} : (i, j) \in \mathcal{C}^+ \}
+		$$
+		$$
+		\vartheta^- = \min\{ \bar{x}_{ij} : (i, j) \in \mathcal{C}^- \}
+		$$
+		$$
+		\vartheta = \min\{\vartheta^+, \vartheta^-\}
+		$$
+	\IF{$\vartheta = \infty$}
+		\STATE Fermati, il flusso di costo minimo ha valore $-\infty$ 
+	\ELSE
+		\STATE Trova l'arco uscente: 
+		$$ 
+		(r, s) = \min \left\{ \{(i, j) \in \mathcal{C}^+ : u_{ij} - \bar{x}_{ij} = \vartheta \} \cup \{(i, j) \in \mathcal{C}^- : \bar{x}_{ij} = \vartheta \} \right\} 
+		$$
+		stabilito un ordinamento lessicografico degli archi
+	\ENDIF
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+\begin{algorithmic}
+	\STATE Aggiorna le partizioni come:
+	
+	\IF{$(p,q) \in L$}
+		\IF{$(r,s) \in \mathcal{C}^-$}
+			\STATE $ T = T \setminus (r,s) \cup (p,q), \, L = L \setminus (p, q) \cup (r,s) $
+		\ELSE
+			\IF{$(p,q) = (r,s)$}
+				\STATE $ L = L \setminus (p, q), \, U = U \cup (p, q) $
+			\ELSE
+				\STATE $ T = T \setminus (r,s) \cup (p,q), \, L = L \setminus (p, q), \, U = U \cup (r, s) $
+			\ENDIF
+		\ENDIF
+	\ELSE
+		\IF{$(r,s) \in \mathcal{C}^-$}
+			\IF{$(p,q) = (r,s)$}
+				\STATE $ L = L \cup (p, q), \, U = U \setminus (p, q) $
+			\ELSE
+				\STATE $ T = T \setminus (r,s) \cup (p,q), \, L = L \cup (r,s), \, U = U \setminus (p,q) $
+			\ENDIF
+		\ELSE
+				\STATE $ T = T \setminus (r,s) \cup (p,q), \, U = U \setminus (p, q) \cup (r,s) $
+		\ENDIF
+	\ENDIF
+	
+	\STATE Torna a \textsf{ciclo}
+\end{algorithmic}
+\end{algorithm}
+
+Notiamo che le stesse ottimizzazioni che avevamo visto sul simplesso per i flussi valgono per il simplesso per i flussi capacitati.
 
 
 \end{document}
