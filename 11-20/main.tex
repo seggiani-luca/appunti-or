@@ -229,22 +229,25 @@ Prendiamo il grafo:
 	\end{tikzpicture}
 \end{center}
 
-Un algoritmo celebre per il problema è quello di \textbf{Dijkstra}.
+Un (celebre) algoritmo per il problema è quello di \textbf{Dijkstra}.
 \begin{algorithm}
 \caption{di Dijkstra}
 \begin{algorithmic}
-	\STATE \textbf{Input:} % input
-	\STATE \textbf{Output:} % output
+	\STATE \textbf{Input:} un problema di cammini minimi con costi $c_{ij}>0$ % input
+	\STATE \textbf{Output:} l'albero dei cammini minimi % output
 	% body
 	\STATE Etichetta ogni nodo come $\pi = \left( 0, +\infty, ..., +\infty \right)$, assunto il primo nodo come partenza
 	\STATE Associa un predecessore ad ogni nodo come $P = (1, 0, ..., 0)$
-	\STATE Prendi il nodo $n \in N$ di etichetta $\pi$ minima, rimuovilo da $N$, e prendi la stella uscente ($\mathrm{FS}(n)$) di $n$
-	\FOR{$\forall j \in \mathrm{FS}(n)$}
-		\IF{$\pi_j \geq \pi_i + c_{ij}$}
-			\STATE Poni il predecessore $P_j = i$
-			\STATE Poni l'etichetta $\pi_j = \pi_i + c_{ij}$
-		\ENDIF
-	\ENDFOR
+	\STATE Poni $U = N$
+	\WHILE{$U \neq \emptyset$}
+		\STATE Prendi il nodo $n \in U$ di etichetta $\pi$ minima, rimuovilo da $U$, e prendi la stella uscente $\mathrm{FS}(n)$ di $n$
+		\FOR{$\forall j \in \mathrm{FS}(n)$}
+			\IF{$\pi_j \geq \pi_i + c_{ij}$}
+				\STATE Poni il predecessore $P_j = i$
+				\STATE Poni l'etichetta $\pi_j = \pi_i + c_{ij}$
+			\ENDIF
+		\ENDFOR
+	\ENDWHILE
 \end{algorithmic}
 \end{algorithm}
 

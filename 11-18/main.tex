@@ -270,7 +270,7 @@ Scriviamo per esteso le uguaglianze dei vincoli:
 Notiamo che questo problema è effettivamente un problema di flusso minimo (massimo) su $n+1$ variabili per $n$ nodi, dove la $n$-esima variabile è proprio il flusso $v$.
 Inoltre, con capacità massime intere, anche $v$ sarà necessariamente intero (dato da somma di interi) e quindi la matrice \textbf{unimodulare}, con la conseguenza già vista che $\text{PL} = \text{ILP}$.
 
-Inoltre, possiam portare i termini $v$ di $b$ a sinistra delle rispettive equazioni, ottenendo effettivamente la matrice:
+Inoltre, possiamo portare i termini $v$ di $b$ a sinistra delle rispettive equazioni, ottenendo effettivamente la matrice:
 $$
 \begin{pmatrix}
  & 1 \\ 
@@ -338,5 +338,6 @@ $$
 (x, v) = \left( 5, 9, 3, 2, 8, 4, 10, 0, 4, 14 \right)
 $$
 da cui $v=14$, come ci aspettavamo.
+Vedremo in seguito un algoritmo per il calcolo del flusso massimo su reti più efficiente dell'applicazione diretta del simplesso.
 
 \end{document}
