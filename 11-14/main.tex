@@ -300,7 +300,7 @@ Possiamo quindi formulare l'algoritmo:
 	\bar{x} = \left(E_T^{-1} (b - E_U u_U), 0, u_U, u_T - x_T, u_L, 0\right) $$
 	e il potenziale di base capacitato:
 	$$
-	\bar{\pi} = \left( c_T^T E_T^{-1}, 0, 0, c_U^T - \pi^T E_U \right)
+	\bar{\pi} = \left( c_T^\intercal E_T^{-1}, 0, 0, c_U^\intercal - \pi^\intercal E_U \right)
 	$$
 	\STATE Calcola i costi ridotti $c_{ij}^{\bar{\pi}} = c_{ij} + \bar{\pi}_{ij} - \bar{\pi}_{ij}$ per ogni arco
 	\IF{Bellman è soddisfatto, cioè:

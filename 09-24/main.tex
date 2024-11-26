@@ -163,7 +163,7 @@ Ciò che abbiamo formulato finora è un problema di programmazione lineare.
 Possiamo dire che la forma:
 \[
 	\begin{cases}
-			\max(c^T \cdot x) \\
+			\max(c^\intercal \cdot x) \\
 			A x \leq b
 	\end{cases}
 \]
@@ -174,7 +174,7 @@ rappresenta un problema LP in forma \textbf{primale standard}, ricordando che $c
 	
 	\[
 		\begin{cases}
-			\max(c^T \cdot x) \\
+			\max(c^\intercal \cdot x) \\
 			Ax \leq b \\
 		\end{cases}
 	\]
@@ -291,15 +291,15 @@ Possiamo dimostrare 4 proprietà dei poliedri:
 		$$
 		A questo punto si pone che $z$ e $w$ sono entrambi soluzioni ottime, ergo: 
 		$$ 
-			\max(c^T \cdot x) = c^T z = c^T w = v 
+			\max(c^\intercal \cdot x) = c^\intercal z = c^\intercal w = v 
 		$$
 		da cui si può dire che:
 		$$ 
-			c^T\left(\lambda z + (1 - \lambda)w\right) = \lambda c^T z + (1 - \lambda) c^T w = \lambda v + (1 - \lambda) v = v 
+			c^\intercal\left(\lambda z + (1 - \lambda)w\right) = \lambda c^\intercal z + (1 - \lambda) c^\intercal w = \lambda v + (1 - \lambda) v = v 
 		$$
 		Ovvero ogni punto sul segmento porta la funzione obiettiva a massimo assoluto, quindi è soluzione ottimale.
 	\item Infine, notiamo che il poliedro della regione ammissible di un problema LP può essere vuoto, ergo $P = \emptyset$.
-		In questo caso, si ha che $ \max(c^T \cdot x) = -\infty $ e $ \min(c^T \cdot x) = \infty $. 
+		In questo caso, si ha che $ \max(c^\intercal \cdot x) = -\infty $ e $ \min(c^\intercal \cdot x) = \infty $. 
 		Un poliedro vuoto significa che i vincoli stessi vanno modificati. 
 		Questo solitamente si fa risovendo una versione semplificata del problema LP.
 \end{enumerate}
@@ -311,12 +311,12 @@ Sarà solo il massimo (o minimo) a variare di un rapporto pari a quello di cui v
 \subsection{Gradiente e linee di isocosto}
 Si può dimostrare il seguente teorema:
 \begin{theorem}{Gradiente della funzione obiettivo}
-	Il gradiente di una funzione obiettivo definita come $ f(x) = c^T \cdot x $ sulla base di un qualche vettore $c$ è in ogni punto il vettore $c$ stesso.
+	Il gradiente di una funzione obiettivo definita come $ f(x) = c^\intercal \cdot x $ sulla base di un qualche vettore $c$ è in ogni punto il vettore $c$ stesso.
 \end{theorem}
 Da questo gradiente si possono ricavare le cosiddette linee di isocosto (in dimensioni $>2$ sarebbero superfici), cioè linee a valore costante della funzione obiettivo.
 \begin{definition}{Linea di isocosto}
 	Si definisce linea di isocosto di una funzione obiettivo con vettore $c$ una retta (o superficie):	
-	$$ f(x) = c^T \cdot x = k $$
+	$$ f(x) = c^\intercal \cdot x = k $$
 	per un qualsiasi $k$ costante.
 \end{definition}
 

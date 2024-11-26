@@ -229,7 +229,7 @@ Inoltre, le soluzioni degeneri non contribuiscono al risultato, ergo anche quell
 \subsection{Riassunto delle trasformazioni equivalenti}
 Riassumiamo adesso le trasformazioni equivalenti che abbiamo individuato finora per le disequazioni di problemi LP:
 \begin{itemize}
-	\item $\mathrm{min}(C^T \cdot x) \leftrightarrow \mathrm{max}(C^T \cdot x)$: trasformiamo problemi di massimo in problemi di minimo invertendo i segni;
+	\item $\mathrm{min}(C^\intercal \cdot x) \leftrightarrow \mathrm{max}(C^\intercal \cdot x)$: trasformiamo problemi di massimo in problemi di minimo invertendo i segni;
 	\item $Ax \geq b \leftrightarrow -Ax \leq -b$: invertiamo il verso della diseguaglianza moltiplicando per $-1$;
 	\item $Ax = b \rightarrow Ax \leq b \wedge Ax \geq b$: convertiamo un'uguaglianza in una coppia di diseguaglianze;
 	\item $Ax \leq b \rightarrow Ax + s = b$: convertiamo una diseguaglianza in un'uguaglianza introducendo una variabile di surplus. Si nota che la variabile di surplus può essere riconosciuta per essere rimossa, da:

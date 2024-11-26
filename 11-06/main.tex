@@ -203,16 +203,16 @@ Chiameremo comunque \textbf{primale} il primo problema, e \textbf{duale} il seco
 Facciamo innanzitutto una precisazione sulla forma in cui si esprime la matrice $A$ (o nei problemi su grafi, $E$ di incidenza).
 Sono equivalenti le forme:
 $$
-Ax = b \Leftrightarrow x^T A^T = b
+Ax = b \Leftrightarrow x^\intercal A^\intercal = b
 $$
 e quindi sui grafi:
 $$
-Ex = b \Leftrightarrow x^T E^T = b
+Ex = b \Leftrightarrow x^\intercal E^\intercal = b
 $$
 
 La seconda forma ha un vantaggio: la matrice così espressa risulta identica sia nel primale che nel duale, in quanto avevamo visto i vincoli duali si esprimono, almeno nei problemi di ottimizzazione visti finora, come:
 $$
-A^T y = c
+A^\intercal y = c
 $$
 
 \subsection{Duali di problemi di ottimizzazione sui grafi}
@@ -220,7 +220,7 @@ Veniamo quindi al calcolo vero e proprio dei problemi associati di problemi di o
 A partire dal problema:
 \[
 	\begin{cases}
-		\min c^T \cdot x \\ 
+		\min c^\intercal \cdot x \\ 
 		Ex = b \\ 
 		x \geq 0
 	\end{cases}
@@ -228,8 +228,8 @@ A partire dal problema:
 potremo ricavare:
 \[
 	\begin{cases}
-			\max b^T \cdot \pi \\ 
-			\pi^T E \leq c \Leftrightarrow E^T\pi \leq c
+			\max b^\intercal \cdot \pi \\ 
+			\pi^\intercal E \leq c \Leftrightarrow E^\intercal\pi \leq c
 	\end{cases}
 \]
 dove si nota, come prima, l'equivalenza delle due forme di espressione dei vincoli.
@@ -237,11 +237,11 @@ dove si nota, come prima, l'equivalenza delle due forme di espressione dei vinco
 Chiamiamo questo problema \textbf{problema dei potenziali} ai nodi del grafo.
 :qa!
 :qa!
-Notiamo che, se nel duale avevamo rimosso una riga, dal teorema del rango $n-1$, qui potremo rimuovere una \textbf{variabile}, cioè una colonna della matrice $E^T$.
+Notiamo che, se nel duale avevamo rimosso una riga, dal teorema del rango $n-1$, qui potremo rimuovere una \textbf{variabile}, cioè una colonna della matrice $E^\intercal$.
 
-Presa quindi una base $T$ (cioè un albero di copertura), avremo che il \textbf{potenziale di base} relativo a $T$ è la soluzione del sistema $ \pi^T E_T =c_T^T $, cioè:
+Presa quindi una base $T$ (cioè un albero di copertura), avremo che il \textbf{potenziale di base} relativo a $T$ è la soluzione del sistema $ \pi^\intercal E_T =c_T^\intercal $, cioè:
 $$
-\pi^T = c^T E_T^{-1}
+\pi^\intercal = c^\intercal E_T^{-1}
 $$
 
 Il potenziale di base, come il flusso di base, ha un algoritmo greedy di calcolo piuttosto intuitivo: partendo dalla \textbf{radice} dell'albero $T$, si calcola il costo complessivo sugli archi necessario a spostarsi da questa al nodo di cui vogliamo trovare il potenziale.

@@ -285,7 +285,7 @@ Se nello scorso problema avevamo $5 \cdot 5 = 25$ variabili meno $5$ della diago
 Abbiamo poi che i vincoli si presentano in forma:
 \[
 	\begin{cases}
-		\min c^T x \\ 
+		\min c^\intercal x \\ 
 		\sum\limits_{h,i \in A} x_{hi} + \sum\limits_{i,k \in A} = 2, \quad \forall i \in N \\
 		\sum\limits_{i \in S, \, j \notin S} x_{ij} + \sum\limits_{i \notin S, \, j \in S} x_{ij} \geq 1, \quad \forall S \subset N, \quad 2 \leq |S| \leq \left\lceil \frac{|N|}{2} \right\rceil
 	\end{cases}
@@ -317,7 +317,7 @@ Per il calcolo di una valutazione inferiore avremo bisogno di un rilassamento.
 Scegliamo di rilassare i vincoli sul grado di tutti i nodi tranne uno, detto $k$: 
 \[
 	\begin{cases}
-		\min c^T x \\ 
+		\min c^\intercal x \\ 
 		\sum\limits_{h,r \in A} x_{hi} + \sum\limits_{r,k \in A} = 2, \quad \forall i \in N \\
 		\sum\limits_{i \in S, \, j \notin S} x_{ij} + \sum\limits_{i \notin S, \, j \in S} x_{ij} \geq 1, \quad \forall S \subset N \setminus \{r\}, \quad 2 \leq |S| \leq \left\lceil \frac{|N|}{2} \right\rceil
 	\end{cases}

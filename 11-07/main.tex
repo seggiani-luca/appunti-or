@@ -233,7 +233,7 @@ Possiamo quindi formulare l'algoritmo per intero:
 	\STATE \textbf{Output:} la soluzione ottima 
 	\STATE Trova una partizione degli archi $(T,L)$ con $T$ albero di copertura che genera un flusso ammissibile
 	\STATE \textsf{ciclo:}
-	\STATE Calcola il flusso di base $\bar{x}_T = E_T^{-1} b$, posti gli $\bar{x}_L = 0$, e il potenziale di base $\bar{\pi}_T = c_T^T E_T^{-1}$
+	\STATE Calcola il flusso di base $\bar{x}_T = E_T^{-1} b$, posti gli $\bar{x}_L = 0$, e il potenziale di base $\bar{\pi}_T = c_T^\intercal E_T^{-1}$
 	\STATE Calcola i costi ridotti $c_{ij}^{\bar{\pi}} = c_{ij} + \bar{\pi}_{ij} - \bar{\pi}_{ij}$ per ogni arco
 	\IF{$c_{ij}^{\overline{\pi}} \geq 0 \ \ \forall (i, j) \in L$}
 	\STATE Fermati, $\bar{x}$ è un flusso ottimo e $\bar{\pi}$ è un potenziale ottimo

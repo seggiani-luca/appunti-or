@@ -239,8 +239,8 @@ Possiamo quindi formulare il sistema:
 	\end{cases}
 	\rightarrow
 	\begin{cases}
-		\max \left( v^T x \right) \\
-		p^T x \leq P \\
+		\max \left( v^\intercal x \right) \\
+		p^\intercal x \leq P \\
 		x \in \{ 0, 1 \}^n
 	\end{cases}
 \]
@@ -253,7 +253,7 @@ Decidiamo di trasformare il problema in un LP corrispondente, che chiameremo \te
 	Dato un problema ILP in forma:
 	\[
 		\begin{cases}
-			\max c^T \cdot x \\ 
+			\max c^\intercal \cdot x \\ 
 			Ax \leq b \\ 
 			x \in \mathbb{Z}^n
 		\end{cases}
@@ -261,7 +261,7 @@ Decidiamo di trasformare il problema in un LP corrispondente, che chiameremo \te
 	chiamiamo \textbf{rilassato continuo} il problema LP che rimuove il vincolo di interezza:
 	\[
 		\begin{cases}
-			\max c^T \cdot x \\ 
+			\max c^\intercal \cdot x \\ 
 			Ax \leq b 
 		\end{cases}	
 	\]
@@ -270,8 +270,8 @@ Decidiamo di trasformare il problema in un LP corrispondente, che chiameremo \te
 Possiamo ricavare questo rilassato continuo in due modi: il primo prevede di rimuovere semplicemente il vincolo, magari includendo la positività, o ancor meglio l'appartenenza $x \in [0, 1]$:
 \[
 	\begin{cases}
-		\max \left( v^T x \right) \\
-		p^T x \leq P \\
+		\max \left( v^\intercal x \right) \\
+		p^\intercal x \leq P \\
 		0 \leq x \leq 1
 	\end{cases}
 \]

@@ -199,7 +199,7 @@ Avevamo posto problemi LP in forma primale standard come:
 
 \[
 	\begin{cases}
-		\min(c^T \cdot x) \\
+		\min(c^\intercal \cdot x) \\
 		Ax \leq b
 	\end{cases}
 \]
@@ -242,14 +242,14 @@ Possiamo formalizzare questo risultato:
 	\[
 		P:
 		\begin{cases}
-			\max(c^T \cdot x) \\ 
+			\max(c^\intercal \cdot x) \\ 
 			Ax \leq b
 		\end{cases}
 	\rightarrow
 		D:
 		\begin{cases}
-			\min(b^T \cdot y) \\ 
-			A^T y = c \\
+			\min(b^\intercal \cdot y) \\ 
+			A^\intercal y = c \\
 			y \geq 0
 		\end{cases}
 	\]
@@ -264,7 +264,7 @@ Si può dimostrare che l'operazione del calcolo del duale è involutoria: il dua
 Visto che abbiamo costruito il duale per avere un limite superiore dei valori ottenuti dalla funzione obiettivo del primale, potremo dimostrare facilmente:
 \begin{theorem}{Dualità debole}
 	Se i poliedri $P$ e il suo duale $D$ non sono vuoti, allora:
-	$$ c^T x \leq y^T b \quad \forall x \in P, \forall y \in D$$
+	$$ c^\intercal x \leq y^\intercal b \quad \forall x \in P, \forall y \in D$$
 \end{theorem}
 Cioè il duale è sempre maggiore del primale.
 
@@ -273,7 +273,7 @@ Idealmente, ciò che vorremmo è che primale e duale convergessero verso un punt
 Effettivamente, questo risultato è verificato:
 \begin{theorem}{Dualità forte}
 	Se i poliedri $P$ e il suo duale $D$ non sono vuoti, allora:
-	$$ -\infty \leq \min_{y \in D} b^T y = \max_{x \in P} c^T x \leq +\infty $$
+	$$ -\infty \leq \min_{y \in D} b^\intercal y = \max_{x \in P} c^\intercal x \leq +\infty $$
 \end{theorem}
 
 Il teorema della dualità forte afferma che, se entrambi i poliedri (primale e duale) sono non vuoti, allora condividono l'ottimo, e anzi, che due soluzioni nel primale e nel duale sono ottime solo se hanno lo stesso valore.
@@ -319,11 +319,11 @@ Il punto $\bar{x}$ nel primale ha come complementare l'ottimo del duale perchè 
 Si può dimostrare il seguente teorema:
 \begin{theorem}{Scarti complementari}
 	Se le soluzioni $x$ e $y$ dei problemi primale e duale $\mathcal{P}$ e $\mathcal{D}$ sono entrambe ottime, allora vale:
-	$$ y^T (b - Ax) = 0 $$
+	$$ y^\intercal (b - Ax) = 0 $$
 \end{theorem}
 Questo si ricava dal fatto che, per la dualità forte, si ha che:
 $$
-c^T x = y^T Ax = y^T b \Rightarrow y^T(b - Ax) = 0
+c^\intercal x = y^\intercal Ax = y^\intercal b \Rightarrow y^\intercal(b - Ax) = 0
 $$
 
 Il significato del teorema è che, se una disequazione nel primale è \textit{stretta}, allora la corrispondente variabile nel duale è $\neq 0$, e viceversa.
@@ -347,20 +347,20 @@ Questo significa che possiamo trovare due soluzioni di base corrispondenti per u
 Queste sono:
 \begin{itemize}
 	\item Soluzione di base primale: $ x = A_B^{-1} b_B $;
-	\item Soluzione di base duale: $ y_B^T = c^T A_B^-1, \quad y_N = 0 $;
+	\item Soluzione di base duale: $ y_B^\intercal = c^\intercal A_B^-1, \quad y_N = 0 $;
 \end{itemize}
 Si dice che le soluzioni di base sono \textbf{complementari}.
 
 \par\smallskip
 \noindent 
 \textbf{\textsf{Dimostrazione}}
-Vogliamo che $y^T(b - Ax)$ sia $=0$ soddisfatte le condizioni di base.
+Vogliamo che $y^\intercal(b - Ax)$ sia $=0$ soddisfatte le condizioni di base.
 Applichiamo quindi la base:
 $$
-y^T(b - Ax) = \left( y_B^T, y_N^T \right) \binom{b_B - A_B x}{b_N - A_N x} = \left( c^T A_B^{-1}, 0 \right) \binom{b_B - A_B A_B^{-1} b_B}{b_N - A_N A_B^{-1} b_B}
+y^\intercal(b - Ax) = \left( y_B^\intercal, y_N^\intercal \right) \binom{b_B - A_B x}{b_N - A_N x} = \left( c^\intercal A_B^{-1}, 0 \right) \binom{b_B - A_B A_B^{-1} b_B}{b_N - A_N A_B^{-1} b_B}
 $$
 $$
-= \left( c^T A_B^{-1}, 0 \right) \binom{0}{b_N - A_N A_B^{-1} b_B} = 0
+= \left( c^\intercal A_B^{-1}, 0 \right) \binom{0}{b_N - A_N A_B^{-1} b_B} = 0
 $$
 
 Questo nome non è a caso, in quanto si può dimostrare le due soluzioni sono in scarti complementari.

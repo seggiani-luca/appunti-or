@@ -197,7 +197,7 @@
 Avevamo quindi posto problemi con vincoli  in forma:
 \[
 	\begin{cases}
-			\min c^T \cdot x \\ 
+			\min c^\intercal \cdot x \\ 
 			\sum\limits_{x < j} x_{ij} + \sum\limits_{j < y} x_{ij} = 2, \quad \forall j \\ 
 			\sum\limits_{i \in S \, j \notin S} x_{ij} + \sum\limits_{i \notin S \, j \in S} x_{ij} \geq 1, \quad \forall S \subset N, \quad 2 \leq |S| \leq \left\lceil \frac{|N|}{2} \right\rceil  
 	\end{cases}
@@ -214,7 +214,7 @@ Presentiamo adesso un altro metodo, detto \textbf{branch and bound}.
 Il metodo più naive che possiamo adottare per risolvere un problema in forma:
 \[
 	\begin{cases}
-		\max c^T x \\ 
+		\max c^\intercal x \\ 
 		A x\leq b \\ 
 		x \in \{0, 1\}^n
 	\end{cases}

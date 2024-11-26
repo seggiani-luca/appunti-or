@@ -1,0 +1,352 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Ricerca Operativa}
+\author{Luca Seggiani}
+\date{2024}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=Teorema~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
+	#1
+}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+
+% sezione (data)
+\section{Lezione del 26-11-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+\subsection{Introduzione alla programmazione non lineare}
+% testo
+\begin{problem}{di programmazione non lineare}
+	In una nuova linea di produzione sono integrati 6 robot, ciascuno dei quali può rotare di 360 gradi attorno all'asse verticale.
+	Le aree di lavoro di ciascun robot non devono sovrapporsi, in modo da evitare collisioni fra di essi.
+	Inoltre, i robot devono essere collegati fra di loro attraverso cavi in fibra ottica, e poichè questi sono costosi, è necessario minimizzare la distanza da coprire.
+\end{problem}
+
+I raggi di lavoro dei robot sono, poniamo, i seguenti:
+\begin{table}[h!]
+	\center \rowcolors{2}{white}{black!10}
+	\begin{tabular} { c | c  }
+		\bfseries Robot & \bfseries Raggio  \\
+		\hline 
+		 1 & 120 \\ 
+		 2 & 80 \\ 
+		 3 & 100 \\ 
+		 4 & 70 \\ 
+		 5 & 45 \\ 
+		 6 & 120
+	\end{tabular}
+\end{table}
+
+Il problema sarà quindi quello di individuare i 6 punti sul piano $(x_1, y_1), (x_2, y_2)$, $...$, $(x_6, y_6)$ che corrispondono alle posizioni degli assi verticali di ogni robot, imponendo il vincolo di distanza fra due robot adiacenti $i$ e $j$ di $r_i + r_j$.
+La funzione obiettivo sarà quindi la quantità di cavo in fibra ottica, cioè la distanza fra ogni coppia $i$, $j$ di robot.
+Possiamo quindi disporre un modello:
+\[
+	\begin{cases}
+		\max \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} + \sqrt{(x_2 - x_3)^2 + (y_2 - y_3)^2} + ... + \sqrt{(x_5 - x_6)^2 + (y_5 - y_6)^2} \\ 
+		d_{ij} \geq r_j + r_j, \quad \forall i = 1, 2, ..., 6, \quad \forall j = 1, 2, ..., 6, \quad i < j
+	\end{cases}
+\]
+su 12 variabili e $\frac{n(n-1)}{2} \big|_{n=6} = 15$ vincoli.
+Nelle prossime lezioni vedremo come risolvere questo tipo di problemi, notando per ora che tutte le funzioni che abbiamo generato finora sono \textbf{quadratiche} tolte le radici (che possiamo fare conservando massimi e minimi).
+
+\par\smallskip
+
+In generale, nella programmazione non lineare, vorremo avere le nostre funzioni $\in C^1$ in modo da poter derivare, cioè ricavare il gradiente e stabilire punti di massimo e di minimo, attraverso il teorema di Fermat:
+\begin{theorem}{di Fermat}
+	Sia data una funzione $f: \mathbb{R}^n \rightarrow \mathbb{R}$, con adeguate condizioni di continuità.
+	Si ha che in ogni punto di massimo o minimo locale $\bar{x}$ vale:
+	$$
+		\nabla f (\bar{x}) = 0
+	$$
+\end{theorem}
+
+Addirittura, fosse la funzione $\in C^2$ potremmo ricavare l'Hessiana come ulteriore discriminante, ricordando che \textit{Hessiana definita positiva} significa \textbf{punto di minimo}, e viceversa \textit{Hessiana definita negativa} significa \textbf{punto di massimo} (con le opportune considerazioni di definizione positiva/negativa stretta e non).
+
+Vediamo quindi di fare una classificazione di funzioni utili ai fini dell'ottimizzazione.
+
+\subsubsection{Funzioni quadratiche}
+Diamo quidi una forma generale di polinomi di secondo grado su cui fare ottimizzazione.
+Una funzione tipo potrebbe essere:
+$$
+f(x) = \frac{1}{2}x^\intercal Qx + c^\intercal x
+$$
+imponendo, vedremo poi come mai, la matrice $Q$ definita positiva.
+
+Di cui potrebbe essere un esempio:
+$$
+f(x) = ax_1^2 + bx_1x_2 + cx_2^2 + dx_1 + ex_2
+$$
+
+Vediamo come trovare la matrice $Q$ e il vettore $c$. 
+Nel caso in due variabili, che continuiamo per la convenzione della ricerca operativa a chiamare $x_1$ e $x_2$, avremo per calcolo diretto, spezzando le componenti in $Q$ e in $C$:
+\begin{itemize}
+	\item $Q$:
+		$$
+		\frac{1}{2}x^\intercal Q x = 
+		\frac{1}{2}
+		\begin{pmatrix}
+			x_1 & x_2
+		\end{pmatrix}
+		\begin{pmatrix}
+			q_{11} & q_{12} \\ 
+			q_{21} & q_{22}
+		\end{pmatrix}
+		\begin{pmatrix}
+			x_1 & x_2
+		\end{pmatrix}
+		=
+		\frac{1}{2}
+		\begin{pmatrix}
+			x & y
+		\end{pmatrix}
+		\begin{pmatrix}
+			q_{11} x_1 & q_{12} x_2 \\ 
+			q_{21} x_1 & q_{22} x_2
+		\end{pmatrix}
+		$$
+		$$
+		= \frac{1}{2}\left( q_{11} x_1^2 + (q_{12} + q_{21}) x_1 x_2 + q_{22} x_2^2 \right)
+		$$
+		sarà quindi:
+		\[
+			\begin{cases}
+				q_{11} = 2a \\ 
+				q_{12} = b \\
+				q_{21} = b \\
+				q_{22} = 2c
+			\end{cases}
+		\]
+	\item $c$: valgono le stesse regole viste sulle lineari, cioè nel nostro esempio:
+		\[
+			\begin{cases}
+				c_1 = d \\ 
+				c_2 = e
+			\end{cases}
+		\]
+\end{itemize}
+
+Abbiamo quindi stabilito che esiste una corrispondenza fra polinomi di secondo grado e matrici quadrate simmetriche di dimensione 2, dove la definizione positiva indica la presenza di un solo minimo globale della quadratica.
+
+Si può poi dimostrare che in generale esiste una corrispondenza fra \textbf{funzioni polinomiali di secondo grado} e \textbf{matrici quadrate simmetriche} di qualsiasi dimensione.
+
+Notiamo che, stabilita la $Q$ e la $c$, il calcolo di gradiente risulta immediato in quanto:
+\[
+	\begin{cases}
+		\nabla f = Qx + c \\ 
+		Hf = Q
+	\end{cases}
+\]
+da cui si spiega l'$\frac{1}{2}$ accanto a $Q$, che "normalizza" il modulo dell'Hessiana.
+
+\subsubsection{Funzioni convesse}
+Diamo innanzitutto una definizione:
+\begin{definition}{Funzione convessa}
+	Una funzione convessa è qualsiasi funzione che rispetta:
+	$$
+		f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)
+	$$
+	con $\forall \lambda \in [0, 1]$, $\forall x$, $\forall y \in \mathbb{R}^n$.
+\end{definition}
+la definizione di funzione convessa stabilisce essenzialmente per una qualsiasi retta intercettante la funzione $f$, in qualsiasi punto compreso fra le intercette la funzione raggiunge un valore minore o uguale al valore della retta calcolato nello stesso punto.
+
+Una proprietà importante delle funzioni convesse è che il gradiente è dato da una funzione \textbf{monotona crescente}, cioè $f(x) < f(y)$ $\forall x < y$, e quindi che l'Hessiana è \textbf{semidefinita positiva} ($\geq 0$ nel caso scalare).
+
+Una conseguenza immediata di quest'ultima considerazione è che in una funzione convessa, ogni punto dove $\nabla f(x) = 0$ è necessariamente \textbf{minimo}.
+
+Notiamo alcune altre proprietà delle funzioni convesse:
+\begin{itemize}
+	\item Una funzione convessa può non avere minimo: si pensi all'esponenziale, che tende a 0 senza raggiungerlo mai, e quindi ha solo un \textit{limite inferiore};
+	\item Il minimo locale di una funzione convessa è anche minimo globale;
+	\item Le funzioni convesse non hanno selle.
+\end{itemize}
+
+\subsubsection{Funzioni coercive}
+Definiamo infine un'ultima classe, data da:
+\begin{definition}{Funzione coerciva}
+	Una funzione coerciva è una funzione che rispetta il limite:
+	$$
+		\lim_{|x| \rightarrow +\infty} f(x) = +\infty
+	$$
+\end{definition}
+	
+Possiamo quindi essere sicuri che una funzione coerciva non ha massimo globale, ma al massimo solo massimi locali.
+
+\end{document}

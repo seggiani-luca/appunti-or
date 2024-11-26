@@ -245,7 +245,7 @@ Si ricavano quindi i vincoli su ogni riga:
 ergo si ricava un problema di ILP in forma:
 \[
 	\begin{cases}
-		\min c^T \cdot x \\ 
+		\min c^\intercal \cdot x \\ 
 		Ax \geq 1 \\ 
 		x \in \{ 0, 1 \}
 	\end{cases}
@@ -261,7 +261,7 @@ Vediamo quali valutazioni possiamo usare per trovare soluzioni approssimate.
 	\item \textbf{Valutazione inferiore:} una valutazione inferiore $v_I$ può essere agevolmente calcolata dal rilassato continuo del problema ILP:
 		\[
 			\begin{cases}
-				\min c^T \cdot x \\ 
+				\min c^\intercal \cdot x \\ 
 				Ax \geq 1 \\ 
 				0 \leq x \leq 1
 			\end{cases}

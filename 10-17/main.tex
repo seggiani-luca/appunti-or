@@ -200,7 +200,7 @@ Abbiamo visto finora il problema:
 
 \[
 	\begin{cases}
-		\max c^T x \\
+		\max c^\intercal x \\
 		Ax \leq b
 		x \in \mathbb{Z}^n_+
 	\end{cases}
@@ -228,7 +228,7 @@ Decidiamo di ridurre le dimensioni dell'insieme $P$, visto che $\mathrm{conv}(\O
 Facciamo ciò sfruttando le cosiddette \textbf{disuguaglianze valide} (DV):
 \begin{definition}{Diseguaglianza valida}
 	Una diseguaglianza è una DV di un'insieme $\Omega \subset \mathbb{Z}^n$ se rispetta la forma:
-	$$ \gamma^T x \leq \gamma_0, \quad \forall x \in \Omega $$
+	$$ \gamma^\intercal x \leq \gamma_0, \quad \forall x \in \Omega $$
 \end{definition}
 
 Abbiamo quindi che una diseguaglianza è valida se contiene $\Omega$ completamente nel semispazio che definisce.
@@ -252,7 +252,7 @@ L'idea dei piani di taglio è quella di rimuovere successivamente soluzioni di $
 Supponiamo di avere il problema:
 \[
 	\begin{cases}			
-		\max c^T x \\ 
+		\max c^\intercal x \\ 
 		Ax \leq b \\ 
 		\gamma x \leq \gamma_0
 	\end{cases}
@@ -274,7 +274,7 @@ Il sottoinsieme dei piani di taglio che studieremo è quello dei \textbf{piani d
 Prendiamo un problema di ILP in forma:
 \[
 	\begin{cases}
-		\max c^T x \\ 
+		\max c^\intercal x \\ 
 		Ax = b \\ 
 		x \geq 0 \\ 
 		x \in \mathbb{Z}^n

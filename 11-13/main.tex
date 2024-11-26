@@ -199,8 +199,8 @@ Vediamo adesso come calcolare i potenziali di base.
 Si imposta innanzitutto il duale, cioè il \textbf{problema dei potenziali}: 
 \[
 	\begin{cases}
-		\max b^T \pi + u^T \mu \\ 
-		E^T \pi + \mu \leq c \\ 
+		\max b^\intercal \pi + u^\intercal \mu \\ 
+		E^\intercal \pi + \mu \leq c \\ 
 		\mu \leq 0
 	\end{cases}
 \]
@@ -212,21 +212,21 @@ Notiamo che avremmo potuto usare la stessa matrice dei vincoli nel primale segue
 		\min
 		\begin{pmatrix}
 			x & w
-		\end{pmatrix}^T
+		\end{pmatrix}^\intercal
 		\begin{pmatrix}
 			c \\ 0
 		\end{pmatrix} \\ 
 		\begin{pmatrix}
 			x & w
-		\end{pmatrix}^T
+		\end{pmatrix}^\intercal
 		\begin{pmatrix}
-			E^T & I \\ 
+			E^\intercal & I \\ 
 			0 & I 
 		\end{pmatrix}
 		=
 		\begin{pmatrix}
 			b & u
-		\end{pmatrix}^T \\ 
+		\end{pmatrix}^\intercal \\ 
 		\begin{pmatrix}
 			x & w
 		\end{pmatrix}
@@ -239,13 +239,13 @@ Lo stesso problema potrebbe essere stato espresso nella forma a blocchi, come av
 	\begin{cases}
 		\max 
 		\begin{pmatrix}
-			b^T & u^T
+			b^\intercal & u^\intercal
 		\end{pmatrix}
 		\begin{pmatrix}
 			\pi \\ \mu
 		\end{pmatrix}\\
 		\begin{pmatrix}
-			E^T & I \\ 
+			E^\intercal & I \\ 
 			0 & I
 		\end{pmatrix}
 		\begin{pmatrix}
@@ -261,11 +261,11 @@ Lo stesso problema potrebbe essere stato espresso nella forma a blocchi, come av
 Vediamo quindi il calcolo vero e proprio.
 Si tratta il problema come qualsiasi altro problema in formato primale, cioè si rendono valide le equazioni date dalla base $T, U, T', L'$.
 Avremo quindi che $\mu_T = 0$ e $\mu_L = 0$.
-A questo punto troviamo i $\pi$ dati da $E_T^T \mu = c_T$, su $T$, $L$ e $U$.
-Infine, abbiamo i $\mu$ su $U$, dati da $\pi_T E_U + \mu_U^T = c^T$.
+A questo punto troviamo i $\pi$ dati da $E_T^\intercal \mu = c_T$, su $T$, $L$ e $U$.
+Infine, abbiamo i $\mu$ su $U$, dati da $\pi_T E_U + \mu_U^\intercal = c^\intercal$.
 Cioè, riassumendo, secondo la stessa notazione usata per i flussi di base (si noti che il flusso in $T$ è soluzione di un unico sistema):
 $$
-(\pi(T), \mu(T'. L', U')) = \left(c_T^T E_T^{-1}, 0, 0, c_U^T - \pi^T E_U \right)
+(\pi(T), \mu(T'. L', U')) = \left(c_T^\intercal E_T^{-1}, 0, 0, c_U^\intercal - \pi^\intercal E_U \right)
 $$
 
 Dai potenziali possiamo calcolare i costi ridotti, analogamente a come avevamo fatto sui flussi non capacitati:

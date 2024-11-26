@@ -493,7 +493,7 @@ In sostanza, se un problema LP ha soluzione, essa si trova su uno dei vertici de
 Sia dato un problema LP $\mathcal{P}$ in forma primale standard, ergo posto come:
 \[
 	\begin{cases}
-		\max{c^T \cdot x} \\ 
+		\max{c^\intercal \cdot x} \\ 
 		Ax \leq b	
 	\end{cases}
 \]
@@ -510,31 +510,31 @@ $$
 $$
 ed esprimiamo quindi la funzione obiettivo come il prodotto scalare fra il vettore costo e il punto $\bar{x}$ del poliedro:
 $$
-c^T \cdot \bar{x} = c^T \cdot \left( \sum_{i=1}^k \lambda_i v_i + \sum_{j=i}^p \mu_j e_j \right) = \sum_{i=1}^k \lambda_i c^T v_i + \sum_{j=i}^p \mu_j c^T e_j
+c^\intercal \cdot \bar{x} = c^\intercal \cdot \left( \sum_{i=1}^k \lambda_i v_i + \sum_{j=i}^p \mu_j e_j \right) = \sum_{i=1}^k \lambda_i c^\intercal v_i + \sum_{j=i}^p \mu_j c^\intercal e_j
 $$
 
 A questo punto conviene chiarire su cosa significa che il problema ha valore ottimo finito.
 Il secondo termine è la combinazione conica della sommatoria dei vettori di recessione scalati dal vettore costo.
-Se almeno uno dei $c^T e_j > 0$, si avrà che portando $\mu_j \rightarrow +\infty$ la funzione avrà massimo $= \infty$.
+Se almeno uno dei $c^\intercal e_j > 0$, si avrà che portando $\mu_j \rightarrow +\infty$ la funzione avrà massimo $= \infty$.
 Geometricamente, questo significa che esiste una direzione illimitata del poliedro dove i vettori costo permettono alla funzione di crescere all'infinito.
 
-Dunque sarà vero che $c^T e_j \leq 0 \quad \forall j \in \{ 1, ..., p \}$ se vogliamo che la funzione abbia valore ottimo finito.
+Dunque sarà vero che $c^\intercal e_j \leq 0 \quad \forall j \in \{ 1, ..., p \}$ se vogliamo che la funzione abbia valore ottimo finito.
 
 Possiamo quindi usare questa ipotesi per dire:
 $$
-c^T \cdot \bar{x} = \sum_{i=1}^k \lambda_i c^T v_i + \sum_{j=i}^p \mu_j c^T e_j \leq \sum_{i=1}^k \lambda_i c^T v_i \leq \sum_{i=1}^k \max_{1 \leq i \leq p} \left(\lambda_i c^T v_i\right) 
+c^\intercal \cdot \bar{x} = \sum_{i=1}^k \lambda_i c^\intercal v_i + \sum_{j=i}^p \mu_j c^\intercal e_j \leq \sum_{i=1}^k \lambda_i c^\intercal v_i \leq \sum_{i=1}^k \max_{1 \leq i \leq p} \left(\lambda_i c^\intercal v_i\right) 
 $$
 
 $$
-= \left( \max_{1 \leq i \leq p} c^T v_i\right) \sum_{i=1}^k \lambda_i = \max_{1\leq i \leq p} c^Tv_i = c^T v_k
+= \left( \max_{1 \leq i \leq p} c^\intercal v_i\right) \sum_{i=1}^k \lambda_i = \max_{1\leq i \leq p} c^\intercal v_i = c^\intercal v_k
 $$
 
-E quindi $\max_{x \in P} c^T \cdot x \leq c^T v_k$.
+E quindi $\max_{x \in P} c^\intercal \cdot x \leq c^\intercal v_k$.
 A questo punto, visto che $\bar{x}$ è effettivamente un punto della regione ammissibile, sarà vero che:
 $$
-c^Tv_k \leq \max_{x \in P} c^T \cdot x
+c^\intercal v_k \leq \max_{x \in P} c^\intercal \cdot x
 $$
 
-E dunque $\max_{x \in P} c^T \cdot x = c^T v_k$, come volevasi dimostrare. 
+E dunque $\max_{x \in P} c^\intercal \cdot x = c^\intercal v_k$, come volevasi dimostrare. 
 
 \end{document}

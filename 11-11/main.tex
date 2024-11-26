@@ -283,7 +283,7 @@ Vediamo un'altro tipo di problema che può essere risolto attraverso una version
 In generale, un problema dei cammini a costo minimo è un problema di ottimizzazione sui grafi in forma:
 \[
 	\begin{cases}
-		\min c^T \cdot x \\
+		\min c^\intercal \cdot x \\
 		Ex = b \\ 
 		x \geq 0
 	\end{cases}
@@ -320,7 +320,7 @@ Formuliamo allora il \textbf{simplesso per cammini}:
 	\STATE \textbf{Output:} la soluzione ottima 
 	\STATE Trova un albero $T$ di radice $r$ 
 	\STATE \textsf{ciclo:}
-	\STATE Calcola il potenziale di base $\bar{\pi}^T = c_T^T E_T^{-1}$
+	\STATE Calcola il potenziale di base $\bar{\pi}^\intercal = c_T^\intercal E_T^{-1}$
 	\STATE Calcola i costi ridotti $c_{ij}^{\bar{\pi}} = c_{ij} + \bar{\pi}_{ij} - \bar{\pi}_{ij}$ per ogni arco
 	\IF{$c_{ij}^{\overline{\pi}} \geq 0 \ \ \forall (i, j) \in L$}
 	\STATE Fermati, $\bar{x}$ è un albero dei cammini minimi 
@@ -357,14 +357,14 @@ Il problema presentato è un di ottimizzazione \textbf{multiobiettivo}: vogliamo
 Un'approccio è quello di impostare il problema di costo minimo sulle distanze, cioè come:
 \[
 	\begin{cases}
-		\min d^T \cdot x \\ 
+		\min d^\intercal \cdot x \\ 
 		Ex = b \\ 
 		x \geq 0 \\ 
 	\end{cases}
 \]
 e di introdurre termine di \textit{budget}, cioè un valore massimo $C$ di costo che siamo disposti a pagare:
 $$
-c^T x \leq C
+c^\intercal x \leq C
 $$
 
 Questo approccio però non è propriamente ottimale, in quanto introducendo un nuovo vincolo, che potrebbe violare le condizoni di \textbf{interezza} rispettate dalla matrice di adiacenza, che sappiamo essere \textbf{unimodulare}.

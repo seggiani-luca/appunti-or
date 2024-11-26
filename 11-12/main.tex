@@ -200,7 +200,7 @@ Avremo quindi che, oltre oltre agli $n$ bilanci $b_i$ e agli $m$ costi $c$ per $
 Porremo quindi il nostro sistema come:
 \[
 	\begin{cases}
-		\max c^T x \\ 
+		\max c^\intercal x \\ 
 		Ex = b \\ 
 		0 \leq x \leq u
 	\end{cases}
@@ -211,7 +211,7 @@ Avevamo notato che un problema di flusso di costo minimo \textit{non capacitato}
 Converrà quindi esprimere il vincolo delle capacità superiori come uguaglianza, per ricondursi allo stesso formato:
 \[
 	\begin{cases}
-		\max c^T x \\ 
+		\max c^\intercal x \\ 
 		Ex = b \\
 		x + w = u \\ 
 		x \geq 0 \\ 

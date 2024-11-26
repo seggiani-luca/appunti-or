@@ -199,7 +199,7 @@ Vediamo di approfondire il legame fra un problema ILP e i problemi LP che possia
 Avevamo posto un problema ILP in forma:
 \[
 	\begin{cases}
-			\max (c^T x) \\ 
+			\max (c^\intercal x) \\ 
 			Ax \leq b \\ 
 			x \in \mathbb{Z}^n
 	\end{cases}
@@ -208,7 +208,7 @@ Avevamo posto un problema ILP in forma:
 E avevamo visto che si può trovare un limite inferiore $V_I$ e un limite superiore $V_S$ a partire dagli algoritmi dei rendimenti, quindi prendendo il rilassato continuo del problema, cioè l'associato che rimuove il vincolo $x \in \mathbb{Z}^n$:
 \[
 	\begin{cases}
-			\max (c^T x) \\ 
+			\max (c^\intercal x) \\ 
 			Ax \leq b
 	\end{cases}
 \]
@@ -417,7 +417,7 @@ dove è stata evidenziata la soluzione del primale sull'insieme $\mathrm{conv}(\
 
 Possiamo quindi dire, visto che $\Omega \subset \mathrm{conv}(\Omega)$ e che $P$ è un'estensione di $\Omega$ in quanto poliedro del rilassato continuo, che è vera la catena di diseguaglianze:
 $$
-\max_{x \in \Omega} c^T x \leq \max_{x \in \mathrm{conv}(\Omega)} c^T x \leq \max_{x \in P} c^T x
+\max_{x \in \Omega} c^\intercal x \leq \max_{x \in \mathrm{conv}(\Omega)} c^\intercal x \leq \max_{x \in P} c^\intercal x
 $$
 e non solo: si può stringere la diseguaglianza sul lato sinistro, per affermare che:
 \begin{theorem}{Equivalenza fra problemi LP e ILP}
@@ -428,8 +428,8 @@ $$
 con, posto $P$ come il poliedro del rilassato continuo, $q$ ricavato dai vertici $P \cap \mathbb{Z}^n$, e $r$ ricavato dalle direzioni di recessione di $P$. 
 
 Se si prendono le soluzioni:
-$$ v_\Omega = \max_{x \in \Omega} c^T x, \quad v_{\mathrm{conv}(\Omega)} = \max_{x \in \mathrm{conv}(\Omega)} c^T x$$
-si ha che $v_\Omega = v_{\mathrm{conv}(\Omega)}$, e che se $v_{\mathrm{conv}(\Omega)}$ è finito, allora esiste $x_\Omega \in \Omega$ tale che $c^T x_\Omega = v_\Omega = v_{\mathrm{conv}(\Omega)}$
+$$ v_\Omega = \max_{x \in \Omega} c^\intercal x, \quad v_{\mathrm{conv}(\Omega)} = \max_{x \in \mathrm{conv}(\Omega)} c^\intercal x$$
+si ha che $v_\Omega = v_{\mathrm{conv}(\Omega)}$, e che se $v_{\mathrm{conv}(\Omega)}$ è finito, allora esiste $x_\Omega \in \Omega$ tale che $c^\intercal x_\Omega = v_\Omega = v_{\mathrm{conv}(\Omega)}$
 \end{theorem}
 
 Siamo quindi arrivati a formulare un teorema secondo cui, per ogni problema ILP, possamo costruire un problema LP associato che ha la stessa soluzione, semplicemente riformulando i vincoli in modo che descrivano l'involucro convesso dei punti in $\Omega = P \cap \mathbb{Z}^n$, ed eventuali direzioni di recessione di $P$, dove $P$ è il poliedro del rilassato continuo.
