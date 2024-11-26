@@ -300,12 +300,18 @@ Questo si ottiene scegliendo il vettore $b$ appositamente:
 cioè impostando il nodo $r$ come una sorgente da $n-1$ unità, e ogni nodo di arrivo $i \neq r$ come un pozzo di $1$ unità.
 
 Notiamo che un albero di copertura $T_r$ radicato in $r$ rappresenta una base ammissibile del problema, in quanto porterà le $-(n-1)$ unità di flusso sugli $n-1$ nodi.
-Inoltre, il flusso di base asssociato a $T_r$ sarà \textbf{non degenere}, cioè nessuno flusso sarà uguale a 0 (ogni nodo avrà in arrivo almeno 1 unità di flusso).
-Possiamo quindi dire che il teorema di Bellman da solo basta a dimostrare l'ottimalià, e non occorrono regole anticiclo di Bland (non esistono soluzioni di base ammissibili degeneri).
+Inoltre, il flusso di base asssociato a $T_r$ sarà \textbf{non degenere}, cioè nessuno flusso sarà uguale a 0 .
+Quest'ultima proposizione potrebbe risultare poco intuitiva.
+Notiamo allora che:
+\begin{itemize}
+	\item Ogni nodo non radice ha bilancio 1, ergo ogni arco deve portare almeno 1 unità di flusso su un nodo;
+	\item Esiste solo un nodo sorgente, cioè la radice: questo significa che non esistono più strade per raggiungere lo stesso nodo (altrimenti una di esse si sarebbe potuta svuotare).
+\end{itemize}
+Possiamo quindi dire che il teorema di Bellman da solo basta a dimostrare l'ottimalità, e non occorrono regole anticiclo di Bland.
 Anzi, possiamo dire che conviene prendere l'arco con costo ridotto minimo, in quanto comporterà l'abbattimento maggiore del valore ottimo.
 
 Infine, possiamo fare un'ottimizzazione significativa per quanto riguarda la rimozione degli archi in $\mathcal{C}^-$ (cioè quelli discordi all'arco introdotto $(p,q)$) nella fase di \textbf{rimozione dei cicli}.
-Si ha che a ogni passso dell'algoritmo la soluzione ammissibile considerata è un albero di copertura, ergo ogni nodo sarà raggiunto.
+Si ha che a ogni passo dell'algoritmo la soluzione ammissibile considerata è un albero di copertura, ergo ogni nodo sarà raggiunto.
 L'algoritmo di Bellman restituirà quindi un modo \textit{più efficiente} di quello previsto dall'albero di arrivare ad un dato nodo $q$, partendo da un nodo $p$.
 Avremo quindi che esiste sempre un nodo $(i,q)$ \textbf{entrante} in $q$, cioè il modo di arrivare in $q$ che era originariamente previsto dall'albero che abbiamo appena considerato.
 Inoltre, si avrà che questo arco sarà l'ultimo a portare a $q$, o almeno sarà a costo minore dei suoi precedenti (ogni precedente dovrà portare a $q$ e a tutti gli eventuali nodi a cui arriva $q$).
@@ -317,7 +323,7 @@ Formuliamo allora il \textbf{simplesso per cammini}:
 \caption{del simplesso per cammini}
 \begin{algorithmic}
 	\STATE \textbf{Input:} un problema di cammini di costo minimo 
-	\STATE \textbf{Output:} la soluzione ottima 
+	\STATE \textbf{Output:} l'albero dei cammini minimi 
 	\STATE Trova un albero $T$ di radice $r$ 
 	\STATE \textsf{ciclo:}
 	\STATE Calcola il potenziale di base $\bar{\pi}^\intercal = c_T^\intercal E_T^{-1}$
@@ -339,7 +345,7 @@ Formuliamo allora il \textbf{simplesso per cammini}:
 	\ENDIF
 	\STATE Aggiorna l'albero come:
 	$$
-	T = T \setminus \left\{ (r,s) \right\} \cup \left\{ (p, q) \right\} 
+	T = T \setminus \left\{ (i, q) \right\} \cup \left\{ (p, q) \right\} 
 	$$
 	\STATE Torna a \textsf{ciclo}
 \end{algorithmic}
@@ -353,7 +359,7 @@ Formuliamo allora il \textbf{simplesso per cammini}:
 	Si vuole trovare un algoritmo che trovi il percorso ottimo fra due località $i$ e $j$.
 \end{problem}
 
-Il problema presentato è un di ottimizzazione \textbf{multiobiettivo}: vogliamo \textit{minimizzare} sia il costo che la distanza.
+Il problema presentato è un problema di ottimizzazione \textbf{multiobiettivo}: vogliamo \textit{minimizzare} sia il costo che la distanza.
 Un'approccio è quello di impostare il problema di costo minimo sulle distanze, cioè come:
 \[
 	\begin{cases}
@@ -362,13 +368,13 @@ Un'approccio è quello di impostare il problema di costo minimo sulle distanze, 
 		x \geq 0 \\ 
 	\end{cases}
 \]
-e di introdurre termine di \textit{budget}, cioè un valore massimo $C$ di costo che siamo disposti a pagare:
+e di introdurre un termine di \textit{budget}, cioè un valore massimo $C$ di costo che siamo disposti a pagare:
 $$
 c^\intercal x \leq C
 $$
 
 Questo approccio però non è propriamente ottimale, in quanto introducendo un nuovo vincolo, che potrebbe violare le condizoni di \textbf{interezza} rispettate dalla matrice di adiacenza, che sappiamo essere \textbf{unimodulare}.
 Per continuare a prendere archi interi, dovremmo obbligatoriamente introdurre un vincolo $x_{ij} \in \{0, 1\}$, ergo trasformare il problema in un problema di ILP.
-Vedremo quindi metodi più efficienti per ottimizzare problemi multiobiettivo di questo tipo.
+Esistono quindi metodi più efficienti, che però come per i multizaini non sono coperti dal corso.
 
 \end{document}

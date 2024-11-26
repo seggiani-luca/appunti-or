@@ -227,7 +227,7 @@ Possiamo quindi dimostrare il teorema:
 	$$
 \end{theorem}
 
-Notiamo come le ultime due equazioni ricalcano rispettivamente la \textbf{dualità debole} e la \textbf{dualità forte}: si può effettivamente dimostrare che il problema del taglio minimo è il \textbf{duale} del problema di flusso massimo (effettivamente vogliamo trovare un \textit{limite superiore} del flusso, che è lo stesso procedimento che avevamo adottato,, in quel caso adattando le diseguaglianze, nel ricavare il duale nei problemi di LP).
+Notiamo come le ultime due equazioni ricalcano rispettivamente la \textbf{dualità debole} e la \textbf{dualità forte}: si può effettivamente dimostrare che il problema del taglio minimo è il \textbf{duale} del problema di flusso massimo (effettivamente vogliamo trovare un \textit{limite superiore} del flusso, che è lo stesso procedimento che avevamo adottato, in quel caso adattando le diseguaglianze, nel ricavare il duale nei problemi di LP).
 
 Chiaramente è improbabile calcolare il taglio minimo per enumerazione completa: togliendo il fatto che le partizioni dei tagli lavorano su $n-2$ anziché $n$ nodi (in quanto ci sono i vincoli $s \in N_s$ e $t \in N_t$), il numero di partizioni va comunque come $\sim 2^n$, che è quindi a complessità \textbf{esponenziale}.
 
@@ -297,6 +297,8 @@ Chiaramente, quando non si riuscirà più a trovare cammini aumentanti, cioè ar
 \end{algorithmic}
 \end{algorithm}
 
+\lstset{style=codestyle}
+
 Si presenta un algoritmo per il calcolo dei cammini aumentanti, detto \textbf{algoritmo della croce}:
 \begin{algorithm}[H]
 \caption{della croce}
@@ -313,7 +315,7 @@ Si presenta un algoritmo per il calcolo dei cammini aumentanti, detto \textbf{al
 	\IF{non hai raggiunto $t$; cioè il nodo di arrivo}
 		\STATE Torna a \textsf{ciclo}
 	\ENDIF
-	\STATE Ripercorrendo i nodi in \lstinline|closed| al contrario, partendo da quello di arrivo, hai il cammino aumentate $C_{aum}$
+	\STATE Ripercorrendo i nodi in \lstinline|closed|, partendo da quello di arrivo, hai il cammino aumentate $C_{aum}$
 \end{algorithmic}
 \end{algorithm}
 
