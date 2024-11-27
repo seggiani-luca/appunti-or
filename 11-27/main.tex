@@ -244,21 +244,93 @@ Essendo l'iperrettangolo limitato, e il dominio contenuto interamente al suo int
 	\end{theorem}
 
 \subsubsection{Domini regolari}
-Vediamo quindi una classificazione per domini \textbf{regolari}, # definizione
+Una caratteristica che desideriamo dai nostri domini è la \textbf{regolarità}.
+Per giungere a una definizione di regolarità, dobbiamo introdurre due concetti supplementari.
+Il primo è quello di \textbf{cono tangente}, che si ricava dai \textbf{vettori tangenti}:
+\begin{definition}{Vettore tangente}
+	Dato un punto $x^* \in \Omega$, un vettore $d$ si dice tangente a $\Omega$ in $x^*$ se esistono una successione di vettori $z_k \subset \Omega$ e una successione di scalari $t_k \subset \mathbb{R}^+$ tali che:
+	$$
+		\lim_{k \rightarrow \infty} \frac{z_k - x^*}{t_k} = d
+	$$
+\end{definition}
+da cui la definizione:
+\begin{definition}{Cono tangente}
+	L'insieme dei vettori tangenti a $\Omega$ in un punto $x$ si dice cono tangente, ed è denotato con $T_\Omega(x)$.
+\end{definition}
 
+Il cono tangente viene anche detto \textit{cono di Bouligand}, e indicato come:
+$$
+T_\Omega(x) = \left\{ d \in \mathbb{R}^n : \exists d_k \in \mathbb{R}^n, d_k \rightarrow d, \ \exists t_k \in \mathbb{R}^+, t_k \rightarrow 0 : x^* + d_k t_k \in \Omega \right\}
+$$
+Le due definizioni sono equivalenti in quanto è noto:
+$$
+\lim_{k \rightarrow \infty} \frac{z_k - x^*}{t_k} = d
+$$
+e allora dato $d_k$ tale che:
+$$
+\lim_{k \rightarrow \infty} d_k = d
+$$
+si potrà dire:
+$$
+\lim_{k \rightarrow \infty} \frac{z_k - x^*}{t_k} = \lim_{k \rightarrow \infty} d_k 
+$$
+e potremo scegliere $d_k$ in modo tale che soddisfi:
+$$
+\frac{z_k - x^*}{t_k} = d_k \Rightarrow z_k - x^* = d_k t_k \Rightarrow z_k = x^* + d_k t_k
+$$
+Questa è la forma che troviamo nella definizione del cono di Bouligand.
+Visto che ciò che si imponeva era $x^* + d_k t_k \in \Omega$, e $z_k \in \Omega$ per definizione, le due forme sono equivalenti.
+
+\par\smallskip
+
+Definiamo quindi il \textbf{cono delle direzioni ammissibili} di un punto $x$ sul dominio $\Omega$, sulla base delle funzioni $g(x)$ e $h(x)$ che lo definiscono.
+Innanzitutto, servirà la definizione dell'insieme dei \textbf{vincoli attivi}:
+\begin{definition}{Vincoli attivi}
+	Dato un punto $x^* \in \Omega$, si indicano come $A(x^*)$ gli indici di tutti i vincoli di diseguaglianza che sono stretti in $x^*$, cioè:
+	$$
+		A(x^*) = \left\{ i : g(x^*) = 0 \right\}
+	$$
+\end{definition}
+definiamo allora:
+\begin{definition}{Cono delle direzioni ammissibili del primo ordine}
+	Dato un punto $x^* \in \Omega$, indichiamo il cono delle direzioni ammissibili del primo ordine $D(x^*)$:
+	$$
+	D(x^*) = \left\{
+			d \in \mathbb{R}^n : 	
+			\begin{cases}
+				d^T \nabla g_i(x^*) = 0, \quad i \in A(x^*) \\ 
+				d^T \nabla h_j(x^*) = 0, \quad j = 1, ..., p
+			\end{cases}
+		\right\}
+	$$
+\end{definition}
+dove notiamo che solo le diseguaglianze \textit{attive} figurano, mentre le uguaglianze vengono prese tutte.
+
+Possiamo finalmente dare la definizione di regolarità per un punto:
+\begin{definition}{Regolarità}
+	I vincoli di un dominio $\Omega$ si dicono regolari in un punto $x^*$ se vale:
+	$$
+		T_\Omega(x) = D(x)
+	$$
+\end{definition}
+
+Abbiamo che il cono tangente deriva solo dalle proprietà geometriche del dominio, mentre il cono delle direzioni ammissbili deriva solo dalle caratteristiche algebriche dei gradienti delle funzioni che definiscono il dominio.
+Questo significa che imponendo l'uguaglianza fra i due, andiamo a discriminare tutti quei punti di $\Omega$ che hanno un comportamento patologico. 
+
+\subsubsection{Classificazione dei domini regolari}
+Vediamo quindi una classificazione per domini sicuramente \textbf{regolari}:
 \begin{enumerate}
-	\item Poliedri
-	\item $g_i$ convesse, $h_j$ lineari, $\exists \bar{x} : g_i(\bar{x}) < 0 \ \ \forall i$
-	\item $
+	\item I \textbf{poliedri} visti nella PL sono tutti regolari, come conseguenza della linearità delle equazioni che li descrivevano;
+	\item Sono regolari quei domini per cui vale la \textbf{condizione di Slater}: $g_i$ convesse, $h_j$ lineari, $\exists \bar{x} : g_i(\bar{x}) < 0 \ \ \forall i \in 1, ..., m$ ;
+	\item Infine, sono regolari quei domini dove i gradienti dei vincoli attivi sono fra di loro linearmente indipendenti, cioè: $$
 		\begin{cases}
 			\nabla g_i(\bar{x}), \quad i \in A(\bar{x})	\\ 
 			\nabla h_j(x)
 		\end{cases}
 		\text{sono linearmente indipendenti}
-	$ \\
+	$$
 	dove $A(\bar{x})$ dà i \textbf{vincoli attivi} $A(\bar{x}) = \left\{ i : g_i(\bar{x}) = 0 \right\}$.
-
-	A parole, il gradiente dei dei vincoli di diseguaglianza attivi è linearmente indipendente dal gradiente dei vincoli di uguaglianza.
+Notiamo ancora come si prendono quando attivi solo i vincoli di diseguaglianza $g(x)$, mentre i vincoli di uguaglianza $h(x)$ si prendono sempre.
 \end{enumerate}
 
 \end{itemize}
