@@ -1,0 +1,268 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper, margin=8em]{geometry}
+
+% usa i pacchetti per la scrittura in italiano
+\usepackage[french,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\frenchspacing 
+
+% usa i pacchetti per la formattazione matematica
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% usa altri pacchetti
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{standalone}
+
+% imposta il titolo
+\title{Appunti Ricerca Operativa}
+\author{Luca Seggiani}
+\date{2024}
+
+% disegni
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% imposta lo stile
+% usa helvetica
+\usepackage[scaled]{helvet}
+% usa palatino
+\usepackage{palatino}
+% usa un font monospazio guardabile
+\usepackage{lmodern}
+
+\renewcommand{\rmdefault}{ppl}
+\renewcommand{\sfdefault}{phv}
+\renewcommand{\ttdefault}{lmtt}
+
+% disponi il titolo
+\makeatletter
+\renewcommand{\maketitle} {
+	\begin{center} 
+		\begin{minipage}[t]{.8\textwidth}
+			\textsf{\huge\bfseries \@title} 
+		\end{minipage}%
+		\begin{minipage}[t]{.2\textwidth}
+			\raggedleft \vspace{-1.65em}
+			\textsf{\small \@author} \vfill
+			\textsf{\small \@date}
+		\end{minipage}
+		\par
+	\end{center}
+
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+}
+\makeatother
+
+% disponi teoremi
+\usepackage{tcolorbox}
+\newtcolorbox[auto counter, number within=section]{theorem}[2][]{%
+	colback=blue!10, 
+	colframe=blue!40!black, 
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries, 
+	title=Teorema~\thetcbcounter: #2, 
+	#1
+}
+
+% disponi definizioni
+\newtcolorbox[auto counter, number within=section]{definition}[2][]{%
+	colback=red!10,
+	colframe=red!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Definizione~\thetcbcounter: #2,
+	#1
+}
+
+% disponi problemi
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{%
+	colback=green!10,
+	colframe=green!40!black,
+	sharp corners=northwest,
+	fonttitle=\sffamily\bfseries,
+	title=Problema~\thetcbcounter: #2,
+	#1
+}
+
+% disponi codice
+\usepackage{listings}
+\usepackage[table]{xcolor}
+
+\lstdefinestyle{codestyle}{
+		backgroundcolor=\color{black!5}, 
+		commentstyle=\color{codegreen},
+		keywordstyle=\bfseries\color{magenta},
+		numberstyle=\sffamily\tiny\color{black!60},
+		stringstyle=\color{green!50!black},
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=false,         
+		breaklines=true,                 
+		captionpos=b,                    
+		keepspaces=true,                 
+		numbers=left,                    
+		numbersep=5pt,                  
+		showspaces=false,                
+		showstringspaces=false,
+		showtabs=false,                  
+		tabsize=2
+}
+
+\lstdefinestyle{shellstyle}{
+		backgroundcolor=\color{black!5}, 
+		basicstyle=\ttfamily\footnotesize\color{black}, 
+		commentstyle=\color{black}, 
+		keywordstyle=\color{black},
+		numberstyle=\color{black!5},
+		stringstyle=\color{black}, 
+		showspaces=false,
+		showstringspaces=false, 
+		showtabs=false, 
+		tabsize=2, 
+		numbers=none, 
+		breaklines=true
+}
+
+\lstdefinelanguage{javascript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% disponi sezioni
+\usepackage{titlesec}
+
+\titleformat{\section}
+	{\sffamily\Large\bfseries} 
+	{\thesection}{1em}{} 
+\titleformat{\subsection}
+	{\sffamily\large\bfseries}   
+	{\thesubsection}{1em}{} 
+\titleformat{\subsubsection}
+	{\sffamily\normalsize\bfseries} 
+	{\thesubsubsection}{1em}{}
+
+% disponi alberi
+\usepackage{forest}
+
+\forestset{
+	rectstyle/.style={
+		for tree={rectangle,draw,font=\large\sffamily}
+	},
+	roundstyle/.style={
+		for tree={circle,draw,font=\large}
+	}
+}
+
+% disponi algoritmi
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\makeatother
+
+% disponi numeri di pagina
+\usepackage{fancyhdr}
+\fancyhf{} 
+\fancyfoot[L]{\sffamily{\thepage}}
+
+\makeatletter
+\fancyhead[L]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@title \ \@date}}} 
+\fancyhead[R]{\raisebox{1ex}[0pt][0pt]{\sffamily{\@author}}}
+\makeatother
+
+\begin{document}
+
+% sezione (data)
+\section{Lezione del 27-11-24}
+
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Domini di problemi di programmazione non lineare}
+Abbiamo studiato finora funzioni non lineari nell'ottica dell'ottimizzazione non vincolata.
+Vediamo adesso una delle forme dei domini su cui possiamo limitare tali funzioni nel caso dell'ottimizzazione vincolata:
+$$
+D = \left\{ x \in \mathbb{R^n}: \ g_1(x) \leq 0, \ g_2(x) \leq 0, \ ..., \ g_m(x) \leq 0, \
+							h_1(x) = 0, \ h_2(x) = 0, \ ..., \ h_p(x) = 0 \right\}
+$$
+dove
+\[
+	\begin{cases}
+		g_i: \mathbb{R}^n \rightarrow \mathbb{R}, \quad i = 1, ..., m \\ 
+		h_j: \mathbb{R}^n \rightarrow \mathbb{R}, \quad j = 1, ..., p
+	\end{cases}
+\]
+o in maniera più compatta:
+$$
+D = \left\{ x \in \mathbb{R}^n: \ g(x) \leq 0, \ h(x) = 0 \right\}
+$$
+dove
+\[
+	\begin{cases}
+		g(x) = \left( g_1(x), \ g_2(x), \ ..., \ g_m(x) \right) \\	
+		h(x) = \left( h_1(x), \ h_2(x), \ ..., \ h_p(x) \right)	
+	\end{cases}
+\]
+
+Notiamo che i poliedri studiati finora non sono che un caso particolare di insiemi in questa forma.
+Possiamo quindi dire che da qui in poi formuleremo i problemi di NLP come:
+\[
+	\begin{cases}
+		\max f(x) \\ 
+		g(x) \leq 0 \\ 
+		h(x) = 0
+	\end{cases}
+\]
+
+dove $f(x)$ è una funzione in $n$ variabili, $g(x)$ è un vettore di $m$ funzioni, e $h(x)$ è un vettore di $p$ funzioni.
+Vediamo alcune propietà che ci aspettiamo dal dominio:
+\begin{itemize}
+	\item Assumeremo ognuna delle funzioni $g_i(x)$ e $h_j(x)$ come almeno $\in C^2$, in modo da poter calcolare gradiente ed Hessiana;
+	\item Un vantaggio sarà dato dal fatto che l'insieme è \textbf{chiuso}: avevamo visto sulla PL come la soluzione stava \textit{sempre} sulla frontiera. Qui, avremo che la soluzione sta \textit{spesso} sulla frontiera, e dovremo quindi includerla in modo da non perdere soluzioni valide;
+	\item L'insieme sarà idealmente \textbf{limitato}, così da permetterci di confermare attraverso il teorema di Weierstrass l'esistenza di minimi e massimi.
+Questo tra l'altro è necessario in quanto computazionalmente porremo come limite ai domini un iperrettangolo $-M \leq x_i \leq M$ con $M >> 0$.
+Essendo l'iperrettangolo limitato, e il dominio contenuto interamente al suo interno, risulterà chiaramente che anche il dominio stesso sarà (o dovrà essere) limitato;
+\item Vorremo poi che l'insieme sia \textbf{convesso}, visto che questo facilita la sua esplorazione (spostandoci verso vettori \textit{interni} all'insieme da ogni suo punto saremo sicuri di uscire dall'insieme stesso una e una sola volta).
+	Possiamo dare la seguente caratterizzazione:
+	\begin{theorem}{caratterizzazione di insieme convesso}
+		Se le $g_i$ sono convesse e le $h_j$ sono lineari, allora $D$ è convesso.
+	\end{theorem}
+
+\subsubsection{Domini regolari}
+Vediamo quindi una classificazione per domini \textbf{regolari}, # definizione
+
+\begin{enumerate}
+	\item Poliedri
+	\item $g_i$ convesse, $h_j$ lineari, $\exists \bar{x} : g_i(\bar{x}) < 0 \ \ \forall i$
+	\item $
+		\begin{cases}
+			\nabla g_i(\bar{x}), \quad i \in A(\bar{x})	\\ 
+			\nabla h_j(x)
+		\end{cases}
+		\text{sono linearmente indipendenti}
+	$ \\
+	dove $A(\bar{x})$ dà i \textbf{vincoli attivi} $A(\bar{x}) = \left\{ i : g_i(\bar{x}) = 0 \right\}$.
+
+	A parole, il gradiente dei dei vincoli di diseguaglianza attivi è linearmente indipendente dal gradiente dei vincoli di uguaglianza.
+\end{enumerate}
+
+\end{itemize}
+
+
+
+\end{document}
