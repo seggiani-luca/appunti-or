@@ -16,9 +16,6 @@
 \usepackage{hyperref}
 \usepackage{standalone}
 
-% cose fluttuanti
-\usepackage{float}
-
 % imposta il titolo
 \title{Appunti Ricerca Operativa}
 \author{Luca Seggiani}
@@ -188,44 +185,51 @@
 
 \begin{document}
 
-\pagestyle{fancy}
-\thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+% sezione (data)
+\section{Lezione del 28-11-24}
 
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
-\input{../10-01/main.tex}
-\input{../10-02/main.tex}
-\input{../10-03/main.tex}
-\input{../10-07/main.tex}
-\input{../10-08/main.tex}
-\input{../10-09/main.tex}
-\input{../10-10/main.tex}
-\input{../10-14/main.tex}
-\input{../10-15/main.tex}
-\input{../10-16/main.tex}
-\input{../10-17/main.tex}
-\input{../10-21/main.tex}
-\input{../10-22/main.tex}
-\input{../10-23/main.tex}
-\input{../10-24/main.tex}
-\input{../10-29/main.tex}
-\input{../10-30/main.tex}
-\input{../11-05/main.tex}
-\input{../11-06/main.tex}
-\input{../11-07/main.tex}
-\input{../11-11/main.tex}
-\input{../11-12/main.tex}
-\input{../11-13/main.tex}
-\input{../11-14/main.tex}
-\input{../11-18/main.tex}
-\input{../11-19/main.tex}
-\input{../11-20/main.tex}
-\input{../11-26/main.tex}
-\input{../11-27/main.tex}
-\input{../11-28/main.tex}
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Teorema di Lagrange-Kuhn-Tucker}
+Abbiamo assunto come ipotesi per i domini di $f$ che prenderemo in considerazione, cioè:
+$$
+\Omega = 
+	\begin{cases}
+		g(x) \leq 0 \\ 
+		h(x) = 0
+	\end{cases}
+$$
+che $f, g, h \in C^1$, e $\Omega$ regolare secondo una qualsiasi delle forme viste in precedenza (ci basta la \textit{condizione di Slater}).
+
+Vediamo allora il teorema, detto \textit{di Lagrange-Kuhn-Tucker}, o di \textit{Lagrange-Karush-Kuhn-Tucker}, o più semplicemente \textbf{LKT} o \textbf{LKKT}:
+\begin{theorem}{Teorema di Lagrange-Kuhn-Tucker}
+	Sia $\bar{x} \in D$ minimo locale.
+	Allora $\exists \bar{\lambda} \in \mathbb{R}^m$, $\bar{\lambda} \geq 0$, $\exists \bar{\mu} \in \mathbb{R}^p$ tali che:
+	\[
+		\begin{cases}
+			\nabla f(\bar{x}) + \sum\limits_{i=1}^m \bar{\lambda}_i \nabla g_i(\bar{x}) + \sum\limits_{i=1}^m \bar{\mu}_i \nabla h_j(\bar{x}) = 0 \\ 
+			\bar{\lambda}_i g_i(\bar{x}) = 0, \quad \forall i = 1, ..., m \\ 
+			h_j(\bar{x}) = 0, \quad \forall j = 1, ..., p	
+		\end{cases}
+	\]
+\end{theorem}
+Il sistema ha $n + m + p$ equazioni su $n + m + p$ variabili e viene detto \textbf{sistema LKT}.
+Notiamo che nel caso di minimo, vorremo che i moltiplicatori $\bar{\lambda}$ siano $\leq 0$ anziché $\geq 0$.
+
+La funzione:
+$$
+\mathcal{L}(x, \lambda, \mu) = f(x) + \sum\limits_{i=1}^m \lambda_i g_i(x) + \sum\limits_{j=1}^p \mu_j h_j(x)
+$$
+viene detta \textbf{lagrangiana} $\mathcal{L}(x, \lambda, \mu)$.
+Allora la prima equazione dell'LKT non sarà altro che:
+$$
+\nabla f(\bar{x}) + \sum\limits_{i=1}^m \bar{\lambda}_i \nabla g_i(\bar{x}) + \sum\limits_{i=1}^m \bar{\mu}_i \nabla h_j(\bar{x}) = \nabla_x \mathcal{L}(\bar{x}, \bar{\lambda}, \bar{\mu}) = 0 \\ 
+$$
+
+In generale, essere soluzione del sistema LKT è per un punto condizione \textbf{necessaria} ad essere massimo (minimo).
+Questo significa che tutti i massimi (minimi) della funzione $f$ sottoposta ai vincoli $\Omega$ sono soluzioni dell'LKT.
+
 \end{document}
