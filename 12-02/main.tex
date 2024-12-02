@@ -186,50 +186,42 @@
 \begin{document}
 
 % sezione (data)
-\section{Lezione del 28-11-24}
+\section{Lezione del 02-12-24}
 
 % stili pagina
 \thispagestyle{empty}
 \pagestyle{fancy}
 
 % testo
-\subsection{Teorema di Lagrange-Kuhn-Tucker}
-Abbiamo assunto come ipotesi per i domini di $f$ che prenderemo in considerazione, cioè:
-$$
-\Omega = 
-	\begin{cases}
-		g(x) \leq 0 \\ 
-		h(x) = 0
-	\end{cases}
-$$
-che $f, g, h \in C^1$, e $\Omega$ regolare secondo una qualsiasi delle forme viste in precedenza (ci basta la \textit{condizione di Slater}).
-
-Vediamo allora il teorema, detto \textit{di Lagrange-Kuhn-Tucker}, o di \textit{Lagrange-Karush-Kuhn-Tucker}, o più semplicemente \textbf{LKT} o \textbf{LKKT}:
-\begin{theorem}{Teorema di Lagrange-Kuhn-Tucker}
-	Sia $\bar{x} \in D$ minimo locale.
-	Allora $\exists \bar{\lambda} \in \mathbb{R}^m$, $\bar{\lambda} \geq 0$, $\exists \bar{\mu} \in \mathbb{R}^p$ tali che:
-	\[
-		\begin{cases}
-			\nabla f(\bar{x}) + \sum\limits_{i=1}^m \bar{\lambda}_i \nabla g_i(\bar{x}) + \sum\limits_{i=1}^m \bar{\mu}_i \nabla h_j(\bar{x}) = 0 \\ 
-			\bar{\lambda}_i g_i(\bar{x}) = 0, \quad \forall i = 1, ..., m \\ 
-			h_j(\bar{x}) = 0, \quad \forall j = 1, ..., p	
-		\end{cases}
-	\]
+\subsection{Ricavo dei punti di ottimo dall'LKT}
+Dopo aver introdotto il sistema LKT, vediamo il seguente teorema:
+\begin{theorem}{Condizione sufficiente di minimo per problemi convessi}
+	Sia un problema di ottimizzazione vincolata posto su un dominio $\Omega$ regolare, con $f, g, h \in C^1$, $f, g$ convesse e $h$ lineare.
+	Se $\bar{x}$ soddisfa il sistema LKT con la coppia $(\bar{\lambda}, \bar{x}) \in \mathbb{R}^{n+p}$ dove $n$ conta le $g$ e $p$ le $h$, e inoltre $\bar{\lambda} \geq 0$, allora $\bar{x}$ è minimo globale. 
 \end{theorem}
-Il sistema ha $n + m + p$ equazioni su $n + m + p$ variabili e viene detto \textbf{sistema LKT}.
-Notiamo che nel caso di massimo, vorremo che i moltiplicatori $\bar{\lambda}$ siano $\leq 0$ anziché $\geq 0$.
 
-La funzione:
-$$
-\mathcal{L}(x, \lambda, \mu) = f(x) + \sum\limits_{i=1}^m \lambda_i g_i(x) + \sum\limits_{j=1}^p \mu_j h_j(x)
-$$
-viene detta \textbf{lagrangiana} $\mathcal{L}(x, \lambda, \mu)$.
-Allora la prima equazione dell'LKT non sarà altro che:
-$$
-\nabla f(\bar{x}) + \sum\limits_{i=1}^m \bar{\lambda}_i \nabla g_i(\bar{x}) + \sum\limits_{i=1}^m \bar{\mu}_i \nabla h_j(\bar{x}) = \nabla_x \mathcal{L}(\bar{x}, \bar{\lambda}, \bar{\mu}) = 0 \\ 
-$$
+Un problema che rispetta le condizioni stabilite dal teorema viene detto \textbf{problema convesso} di PNL ($f, g$ convesse e $h$ lineare), in quanto il dominio $\Omega$ su tali condizioni risulta effettivamente \textbf{convesso}.
 
-In generale, essere soluzione del sistema LKT è per un punto condizione \textbf{necessaria} ad essere massimo (minimo).
-Questo significa che tutti i massimi (minimi) della funzione $f$ sottoposta ai vincoli $\Omega$ sono soluzioni dell'LKT.
+Chiaramente, vale l'opposto per $\bar{\lambda} \leq 0$ su funzioni \textbf{concave}:
+\begin{theorem}{Condizione sufficiente di massimo per problemi concavi}
+	Sia un problema di ottimizzazione vincolata posto su un dominio $\Omega$ regolare, con $f, g, h \in C^1$, $f$ concava, $f$ convessa e $h$ lineare.
+	Se $\bar{x}$ soddisfa il sistema LKT con la coppia $(\bar{\lambda}, \bar{x}) \in \mathbb{R}^{n+p}$ dove $n$ conta le $g$ e $p$ le $h$, e inoltre $\bar{\lambda} \leq 0$, allora $\bar{x}$ è massimo globale. 
+\end{theorem}
+
+Notiamo che non ha significato parlare di \textit{domini concavi} (nel nostro caso $g$ concava), in quanto non si è data alcuna definizione a riguardo.
+
+Abbiamo quindi che il teorema è una condizione sufficiente per minimi globali, mentre il teorema LKT è una condizione necessaria per minimi locali. 
+
+\begin{theorem}{Condizione sufficiente di minimo su poliedri}
+	Sia un problema di ottimizzazione, con $\Omega$ un poliedro limitato e $f \in C^1$.
+	Se $f$ è convessa, allora uno dei vertici del poliedro è massimo globale.
+\end{theorem}
+
+Ancora una volta, vale il caso concavo:
+\begin{theorem}{Condizione sufficiente di massimo su poliedri}
+	Sia un problema di ottimizzazione, con $\Omega$ un poliedro limitato e $f \in C^1$.
+	Se $f$ è concava, allora uno dei vertici del poliedro è minimo globale.
+\end{theorem}
+
 
 \end{document}
