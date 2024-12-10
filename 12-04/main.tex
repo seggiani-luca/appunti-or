@@ -16,9 +16,6 @@
 \usepackage{hyperref}
 \usepackage{standalone}
 
-% cose fluttuanti
-\usepackage{float}
-
 % imposta il titolo
 \title{Appunti Ricerca Operativa}
 \author{Luca Seggiani}
@@ -188,49 +185,107 @@
 
 \begin{document}
 
-\pagestyle{fancy}
-\thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+% sezione (data)
+\section{Lezione del 04-12-24}
 
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
-\input{../10-01/main.tex}
-\input{../10-02/main.tex}
-\input{../10-03/main.tex}
-\input{../10-07/main.tex}
-\input{../10-08/main.tex}
-\input{../10-09/main.tex}
-\input{../10-10/main.tex}
-\input{../10-14/main.tex}
-\input{../10-15/main.tex}
-\input{../10-16/main.tex}
-\input{../10-17/main.tex}
-\input{../10-21/main.tex}
-\input{../10-22/main.tex}
-\input{../10-23/main.tex}
-\input{../10-24/main.tex}
-\input{../10-29/main.tex}
-\input{../10-30/main.tex}
-\input{../11-05/main.tex}
-\input{../11-06/main.tex}
-\input{../11-07/main.tex}
-\input{../11-11/main.tex}
-\input{../11-12/main.tex}
-\input{../11-13/main.tex}
-\input{../11-14/main.tex}
-\input{../11-18/main.tex}
-\input{../11-19/main.tex}
-\input{../11-20/main.tex}
-\input{../11-26/main.tex}
-\input{../11-27/main.tex}
-\input{../11-28/main.tex}
-\input{../12-02/main.tex}
-\input{../12-03/main.tex}
-\input{../12-04/main.tex}
-\input{../12-05/main.tex}
-\input{../12-09/main.tex}
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+\subsection{Insiemi di livello}
+Per la ricerca di massimi e minimi vincolati può essere utile la definizione di insiemi di livello:
+\begin{definition}{Insieme di livello}
+	Definiamo l'insieme di livello di una funzione $f$ per una certa costante $k$ come:
+	$$
+	\mathrm{lev}_{\leq k} \, f(x) = \left\{ x \in \mathbb{R}^n: f(x) \leq k \right\}
+	$$
+	o alternativamente:
+	$$
+	\mathrm{lev}_{\geq k} \, f(x) = \left\{ x \in \mathbb{R}^n: f(x) \geq k \right\}
+	$$
+\end{definition}
+
+Si ha che, se l'insieme $\mathrm{lev}_{\leq k} \, f(x)$ di $f$ esiste ed è compatto per ogni $k$, allora $f$ ammette minimo, mentre se l'insieme $\mathrm{lev}_{\geq k} \, f(x)$  esiste ed è compatto, sempre per ogni $k$, allora $f$ ammette massimo.
+
+\subsection{Definizione generale di un algoritmo di PNL}
+Abbiamo quindi che vorremmo che un algoritmo di PNL, generalmente, fosse costituito da:
+\begin{itemize}
+	\item Una \textbf{regola} per la scelta delle direzioni di crescita $d_k$;
+	\item Una \textbf{regola} per la scelta del passo $t$;
+	\item Un \textbf{teorema} che dimsotra che le regole di scelta portano sempre a un massimo.
+\end{itemize}
+
+Purtroppo, se non in alcuni casi particolari, questo teorema non esiste.
+Di base, arriviamo sicuramente ad un \textit{punto stazionario}, cioè un punto $\bar{x}$ dove $\nabla \bar{x} = 0$, cioè vale il teorema:
+\begin{theorem}{sui punti di accumulazione di successioni crescenti}
+	Supponiamo $\mathrm{lev}_{\geq x}$ compatti.
+	Allora la successione $x_k \in \mathbb{R}^n$ ha punti di accumulazione, ognuno dei quali è stazionario.
+\end{theorem}
+
+Notiamo che, nel caso di funzioni convesse, significa che il massimo effettivamente viene sempre raggiunto (e l'unico punto a gradiente nullo), come di contro nel caso di funzioni concave il minimo viene sempre raggiunto.
+
+\subsubsection{Criterio di stop}
+Visto che non è assicurato che la serie raggiunga il massimo in un numero finito di passi, introduciamo un \textbf{criterio di stop}, cioè che decide quando il risultato trovato finora dall'algoritmo e valido e so può estrarre la soluzione approssimata che ha trovato:
+\begin{enumerate}
+	\item Innanzitutto possiamo limitare le iterazioni: prendi $x_k$ con $k < M$ elevato a piacere; \\ 
+	\item Possiamo scegliere il punto di scomparsa del gradiente sotto un certo $\varepsilon$, cioè $|\nabla f(x_k)| \leq \varepsilon$;
+	\item Posssiamo pensare in termini di \textit{guadagni} veri e propri su ogni passo, cioè $\Delta f = f(x_{k+1}) - f(x_k)$, e porre $\Delta f < \varepsilon$ per qualche $\varepsilon$.
+\end{enumerate}
+
+\par\medskip
+
+Vediamo quindi alcuni algoritmi di PNL di questo tipo:
+
+\begin{itemize}
+	\item \textsf{\textbf{Metodo del gradiente a passo costante}} \\
+		Si pone come regola:
+		\[
+			\begin{cases}
+				a_k = \nabla f (x_k) \\ 
+				t_k = \eta 
+			\end{cases}
+		\]
+		con $\eta \in 0 < \eta < \frac{2}{L}$, dove $L$, detto \textit{numero di Lipschitz}, è il masssimo delle derivate seconde.
+		
+		Si ha quindi la relazione di ricorrenza:
+		$$
+			x_{k+1} = x_k + \eta \nabla f(x_k)
+		$$
+
+		Il teorema di convergenza sarà allora, semplicemente, che $x_k$ ha punto di accumulazione su $f$ e ogni punto di accumulazione $\bar{x}$ è tale che $\nabla f(\bar{x}) = 0$, $\forall x_0$ posizione di partenza:
+
+	\item \textsf{\textbf{Metodo del gradiente a passo ideale}} \\ 
+		Si pone come regola:
+		\[
+			\begin{cases}
+				d_k = \nabla f(x_k) \\ 
+				t_k \in \mathrm{argmax}_{t \geq 0} f(x_k + t \, d_k)
+			\end{cases}
+		\]
+		dove si deve avere $H$ invertibile.
+		La relazione di ricorrenza è:
+		$$
+			x_{k+1} = x_k + t_k \nabla f(x_k)
+		$$
+
+		Il teorema di convergenza è come sopra;
+		
+	\item \textsf{\textbf{Metodo di Newton}} \\
+		Si pone come regola:
+		\[
+			\begin{cases}
+				d_k = H f(x_k)^{-1} \nabla f(x_k) \\ 
+				t_k = 1
+			\end{cases}
+		\]
+		da cui la relazione di ricorrenza:
+		$$
+		x_{k+1} = x_k - H f(x_k)^{-1} \nabla f(x_k)
+		$$
+		
+		Il teorema di convergenza è come sopra.
+
+\end{itemize}
+
 \end{document}

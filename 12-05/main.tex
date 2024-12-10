@@ -16,9 +16,6 @@
 \usepackage{hyperref}
 \usepackage{standalone}
 
-% cose fluttuanti
-\usepackage{float}
-
 % imposta il titolo
 \title{Appunti Ricerca Operativa}
 \author{Luca Seggiani}
@@ -188,49 +185,107 @@
 
 \begin{document}
 
-\pagestyle{fancy}
-\thispagestyle{empty}
-\renewcommand{\thispagestyle}[1]{}
+% sezione (data)
+\section{Lezione del 05-12-24}
 
-\maketitle
-\input{../09-23/main.tex}
-\input{../09-24/main.tex}
-\input{../09-25/main.tex}
-\input{../09-26/main.tex}
-\input{../09-30/main.tex}
-\input{../10-01/main.tex}
-\input{../10-02/main.tex}
-\input{../10-03/main.tex}
-\input{../10-07/main.tex}
-\input{../10-08/main.tex}
-\input{../10-09/main.tex}
-\input{../10-10/main.tex}
-\input{../10-14/main.tex}
-\input{../10-15/main.tex}
-\input{../10-16/main.tex}
-\input{../10-17/main.tex}
-\input{../10-21/main.tex}
-\input{../10-22/main.tex}
-\input{../10-23/main.tex}
-\input{../10-24/main.tex}
-\input{../10-29/main.tex}
-\input{../10-30/main.tex}
-\input{../11-05/main.tex}
-\input{../11-06/main.tex}
-\input{../11-07/main.tex}
-\input{../11-11/main.tex}
-\input{../11-12/main.tex}
-\input{../11-13/main.tex}
-\input{../11-14/main.tex}
-\input{../11-18/main.tex}
-\input{../11-19/main.tex}
-\input{../11-20/main.tex}
-\input{../11-26/main.tex}
-\input{../11-27/main.tex}
-\input{../11-28/main.tex}
-\input{../12-02/main.tex}
-\input{../12-03/main.tex}
-\input{../12-04/main.tex}
-\input{../12-05/main.tex}
-\input{../12-09/main.tex}
+% stili pagina
+\thispagestyle{empty}
+\pagestyle{fancy}
+
+% testo
+
+\subsection{Regole di Armijo-Goldstein-Wolfe}
+Abbiamo visto alcuni metodi per ricavare passi $t_k$ e direzioni di crescita $d_k$ per algoritmi iterativi di PNL.
+Vediamo adesso un altro metodo, dato dalle condizioni di \textbf{Armijo-Goldstein-Wolfe}:
+$$
+d_k = \nabla f(x_k)
+$$
+$$
+t_k =
+\begin{cases}
+	\phi(t_k) \leq \phi(0) + \alpha \, \phi'(0) \, t_k \\ 
+	\phi'(t_k) \geq \beta \phi'(0)
+\end{cases}
+$$
+dove $0 < \alpha < \beta < 1$ sono parametri dell'algoritmo.
+
+Sostanzialmente la prima condizione va a verificare che $t_k$ stia fra uno dei punti (non diventi \textit{troppo grande}) dove la funzione è minore della retta passante per $\phi(0)$ con coefficiente angolare $\alpha \, \phi'(0)$, cioè che ad $\alpha = 0$ ha coefficiente nullo (parallela all'asse delle $x$) e ad $\alpha = 1$ ha coefficiente $\phi'(0)$ (cioè tangente alla $\phi$, non prenderà nessun punto).
+
+La seconda condizione verifica invece che $t_k$ sia maggiore del punto $t^*$ (non diventi \textit{troppo piccola}), dove $t^*$ è il punto dove la derivata $\phi'(t^*)$ è uguale a $\beta \, \phi'(0)$, che per $\beta = 0$ è nuovamente la retta parallela all'asse $x$, mentre per $\beta = 1$ è tangente a $\phi'(0)$. 
+
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[
+			axis lines = center,
+			xlabel = $x$, ylabel = $y$,
+			width=14cm,
+			height=8cm,
+			xmin = -1.9,
+			xmax = 2.9,
+			ymin = -0.9,
+			ymax = 2.4,
+			grid = minor
+	]
+	\addplot[
+		samples=100
+		]{x^2 - x + 1};
+
+	\addplot[
+		color=purple,
+		thick
+		]{1-0.1*x};
+
+	\addplot[
+		color=yellow,
+		thick
+		]{0.8775-0.3*x};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(0.35,0.7725)};
+
+	\node[anchor=north, xshift=-6px] at (axis cs:0.35,0.7725) {$x^*$};
+
+	\addplot[
+		thick,
+		color=blue,
+		domain=0.35:0.9
+		]{0};
+
+	\addplot[
+		color=yellow
+	](0.35, x);
+
+	\addplot[
+		color=red
+	](0.9, x);
+	\end{axis}
+\end{tikzpicture}
+
+\end{center}
+
+Nel grafico, il vincolo in rosso è il primo (relativo ad $\alpha$), mentre il vincolo in giallo è il secondo (relativo a $\beta$).
+
+\subsection{Metodo di Frank-Wolfe}
+Restringiamoci a funzioni $f(x)$ su domini $\Omega$ regolari limitati, di cui siamo interessati a trovare il massimo $\max_{x \in \Omega} f(x)$.
+L'idea è quella di definire il \textbf{problema linearizzato} (detto \textit{PL}) in $x_k$, cioè $\mathrm{PL}(x_k)$.
+Prendiamo allora l'approssimazione di primo ordine dato dall'espansione di Taylor al secondo termine:
+$$
+f(x) = f(x_k) + \nabla f(x_k) (x - x_k) + o(x-x_k)
+$$
+Scartando i termini costanti, vogliamo trovare:
+$$
+y_k = \max_{x \in \Omega} \nabla f(x_k) x
+$$
+Sarà allora:
+$$
+d_k = y_k - x_k
+$$
+$$
+t_k \in \mathrm{argmax}_{0 \leq t \leq 1} \, f(x_k + t(y_k - x_k))
+$$
+
+Si può dimostrare che il metodo fi Frank-Wolfe, se la funzione ne ammette, trova un punto stazionario dopo un numero finito di iterazioni per qualsiasi punto iniziale $x_0$. 
 \end{document}

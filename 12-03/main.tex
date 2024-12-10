@@ -439,7 +439,7 @@ $$
 f(1, -1) = 0
 $$
 $$
-f(\frac{1}{4}, \frac{1}{2}, -\frac{1}{4})
+f\left(\frac{1}{4}, \frac{1}{2} \right) = -\frac{1}{4}
 $$
 da cui massimo in $(1,1)$ e minimo in $(\frac{1}{4}, \frac{-1}{2})$ (come poteva essere chiaro anche tracciando gli insiemi di livello di $f$).
 Il punto in $(1, -1)$ può essere valutato solo sulla parabola stessa, dove risulta sicuramente crescente (il minimo è toccato in un unico punto).
@@ -460,6 +460,7 @@ Possiamo quindi studiare la funzione su tale dominio per ottenere gli stessi pun
 Sia $f: \mathbb{R}^n \rightarrow \mathbb{R}$: vogliamo definire algoritmi che ricavino, ad esempio, $\max\limits_{x \in \mathbb{R}^n} f(x)$.
 L'idea fondamentale è quella di creare una \textbf{relazione di ricorrenza}, cioè una successione di iterazioni che converga verso il punto di massimo.
 
+\subsubsection{Direzioni di crescita}
 Partiamo quindi da una certa $x_k$ e convergiamo verso una $x_{k+n}$ corrispondente al punto desiderato.
 La domanda è come calcolare $x_{k+1}$.
 Scegliamo quindi una direzione di spostamento $d_k$ e modifichiamo $x_k$ come:
@@ -490,5 +491,16 @@ Una direzione che sicuramente ha prodotto scalare positivo col gradiente sarà i
 $$
 \nabla \phi(t) = \nabla f(x_k + t \, d_k) \cdot \, d_k = |\nabla f(x_k + t \, d_k)|^2
 $$
+
+\par\smallskip 
+
+Notiamo che una direzione di sallita non resta tale per ogni valore di $t$, bensì rappresenta effettivamente un accrescimento della funzione solo per un certo intervallo, cioè:
+$$
+\exists \bar{t}, \ \forall t \in (0, \bar{t}] : f(x_k + t \, d_k) > f(x_k) 
+$$
+
+Possiamo riprendere il conto precedente per determinare se una direzione è di crescita.
+In particolare, se $ \nabla f(x_k) \cdot d_k > 0$, allora $d_k$ è di crescita.
+Notiamo ancora che $d_k = \nabla f(x_k)$ soddisfa questa disequazione, quindi è una direzione di crescita.
 
 \end{document}
