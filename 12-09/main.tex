@@ -225,7 +225,7 @@ Ci interessiamo a trovare massimi e minimi globali.
 
 		Si presentano quindi due metodi di risoluzione: uno per via geometrica, e uno che sfrutta il sistema LKT.
 		\begin{enumerate}
-			\item La $f$ definisce un paraboloide concavo.
+			\item \textit{(via grafica)} La $f$ definisce un paraboloide concavo.
 				In generale, il paraboloide avrà un punto di minimo globale libero $\bar{x}$, e il minimo vincolato sarà il punto $x \in P$ che minimizza la distanza $d(x, \bar{x})$, dove $d$ è scalata per le dimensioni degli elissoidi dati dall'insieme di livello di $\mathrm{lev}_{=k}(f)$.
 				Avevamo adottato un approccio simile negli esempi precedenti, notando il fatto che parlavamo di circonferenze, e quindi $d$ era la comune norma euclidea.
 			
@@ -282,7 +282,7 @@ Ci interessiamo a trovare massimi e minimi globali.
 						\alpha = \frac{\sqrt{2}}{2} \\ 
 						\beta = \frac{1}{2} \\ 
 						p_1 = -1 \\ 
-						p_2 = \frac{1}{8}
+						p_2 = \frac{1}{8} \\
 						r = \sqrt{\frac{33}{16} + k}
 					\end{cases}
 				\]
@@ -298,14 +298,13 @@ Ci interessiamo a trovare massimi e minimi globali.
 				Dove gli $\alpha$ e $\beta$ sono gli stessi semiassi $/ r$ di prima.
 				
 				Questa definizione deriva dalla \textit{distanza di Mahalanobis} su matrici di covarianza, presa nel caso di matrici diagonali (quindi semiassi paralleli agli assi cartesiani).
-				Si potrebbe fare una trattazione più approfondita del caso non strettamente parallelo, ma sono le 2 di notte e domani c'è Reti Logiche.
 
 				Prendiamo quindi il punto $p_\Omega$ come uno qualsiasi fra i:
 				$$
 				\phi_{ij}(t) = v_i (1 - t) + v_j t
 				$$
 				segmenti del bordo di $P$.
-				Consideremo solo i segmenti $(1, 2)$ e $(1, 4)$, cioè $(0,1) - (4,1)$ e $(0, 1) - (-1, 5)$, per esemplificare i calcoli.
+				Consideremo solo i segmenti $(1, 2)$ e $(1, 4)$, cioè $(0,1) \rightarrow (4,1)$ e $(0, 1) \rightarrow (-1, 5)$, per esemplificare i calcoli.
 				Una discussione completa richiederebbe la verifica di tutti i segmenti.
 				Si hanno quindi le parametrizzazioni:
 				$$
@@ -314,24 +313,260 @@ Ci interessiamo a trovare massimi e minimi globali.
 				$$
 				\phi_{14}(t) = v_1 (1 - t) + v_4 t
 				$$
-				E vogliamo calcolare:
+				e si vogliono calcolare:
 				$$
 				\min d(p_m, \phi_{12}(t))
 				$$
 				$$
 				\min d(p_m, \phi_{14}(t))
 				$$
-				Queste sono funzioni reali di variabile reale $t$, e hanno minimo in $0$ di valore $\frac{9}{4}$.
-				Fossero state in disaccordo sul minimo, si sarebbe preso il minimo minore.
+
+				Prendiamo la $d(p_m, \phi_{12}(t))$. Svolgendo le composizioni, si ha:
+				$$
+				d(p_m, \phi_{12}(t)) = \sqrt{\frac{(p_{1}-4t)^{2}}{\alpha^{2}}+\frac{\left(p_{2}-\left(\left(1-t\right)+t\right)\right)^{2}}{\beta^{2}}}
+				$$
+				$$
+				 = \sqrt{\frac{p_{1}^{2}-8p_{1}t+16t^{2}}{\alpha^{2}}+\frac{\left(p_{2}-1\right)^{2}}{\beta^{2}}} = \sqrt{32t^{2}+16t+\frac{81}{16}} 
+				$$
+				Con passaggi simili, la $d(p_m, \phi_{14}(t))$ dà:
+				$$
+				d(p_m, \phi_{14}(t)) = \sqrt{66t^{2}+24t+\frac{81}{16}}
+				$$
+
+				Queste sono funzioni reali di variabile reale $t$, e hanno entrambe minimo in $0$ di valore $\frac{9}{4}$.
+				Fossero state in disaccordo sul punto di minimo, si sarebbe preso il minimo minore (che significa distanza minore).
 				Il fatto che qui i minimi sono identici e sullo stesso punto significa che il minimo è su un vertice.
 				In particolare, secondo le parametrizzazioni riportate sopra, il vertice è $v_1$, quindi $(0, 1)$.
 
-				Notiamo come ad $r = \frac{9}{4}$ si ha $k = 3$, e l'insieme $\mathrm{lev}_{=3}(f)$ sia proprio quello che intercetta per primo il vertice $(0, 1)$ del poliedro.
+				Notiamo come ad $r = \frac{9}{4}$ si ha $k = 3$, e l'insieme $\mathrm{lev}_{=3}(f)$ è proprio quello che intercetta per primo il vertice $(0, 1)$ del poliedro.
 				Questa è una conseguenza di aver scelto una norma $d$ che è correttamente scalata sui semiassi delle ellissi.
 
-				# grafico
-			\item # Lagrange
+				Si riporta un grafico:
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[
+			axis lines = center,
+			xlabel = $x$, ylabel = $y$,
+			width=14cm,
+			height=8cm,
+			xmin = -2.9,
+			xmax = 4.9,
+			ymin = -1.9, 
+			ymax = 5.9,
+			grid = minor
+	]
+	
+	\addplot[
+		domain=0:360,
+		samples=100, 
+		thick,
+		color=red,
+	] ({1.58114*cos(x) - 1}, {1.125*sin(x) + 0.125});
+	\addlegendentry{$\mathrm{lev}_{=3}(f)$};
+
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(0,1) (4,1)};
+	
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(0,1) (-1,5)};
+	
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(0,1)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(4,1)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(-1,5)};
+
+	\node[anchor=south, yshift=5pt] at (axis cs:-1,5) {$v_4$};
+	\node[anchor=south, yshift=5pt, xshift=10pt] at (axis cs:0,1) {$v_1$};
+	\node[anchor=south, yshift=5pt] at (axis cs:4,1) {$v_2$};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(-1, 0.125)};
+	
+	\node[anchor=south, yshift=5pt] at (axis cs:-1,0.125) {$p_m$};
+
+\end{axis}
+\end{tikzpicture}
+
+\end{center}
+
+	\item \textit{(Sistema LKT)} Si esplicitano i vincoli del poliedro come segue:
+		\[
+			\begin{cases}
+				g_1(x_1, x_2) = 1 - x_2 \\   	
+				g_2(x_1, x_2) = x_1 - 4 \\   	
+				g_3(x_1, x_2) = \frac{2}{5}x_1 + x_2 - \frac{23}{5} \\   	
+				g_4(x_1, x_2) = 1 - 4 x_1 - x_2 \\   	
+			\end{cases}
+		\]
+		rispetto ai segmenti $(v_1, v_2)$, $(v_2, v_3)$, $(v_3, v_4)$, $(v_1, v_4)$.
+
+		Dai gradienti di $f$ e le $g_i$ si ricava il sistema LKT:
+		\[
+			\begin{cases}			
+				4 x_1 + 4 + \lambda_2 + \frac{2}{5} \lambda_3 - 4 \lambda_4 = 0 \\ 
+				8 x_2 - 1 - \lambda_1 + \lambda_3 - \lambda_4 = 0 \\ 
+				\lambda_1 (1 - x_2) = 0 \\ 
+				\lambda_2 (x_1 - 4) = 0 \\ 
+				\lambda_3 (\frac{2}{5}x_1 + x_2 - \frac{23}{5}) = 0 \\ 
+				\lambda_4 (1 - 4 x_1 - x_2) = 0
+			\end{cases}
+		\]
 		\end{enumerate}
+		I vincoli rappresentano semipiani, ergo la soluzione del sistema è agile se si considerano prima le coppie di rette incidenti (che per $n=4$ rette sono $\frac{n(n-1)}{2} \big|_{n=4} = 6$), cioè:
+	\begin{table}[H]
+		\center 
+		\begin{tabular} { c c | c c c c }
+			$x_1$ & $x_2$ & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\ 
+			\hline 
+			$4$ & $1$ & $7$ & $-20$ & $0$ & $0$ \\ 
+			$9$ & $1$ & $107$ & $0$ & $-100$ & $0$ \\ 
+			$0$ & $1$ & $1$ & $0$ & $0$ & $6$ \\ 
+			$4$ & $3$ & $0$ & $-\frac{54}{5}$ & $-23$ & $0$ \\ 
+			$4$ & $-15$ & $0$ & $482$ & $0$ & $121$ \\ 
+			$-1$ & $5$ & $0$ & $0$ & $-\frac{130}{3}$ & $-\frac{13}{3}$
+		\end{tabular}
+	\end{table}
+	da cui rimuoviamo subito il 2° e il 5° punto in quanto esterni a $P$.
+	Notiamo inoltre di aver già trovato il punto di massimo in $(-1, 5)$.
+	Si hanno poi i 4 punti giacienti sulle rette, cioè:
+	\begin{table}[H]
+		\center 
+		\begin{tabular} { c c | c c c c }
+			$x_1$ & $x_2$ & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\ 
+			\hline 
+			$-1$ & $1$ & $7$ & $0$ & $0$ & $0$ \\ 
+			$4$ & $\frac{1}{8}$ & $0$ & $-8$ & $0$ & $0$ \\ 
+			$\frac{43}{22}$ & $\frac{42}{11}$ & $0$ & $0$ & $-\frac{325}{11}$ & $0$ \\ 
+			$\frac{2}{11}$ & $\frac{3}{11}$ & $0$ & $0$ & $0$ & $\frac{13}{11}$
+		\end{tabular}
+	\end{table}
+	di cui solo il 3° è interno a $P$.
+	Calcoliamo quindi per enumerazione diretta:
+	\[
+		\begin{cases}
+			f(0,1) = 3 \\ 
+			f(4,1) = 51 \\ 
+			f(4,3) = 81 \\
+			f(-1, 5) = 93 \\ 
+			f(-1, 1) = 1 \\ 
+			f(\frac{43}{22}, \frac{32}{11}) \approx 46.4 \\ 
+		\end{cases}
+	\]	
+	da cui si riconferma il minimo globale in $(0,1)$.
+
+
+		Si riporta un grafico che evidenzia come il punto interno al bordo trovato è dato dall'intersezione fra il bordo di $P$ e l'insieme di livello in $\sim 70$:
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[
+			axis lines = center,
+			xlabel = $x$, ylabel = $y$,
+			width=14cm,
+			height=8cm,
+			xmin = -7.9,
+			xmax = 5.9,
+			ymin = -5.9, 
+			ymax = 5.9,
+			grid = minor
+	]
+	
+	\addplot[
+		domain=0:360,
+		samples=100, 
+		thick,
+		color=red,
+	] ({6*cos(x) - 1}, {4.244*sin(x) + 0.125});
+	\addlegendentry{$\mathrm{lev}_{\approx70}(f)$};
+
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(0,1) (4,1)};
+	
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(0,1) (-1,5)};
+
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(-1,5) (4,3)};
+	
+	\addplot[
+        thick,
+        blue,
+    ] coordinates {(4,1) (4,3)};
+	
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(0,1)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(4,1)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(-1,5)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(4,3)};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(1.9545,3.8182)};
+
+	\node[anchor=south, yshift=5pt] at (axis cs:-1,5) {$v_4$};
+	\node[anchor=south, yshift=5pt, xshift=10pt] at (axis cs:0,1) {$v_1$};
+	\node[anchor=south, yshift=5pt] at (axis cs:4,1) {$v_2$};
+	\node[anchor=south, yshift=5pt] at (axis cs:4,3) {$v_3$};
+	
+	\node[anchor=south, yshift=5pt] at (axis cs:1.9545,3.8182) {$(\frac{43}{22}, \frac{42}{11})$};
+
+	\addplot[
+		only marks,
+		mark=*,
+		mark size = 2pt,
+		] coordinates{(-1, 0.125)};
+	
+	\node[anchor=south, yshift=5pt] at (axis cs:-1,0.125) {$p_m$};
+
+\end{axis}
+\end{tikzpicture}
+
+\end{center}
 \end{itemize}
 
 \subsection{Algoritmo del gradiente proiettato}
